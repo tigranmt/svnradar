@@ -1,0 +1,24 @@
+﻿
+*******************************************************************************************************************
+Orgnaize every clas in logical group and add regions. Delete unused rsources and files. 
+*******************************************************************************************************************
+
+1. Data virtualization for revision changes window, for the cases where large set of data was affected by the revision
+we investigate.
+2. Data virtualization for the main wondow update list. For support large scale repositories data view.    
+
+
+3. Unit test implementation Alfa version.
+
+4. Implement Monitoring issure for the user. User should be able to order to appication to monitor specified file, user
+in order to be notified about any change via (Sound, Mail, Popup...)
+
+5. Add repository statistical information. Embedded DB engne in the application in order to save all information downloaded
+and notified before. (Need to validate this request. Do we really nead this functionallity ?) 
+
+6. Add from the ContextMenu possibility to open file location 
+7. Put the program in autorun 
+
+                           
+
+        

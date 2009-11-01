@@ -1,0 +1,77 @@
+﻿<Window x:Class="RepoManager.UpdateTraceWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:util="clr-namespace:RepoManager.Util"
+    xmlns:converter="clr-namespace:RepoManager.FormatConverters"
+    xmlns:repoManager="clr-namespace:RepoManager"
+    Title="{StaticResource UdateWindowTitle}" 
+    Height="188" 
+    Width="570" 
+    Icon="Images\main.png"
+    Closing="Window_Closing">
+   
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <converter:UpdateActionStateConverter x:Key="UpdateActionStateConverter" />
+
+            <!---ListView State column cells  template definition -->
+            <DataTemplate x:Key="UpdateStateColumnCellTemplate">
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Image  Grid.Column="0"  HorizontalAlignment="Center"
+                          Source="{Binding Path=RepositoryItemState, 
+                            Converter={StaticResource UpdateActionStateConverter}}" 
+                                Width="50"
+                                   Height="15" ToolTip="{Binding Path=Action}"/>
+                </Grid>
+            </DataTemplate>
+            <!---ListView State column cells  template definition -->
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    
+    <Grid  >   
+            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6.0*"></RowDefinition>
+            <RowDefinition Height="30" ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="UpdateTraceListView" Grid.Row="0" 
+                                        VerticalAlignment="Stretch"
+                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                        VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Cursor="Wait">
+
+            <ListView.View>
+                <GridView>
+                    <util:FixWidthListViewColumn FixedWidth="50" CellTemplate="{StaticResource UpdateStateColumnCellTemplate}" Header="{StaticResource STATE_NAME}"/>                                     
+                    <GridViewColumn Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450" />               
+
+                </GridView>
+            </ListView.View>
+
+          
+
+        </ListView>
+
+  		<StatusBar x:Name="statusBar"  Grid.Row="1" Height="30"  Width="Auto" HorizontalAlignment="Stretch"  VerticalAlignment="Bottom"  Grid.RowSpan="2" >
+                <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                    <StatusBarItem x:Name="TextItemOnStatusBar" Width="Auto">
+                        <TextBlock x:Name="TextOnStatusBar" Height="22" Background="#FF546F78"  Foreground="WhiteSmoke" Text="" FontWeight="Bold"/>
+                    </StatusBarItem>
+                    <TextBlock Text="           "/>
+                    <StatusBarItem x:Name="ProgressBarItemOnStatusBar" Width="200" >
+
+                        <ProgressBar x:Name="progressBar" Width="200" Background="Black"  IsIndeterminate="True"  VerticalAlignment="Stretch" Height="22" />
+
+                    </StatusBarItem>
+                </StackPanel>
+            </StatusBar>
+
+
+    </Grid>
+</Window>

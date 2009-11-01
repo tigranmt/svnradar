@@ -1,0 +1,49 @@
+﻿1.   Big performance problem when loading revision information with a lot of differences made on the single file. (+)
+	 *************************************************** TEST CASE EXAMPLES *****************************************
+	 repo     :  googleurl 
+	 revision :  100 
+	 item     :  /trunk/src/url_canon_ip.cc
+	 
+	 Some fixes already made, but still need keep attention on preformance in such cases. The application is not enough fast.
+	 May be we need some another control that supports text coloring, not RichTextBox
+	 ****************************************************************************************************************
+	 
+	 
+2.   If I add new repository to listen, it's on the new generated tab it's impossible to selected any ListView item, 
+	 the object always return null. (+)
+	 
+3.   Raised processes management. Killing, stoping and notification about wat is going on now.(+)
+
+
+4.   Faster and simplier management of the FlowDocument for Revision information window. (+)
+
+
+5.  NotifyIcon implementation -> 
+        a) Start application with notify icon (+)
+        b) Implement commad s with simple fast conrol if the specified repository is out of date 
+           SVN INFO WC s SVN INFO vs REPO (+)
+        c) Implement window/control for notication to the user what repository need to be updated, and may be also 
+           immediately update of the repository. (+)
+           
+           
+6.   Change appearance of the ListView item: color of selected item on the list view, devide the same revision rows on in color groups
+     in FlatView. (+-)
+     ************************** COMMNETS **************************************
+     Alternate color already implemented . Need of selected item nice color.
+     **************************************************************************
+     
+     
+7.   Group view implementation: Define group view template and interaction with the elements. Most probably it will be expander
+     with the RevisionNumber, Account and Date info in the header. 
+     
+     
+     
+8.   Make critical tests: Aor example during updating remove network cable -> User shuld be notified about that. 
+                          Or any kind of error message got from the SVN.exe must be visulaized or signalized to the user, 
+                          in order to keep him updated with what is going on. User must have a control over situation.
+     Load multiple revisons at a time. Don't wait until the process ends load the repository log information, begin immediately
+     maddly click in order to see immediately the cnanges made on the selcted item.
+	 
+	 
+9.   Double click between column on list view will cause strange behaviour on entire application. Need to figure out.
+Fixed by disabling double click in between of the column' space

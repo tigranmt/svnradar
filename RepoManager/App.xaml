@@ -1,0 +1,313 @@
+﻿<Application x:Class="RepoManager.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:RepoManager.FormatConverters"
+    xmlns:util="clr-namespace:RepoManager.Util"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:repoManager="clr-namespace:RepoManager"    
+    xmlns:repoCC="clr-namespace:RepoManager.Common.Controls"            
+    xmlns:database="clr-namespace:RepoManager.DataBase"
+    xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'
+    StartupUri="RepoBrowser.xaml">
+    <Application.Resources>
+
+        <!-- Localized strings dictionaries merge -->
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Strings-EN.xaml" />
+                <ResourceDictionary Source="ButtonTemplates.xaml" />
+                <ResourceDictionary Source="ExpanderStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--- Converters -->
+            <converter:SliderFormatConverter x:Key="SliderFormatConverter" />
+            <converter:VisibilityConverter x:Key="VisibilityConverter" />
+            <converter:RepositoryItemStateConverter x:Key="RepositoryItemStateConverter" />
+            <converter:ListViewItemColorConverter x:Key="ListViewItemColorConverter" />
+            <converter:EnableFromItemsCountConverter x:Key="EnableFromItemsCountConverter" />
+            <converter:IsFlatLayoutConverter x:Key="IsFlatLayoutConverter" />
+            <converter:IsGroupLayoutConverter x:Key="IsGroupLayoutConverter" />
+
+            
+            
+            
+
+            <LinearGradientBrush x:Key="GridBackBrush"  EndPoint="0.908,0.594" StartPoint="-0.091,0.532">
+                <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                <GradientStop Color="#FF1C242D" Offset="1"/>
+            </LinearGradientBrush>
+
+            <!--- Converters -->
+
+            <repoManager:ListViewHeaderDataTemplateSelector x:Key="ListViewHeaderDataTemplateSelector"/>
+
+            <!--- Object data provider for repo info -->
+            <ObjectDataProvider ObjectType="{x:Type database:RepoInfoBase}" MethodName="GetRepoInfoList" x:Key="DataProviderForListView">
+                <ObjectDataProvider.MethodParameters>
+                    <System:String>Empty</System:String>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <!--- Object data provider for repo info -->
+
+
+            <CollectionViewSource x:Key='source' Source="{Binding Source={StaticResource DataProviderForListView}}" >
+                <CollectionViewSource.GroupDescriptions>
+                    <!--<pf:PropertyGroupDescription PropertyName="Revision" />-->
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+
+            <!--- Repo executor global object -->
+            <ObjectDataProvider ObjectType="{x:Type repoManager:RepoExecutor}"  x:Key="repoExecutor"/>
+            <!--- Repo executor global object -->
+
+            <!--- Filter manager global object -->
+            <ObjectDataProvider ObjectType="{x:Type repoManager:FilterManager}"  x:Key="filterManager"/>
+            <!--- Filter manager global object -->
+
+            <!--- Images -->
+            <Image x:Key="FilerByCriteriaImage" Source="Images/filter-data-by-criteria.png"/>
+            <Image x:Key="AddImage" Source="Images/new.png"/>
+            <Image x:Key="DeleteImage" Source="Images/deleted.png"/>
+            <Image x:Key="ModifiedImage" Source="Images/modified.png"/>
+            <Image x:Key="ConflictedImage" Source="Images/conflicted.png"/>
+            <Image x:Key="EmptyImage" Source="Images/empty.png"/>
+            <Image x:Key="UpdateImage" Source="Images/updateimage.png"/>
+            <Image x:Key="LogImage" Source="Images/logimage.png"/>
+            <Image x:Key="NotificationListIcon" Source="Images/notificationlist.ico"/>
+            <Image x:Key="UpdateIcon" Source="Images/update.ico"/>
+            <Image x:Key="PrevImage" Source="Images/prev.png"/>
+            <Image x:Key="NextImage" Source="Images/next.png"/>
+            <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
+            <!--- Images -->
+
+
+            <!--- Animations for listview header image -->
+            <Storyboard x:Key="activateElementStoryBoard">
+                <DoubleAnimation
+               Storyboard.TargetName="myGlowBitmapEffect"
+               Storyboard.TargetProperty="GlowSize"
+               From="0" To="13" Duration="0:0:0.3" />
+            </Storyboard>
+            <!-- This storyboard will make the image revert to its original size -->
+            <Storyboard x:Key="normalizeElementStoryBoard">
+                <DoubleAnimation
+               Storyboard.TargetName="myGlowBitmapEffect"
+               Storyboard.TargetProperty="GlowSize"
+               From="13" To="0" Duration="0:0:0.3" />
+            </Storyboard>
+            <!--- Animations for listview header image -->
+
+
+            <!-- Context menu on sys tray -->
+            <ContextMenu x:Key="ListViewItemContextMenu" >
+                <MenuItem  Header="{StaticResource MI_SHOWREVISIONINFO}" Click="ShowRevisionInfo_Click" Icon="{StaticResource ShowRevisionInfo}" />
+            </ContextMenu>
+
+            <!-- Context menu on sys tray -->
+
+            <!---ListView State header template definition -->
+            <DataTemplate x:Key="ListViewStateHeaderNormalTemplate" >
+                <StackPanel x:Name="NormalStackPanel" Width="{Binding RelativeSource=
+                                                        {RelativeSource FindAncestor, 
+                                                        AncestorType={x:Type GridViewColumnHeader}}, 
+                                                        Path=ActualWidth}" Background="Black">
+                    <TextBlock  Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"  Foreground="WhiteSmoke" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </DataTemplate>
+            <!---ListView State header template definition -->
+
+            <!---ListView Normal header template definition -->
+            <DataTemplate x:Key="ListViewHeaderNormalTemplate" >
+
+                <StackPanel x:Name="NormalStackPanel" Width="{Binding RelativeSource=
+                                                        {RelativeSource FindAncestor, 
+                                                        AncestorType={x:Type GridViewColumnHeader}}, 
+                                                        Path=ActualWidth}" Background="LightSlateGray">
+                    <TextBlock   x:Name="tblock"  Text="{Binding}" VerticalAlignment="Center"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" />
+                </StackPanel>
+
+            </DataTemplate>
+            <!---ListView Normal header template definition -->
+
+            <!---ListView Filtered header template definition -->
+            <DataTemplate x:Key="ListViewHeaderFilteredTemplate">
+                <StackPanel  x:Name="FilteredStackPanel" Orientation="Horizontal" Background="BlanchedAlmond"  HorizontalAlignment="Stretch" >
+
+                    <TextBox   x:Name="tbox" Tag="{Binding}"  
+                               VerticalAlignment="Center"  KeyUp="TextBox_KeyUp"  Width="{Binding RelativeSource=
+                                                        {RelativeSource FindAncestor, 
+                                                        AncestorType={x:Type GridViewColumnHeader}}, 
+                                                        Path=ActualWidth}"                                                                                   
+                                                        Background="Gainsboro" TextAlignment="Center" FontFamily="Courier New"   FontSize="12"/>
+
+                </StackPanel>
+            </DataTemplate>
+            <!---ListView Filtered header template definition -->
+
+
+            <!---ListView State column cells  template definition -->
+            <DataTemplate x:Key="StateColumnCellTemplate">
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Image  Grid.Column="0"  HorizontalAlignment="Center"
+                          Source="{Binding Path=RepositoryItemState, 
+                            Converter={StaticResource RepositoryItemStateConverter}}" 
+                                Width="15"
+                                   Height="15" ToolTip="{Binding Path=StateDescription}"/>
+                </Grid>
+            </DataTemplate>
+            <!---ListView State column cells  template definition -->
+
+
+            <!--- Gradien brushes for splitter -->
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Key="panelBackgroundBrush">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="#FFE3EFFF" Offset="0" />
+                    <GradientStop Color="#FFAFD2FF" Offset="1" />
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+            <!--- Gradien brushes for splitter -->
+
+
+
+            <!-- Style for LitView item-->
+            <Style x:Key="ListViewItemsStyle" TargetType="{x:Type ListViewItem}">
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Revision, Converter={StaticResource ListViewItemColorConverter} }" Value="true">
+                        <Setter Property="Background" Value="White" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Revision, Converter={StaticResource ListViewItemColorConverter} }" Value="false">
+                        <Setter Property="Background" Value="WhiteSmoke" />
+                    </DataTrigger>                    
+                  
+                    <Trigger Property="IsSelected" Value="true">
+                        <Setter Property="Background" Value="Green" />
+                        <Setter Property="Foreground" Value="WhiteSmoke" />
+                    </Trigger>
+
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Background" Value="Green" />
+                        <Setter Property="Foreground" Value="WhiteSmoke" />
+                    </Trigger>
+
+                </Style.Triggers>
+
+                <EventSetter Event="MouseDoubleClick" Handler="ListViewItemDoubleClick"/>
+
+
+
+            </Style>
+            <!-- Style for LitView item-->
+
+
+            <DataTemplate x:Key="TabItemDataTemplate">
+
+
+                <Grid HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch" Name="templateGrid">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8.0*"></RowDefinition>
+                        <!--<RowDefinition Height="6" ></RowDefinition>
+                            <RowDefinition Height="6.0*" ></RowDefinition>-->
+                        <!--<RowDefinition Height="*" ></RowDefinition>-->
+                        <RowDefinition Height="*" ></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListView x:Name="repoView" Grid.Row="0" 
+                                        VerticalAlignment="Stretch"
+                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                        VirtualizingStackPanel.VirtualizationMode="Recycling"                              
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch" 
+                                        ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                        ScrollViewer.CanContentScroll="True"
+                                        ScrollViewer.ScrollChanged="repoView_ScrollChanged"
+                                        GridViewColumnHeader.Click="repoView_Click"
+                                        SelectionMode="Single"
+                                        
+                                        ContextMenu="{StaticResource ListViewItemContextMenu}"
+                                        Loaded="repoView_Loaded"    
+                                        ItemsSource="{Binding Source={StaticResource source}}"
+                                        SelectionChanged="repoView_SelectionChanged"
+                                        ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Margin" Value="5,5,5,5"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                              
+                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{Binding Path=Items[0].UserComment}">
+                                                        <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
+                                                            <Expander.Header>
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <TextBlock FontWeight="Bold" Text="       " />
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Revision}"  TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=RevisionColumn}" />
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Account}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=AccountColumn}" />
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Date}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
+
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items.Count}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
+
+                                                            </DockPanel>
+                                                        </Expander.Header>    
+                                                        <Expander.Content>
+                                                            <ItemsPresenter />
+                                                        </Expander.Content>
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+
+                        <ListView.View>
+                            <GridView>
+
+
+                                <util:FixWidthListViewColumn x:Name="StateColumn" FixedWidth="50"    Header="{StaticResource STATE_NAME}"                                                   
+                                                    HeaderTemplate="{StaticResource ListViewStateHeaderNormalTemplate}"
+                                                    CellTemplate="{StaticResource StateColumnCellTemplate}"/>
+
+                                <util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}" />
+                                <util:CustomColumn x:Name="AccountColumn" Header="{StaticResource ACCOUNT_NAME}" DisplayMemberBinding="{Binding Path=Account}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
+                                <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
+                                <util:CustomColumn x:Name="ItemColumn" Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
+                              
+
+                            </GridView>
+                        </ListView.View>
+
+
+
+
+                    </ListView>
+
+                    <!-- Buttons  -->
+                    <ToggleButton x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="22"  Foreground="Black"  Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
+                    <ToggleButton x:Name="rbUpdateRepository"   Grid.Row="2"  Width="160" Height="22"  Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="200,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
+                    <ProgressBar  x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource repoExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <!-- Buttons  -->
+                </Grid>
+
+
+
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+
+</Application>

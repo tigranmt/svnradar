@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B1CC1272-F2E2-4990-9ECC-5618EF7A9E7F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RepoManager</RootNamespace>
+    <AssemblyName>RepoManager</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>7F6F8B761A463E533AE069E8C19571BD03E49202</ManifestCertificateThumbprint>
+    <ManifestKeyFile>RepoManager_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>C:\PublishTest\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://localhost/RepoManager/</UpdateUrl>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="BugReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Controls\FancyBalloon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExpanderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RevisionInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Strings-EN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RepoBrowser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestSurface.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateTraceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RepoBrowser.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RepoBrowser.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppCommands.cs" />
+    <Compile Include="BugReportWindow.xaml.cs">
+      <DependentUpon>BugReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Controls\RepositoryRoutedEventArgs.cs" />
+    <Compile Include="Common\Controls\RepoAliasTextBox.cs" />
+    <Compile Include="Common\Controls\RepoTabItem.cs" />
+    <Compile Include="FormatConverters\IsGroupLayoutConverter.cs" />
+    <Compile Include="FormatConverters\IsFlatLayoutConverter.cs" />
+    <Compile Include="RepoBrowserAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RepoBrowserAbout.Designer.cs">
+      <DependentUpon>RepoBrowserAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepoBrowserWindow.EventHadlers.cs" />
+    <Compile Include="TestSurface.xaml.cs">
+      <DependentUpon>TestSurface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\CommandStringsManager.cs" />
+    <Compile Include="Util\CustomColumn.cs" />
+    <Compile Include="Util\ErrorManager.cs" />
+    <Compile Include="Common\Intefaces\IRepoWindow.cs" />
+    <Compile Include="Common\MulticultureDictionary\MulticultureDictionary.cs" />
+    <Compile Include="DataBase\RepoInfoBase.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Common\Controls\FancyBalloon.xaml.cs">
+      <DependentUpon>FancyBalloon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FilterManager.cs" />
+    <Compile Include="FormatConverters\EnableFromItemsCountConverter.cs" />
+    <Compile Include="FormatConverters\ListViewItemColorConverter.cs" />
+    <Compile Include="FormatConverters\RepositoryItemStateConverter.cs" />
+    <Compile Include="FormatConverters\SliderFormatConverter.cs" />
+    <Compile Include="FormatConverters\UpdateActionStateConverter.cs" />
+    <Compile Include="FormatConverters\VisibilityFormatConverter.cs" />
+    <Compile Include="GenericQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RepoBrowser.Commands.cs" />
+    <Compile Include="DataTemplateSelectors.cs" />
+    <Compile Include="RepoExecutor.cs" />
+    <Compile Include="RepoProcess.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RevisionInfoWindow.xaml.cs">
+      <DependentUpon>RevisionInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateTraceWindow.xaml.cs">
+      <DependentUpon>UpdateTraceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\BindableRichTextBox.cs" />
+    <Compile Include="Util\FixWidthListViewColumn.cs" />
+    <Compile Include="Util\FolderRepoInfo.cs" />
+    <Compile Include="Util\LogManager.cs" />
+    <Compile Include="Util\RepoBrowserConfiguration.cs" />
+    <Compile Include="Util\RepoInfo.cs" />
+    <Compile Include="Util\RevisionInfo.cs" />
+    <Compile Include="Util\SearchTextBox.cs" />
+    <Compile Include="Util\TaskNotifier.cs" />
+    <Compile Include="Util\UIConstants.cs" />
+    <Compile Include="Util\UpdateTraceRow.cs" />
+    <Compile Include="Util\WindowsManager.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepoBrowserAbout.resx">
+      <DependentUpon>RepoBrowserAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="RepoManager_TemporaryKey.pfx" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\filter-data-by-criteria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\deleted.png" />
+    <Resource Include="Images\modified.png" />
+    <Resource Include="Images\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\main.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\conflicted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FIXED.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NotifyIconWpf\NotifyIconWpf.csproj">
+      <Project>{7AC63864-7638-41C4-969C-D3197EF2BED9}</Project>
+      <Name>NotifyIconWpf</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\needupdated.ico" />
+    <Resource Include="Images\noupdate.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\systrayicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\systrayclose.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\updateimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\notificationlist.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\update.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\next.png" />
+    <Resource Include="Images\prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\showrevision.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="SubsetFont.targets" />
+</Project>

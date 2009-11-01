@@ -1,0 +1,139 @@
+﻿<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:tb="http://www.hardcodet.net/taskbar"
+  x:Class=" RepoManager.Common.Controls.FancyBalloon"
+  x:Name="me"
+  Height="136"
+  Width="545.5" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    <UserControl.Resources>
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:01" Value="0.95"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:03" Value="0.95"/>
+                <!--				<SplineDoubleKeyFrame KeyTime="00:00:05" Value="0"/>-->
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="HighlightCloseButton">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="imgClose" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.4"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FadeCloseButton">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="imgClose" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.4"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FadeBack">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FadeOut" Completed="OnFadeOutCompleted" >
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.2"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="tb:TaskbarIcon.BalloonShowing">
+            <BeginStoryboard Storyboard="{StaticResource FadeIn}" x:Name="FadeIn_BeginStoryboard"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="imgClose">
+            <BeginStoryboard Storyboard="{StaticResource HighlightCloseButton}" x:Name="HighlightCloseButton_BeginStoryboard"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="imgClose">
+            <BeginStoryboard Storyboard="{StaticResource FadeCloseButton}" x:Name="FadeCloseButton_BeginStoryboard"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+            <StopStoryboard BeginStoryboardName="FadeIn_BeginStoryboard"/>
+            <BeginStoryboard x:Name="FadeBack_BeginStoryboard1" Storyboard="{StaticResource FadeBack}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="tb:TaskbarIcon.BalloonClosing">
+            <BeginStoryboard Storyboard="{StaticResource FadeOut}" x:Name="FadeOut_BeginStoryboard"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid x:Name="grid" MouseEnter="grid_MouseEnter" Width="565" Height="136">
+        <Border
+      Margin="7,37.2,24,8"
+      BorderThickness="1,1,1,1"
+      BorderBrush="#FF997137" CornerRadius="2,2,2,2">
+            <Border.Effect>
+                <DropShadowEffect Color="#FF747474"/>
+            </Border.Effect>
+            <Border.Background>
+                <LinearGradientBrush
+          EndPoint="0.5,1"
+          StartPoint="0.5,0">
+                    <GradientStop
+            Color="#FF4B4B4B"
+            Offset="0" />
+                    <GradientStop
+            Color="#FF8F8F8F"
+            Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Image
+      HorizontalAlignment="Left"
+      Margin="13.8,42.8,0,0"
+      Width="55.2"
+      Source="/Images/systrayicon.ico"
+      Stretch="Fill" Height="55.2" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" />
+        <Path
+      Fill="#FFFFFFFF"
+      Stretch="Fill"
+      Margin="88,65.4,57,0"
+      VerticalAlignment="Top"
+      Height="1"
+      Data="M26,107 L220.04123,107" SnapsToDevicePixels="True">
+            <Path.Stroke>
+                <LinearGradientBrush
+          EndPoint="0.973,0.5"
+          StartPoint="0.005,0.5">
+                    <GradientStop
+            Color="#00ECAD25"
+            Offset="1" />
+                    <GradientStop
+            Color="#87ECAD25"
+            Offset="0" />
+                </LinearGradientBrush>
+            </Path.Stroke>
+        </Path>
+        <TextBlock x:Name="RepoUrl"  Margin="88,43.2,0,0" Text="{StaticResource REPOSITORY_NAME}" TextWrapping="Wrap" Foreground="#FFECAD25" FontWeight="Bold" FontSize="10" Width="56" HorizontalAlignment="Left" Height="23.2" VerticalAlignment="Top" />
+        <Image Margin="0,15,25,0" VerticalAlignment="Top" Height="19" Source="/Images/systrayclose.ico" Stretch="Fill" Opacity="0.4" ToolTip="Close Balloon" x:Name="imgClose" MouseDown="imgClose_MouseDown" HorizontalAlignment="Right" Width="19"/>
+
+        <TextBlock Margin="88,0,0,31" x:Name="AuthorName" FontSize="10" FontStyle="Normal" FontWeight="Bold" Foreground="#FFECAD25" TextWrapping="Wrap" Text="{StaticResource ACCOUNT_NAME}" Width="64" HorizontalAlignment="Left" Height="18" d:LayoutOverrides="Height" VerticalAlignment="Bottom"/>
+        <TextBlock HorizontalAlignment="Left" Margin="88,0,0,14" x:Name="RevisionNumber" Width="56" FontFamily="Segoe UI" FontSize="10" FontWeight="Bold" Foreground="#FFECAD25" TextWrapping="Wrap"  Text="{StaticResource REVISION_NAME}" Height="18" VerticalAlignment="Bottom"/>
+        <TextBlock Opacity="0.87" Margin="8,15,165,0" TextAlignment="Center" Text="{Binding LastChangeDate}"  x:Name="ChangeDate" VerticalAlignment="Top" Height="19" Background="#FF100F0F" FontSize="10" FontWeight="Bold" Foreground="#FFECAD25" TextWrapping="Wrap"/>
+        <TextBlock Margin="168,0,189,14" x:Name="RevisionView" Text="{Binding Revision}" FontFamily="Segoe UI" FontSize="10" FontWeight="Bold" Foreground="#FFDADC0C" TextWrapping="Wrap" Height="19" VerticalAlignment="Bottom"/>
+        <TextBlock Margin="0,0,189,32" x:Name="AccountView" FontSize="10" FontStyle="Normal" Text="{Binding LastAuthor}" FontWeight="Bold" Foreground="#FFECAD25" TextWrapping="Wrap" Height="19" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="208" />
+        <TextBlock x:Name="RepoUrlView"  Margin="168,43.2,133,55" Text="{Binding Url}" ToolTip="{Binding Url}" TextWrapping="Wrap" Foreground="#FFECAD25" FontWeight="Bold" FontSize="10"  />
+
+        <Button HorizontalAlignment="Right" ToolTip="{StaticResource UdateToolTip}"  Margin="0,0,28,14" Width="40" Content="{StaticResource UpdateImage}" x:Name="ButtonUpdateAll" Click="ButtonUpdateAll_Click" VerticalAlignment="Bottom" Height="40" />
+        <Button HorizontalAlignment="Left"  ToolTip="{StaticResource ShowChangesToolTip}"  Margin="454,0,0,14" x:Name="ButtonViewLog" Width="40" Content="{StaticResource LogImage}" Click="ButtonViewLog_Click" RenderTransformOrigin="0.479,0.458" VerticalAlignment="Bottom" Height="40" />
+
+        <Button HorizontalAlignment="Right"  VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" 
+            Margin="0,45,57,0" VerticalAlignment="Top"  Width="20" Height="18.2"  ToolTip="{StaticResource PREVIOUSCHANGE_TOOLTIP}" 
+             Click="ButtonPrev_Click" Content="{StaticResource PrevImage}" x:Name="ButtonPrev"/>
+            
+
+        <Button HorizontalAlignment="Right"  VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" 
+            Margin="0,45.2,27,0" VerticalAlignment="Top"  Width="20" Height="18.2" ToolTip="{StaticResource NEXTCHANGE_TOOLTIP}"
+            Click="ButtonNext_Click" Content="{StaticResource NextImage}" x:Name="ButtonNext"/>
+        <TextBlock TextAlignment="Center"  HorizontalAlignment="Right" Margin="0,15,57,0" VerticalAlignment="Top" Width="68" Height="19" Text="uiuio" TextWrapping="Wrap" Foreground="#FFF2EFEF" x:Name="CounterTextBox" FontSize="12">
+        	<TextBlock.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="#FF000000" Offset="0"/>
+        			<GradientStop Color="#FF3A88D6" Offset="1"/>
+        		</LinearGradientBrush>
+        	</TextBlock.Background>
+        </TextBlock>
+
+    </Grid>
+</UserControl>
