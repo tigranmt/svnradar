@@ -8,7 +8,7 @@
     xmlns:repoCC="clr-namespace:RepoManager.Common.Controls"            
     xmlns:database="clr-namespace:RepoManager.DataBase"
     xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'
-    StartupUri="RepoBrowser.xaml">
+    StartupUri="SvnRadar.xaml">
     <Application.Resources>
 
         <!-- Localized strings dictionaries merge -->
@@ -59,7 +59,7 @@
             </CollectionViewSource>
 
             <!--- Repo executor global object -->
-            <ObjectDataProvider ObjectType="{x:Type repoManager:RepoExecutor}"  x:Key="repoExecutor"/>
+            <ObjectDataProvider ObjectType="{x:Type repoManager:SvnRadarExecutor}"  x:Key="svnRadarExecutor"/>
             <!--- Repo executor global object -->
 
             <!--- Filter manager global object -->
@@ -296,7 +296,7 @@
                     <!-- Buttons  -->
                     <ToggleButton x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="22"  Foreground="Black"  Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
                     <ToggleButton x:Name="rbUpdateRepository"   Grid.Row="2"  Width="160" Height="22"  Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="200,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
-                    <ProgressBar  x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource repoExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ProgressBar  x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                     <!-- Buttons  -->
                 </Grid>
 

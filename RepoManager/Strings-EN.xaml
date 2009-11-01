@@ -19,7 +19,7 @@
     <system:String x:Key="UdateWindowTitle">Updating </system:String>
     <system:String x:Key="UdateToolTip">Update from Repository</system:String>
     <system:String x:Key="ShowChangesToolTip">Show Change Log</system:String>
-    <system:String x:Key="MainWindowTitle">Repository notifier</system:String>
+    <system:String x:Key="MainWindowTitle">Svn Radar</system:String>
 
 
 

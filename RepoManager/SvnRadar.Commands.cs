@@ -17,7 +17,7 @@ namespace RepoManager
         /// <summary>
         /// Repo executor object declared in resources of the applciation
         /// </summary>
-        static RepoExecutor repoExecutor = null;
+        static SvnRadarExecutor svnRadarExecutor = null;
 
         /// <summary>
         /// Filter manager object declared in resources of the applciation
@@ -121,12 +121,12 @@ namespace RepoManager
         /// Retrives the RepoExecutor object from the Application resources
         /// </summary>
         /// <returns>Returns RepoExecutor object</returns>
-        RepoExecutor RepoExecutor
+        SvnRadarExecutor RadarExecutor
         {
             get
             {
-                return repoExecutor ??
-                    (repoExecutor = (RepoExecutor)((ObjectDataProvider)FindResource("repoExecutor")).ObjectInstance);
+                return svnRadarExecutor ??
+                    (svnRadarExecutor = (SvnRadarExecutor)((ObjectDataProvider)FindResource("svnRadarExecutor")).ObjectInstance);
             }
         }
 
@@ -179,7 +179,7 @@ namespace RepoManager
 
 
                 /*Assign to the executor current folder repo info, to pass it to the executor process in the future*/
-                RepoExecutor.currentRepoFolderIndormation = folderRepoInfo;
+                SvnRadarExecutor.currentRepoFolderIndormation = folderRepoInfo;
 
                 /*Set up RepoTabItem property in order to maintain the information related to the repository that TabItem rapresents*/
                 selRepo.FolderRepoInformation = folderRepoInfo;
@@ -188,7 +188,7 @@ namespace RepoManager
                 selRepo.UpdateListViewBinding();
 
                 /* Execute command **/
-                RepoExecutor.GetRepositoryLog(selRepoString, folderRepoInfo, false);
+                RadarExecutor.GetRepositoryLog(selRepoString, folderRepoInfo, false);
 
 
             }
@@ -251,7 +251,7 @@ namespace RepoManager
             string repoName = System.IO.Path.GetFileNameWithoutExtension(repositoryPath);
             if (!string.IsNullOrEmpty(repoName))
             {
-                RepositoryProcess availableRepoProcess = RepoExecutor.IsProcesStillAvailable(repoName);
+                RepositoryProcess availableRepoProcess = RadarExecutor.IsProcesStillAvailable(repoName);
                 if (availableRepoProcess != null)
                 {
                     if (CommandStringsManager.IsUpdateCommand(availableRepoProcess.Command))
@@ -316,16 +316,16 @@ namespace RepoManager
 
 
             /*Assign to the executor current folder repo info, to pass it to the executor process in the future*/
-            RepoExecutor.currentUpdateTraceWindow = utw;
+            SvnRadarExecutor.currentUpdateTraceWindow = utw;
 
             /* Register window in the window manager */
             WindowsManager.AddNewWindow(utw);
-            RepoExecutor.UpdateRepository(selRepoCompletePath, false);
+            RadarExecutor.UpdateRepository(selRepoCompletePath, false);
 
             /*Initialize properties of the window */
-            utw.Process = RepoExecutor.LastExecutedProcess;
-            utw.RelatedRepositoryName = RepoExecutor.LastExecutedProcess.RelatedRepositoryName;
-            utw.RelatedCommand = RepoExecutor.LastExecutedProcess.Command;
+            utw.Process = SvnRadarExecutor.LastExecutedProcess;
+            utw.RelatedRepositoryName = SvnRadarExecutor.LastExecutedProcess.RelatedRepositoryName;
+            utw.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
 
 
             utw.Show();
@@ -356,7 +356,7 @@ namespace RepoManager
             if (!System.IO.Directory.Exists(folderPath))
                 return null;
 
-            return RepoExecutor.GetFolderRepoInfo(folderPath, isCallForSysTray);
+            return RadarExecutor.GetFolderRepoInfo(folderPath, isCallForSysTray);
 
         }
 
@@ -398,9 +398,9 @@ namespace RepoManager
 
             WindowsManager.AddNewWindow(reviwWnd);
 
-            repoExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
-            reviwWnd.Process = RepoExecutor.LastExecutedProcess;
-            reviwWnd.RelatedCommand = RepoExecutor.LastExecutedProcess.Command;
+            svnRadarExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
+            reviwWnd.Process = SvnRadarExecutor.LastExecutedProcess;
+            reviwWnd.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
             reviwWnd.Show();
 
         }
@@ -501,12 +501,11 @@ namespace RepoManager
         }
 
 
+
         /// <summary>
-        /// Handles request on group available items list into groups by RevisionNumber
+        /// Setups Group view UI on ListView
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void OnGroupByRevisionNumberCommand(object sender, ExecutedRoutedEventArgs args)
+        private void SetUpGroupByRevision()
         {
             RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView;
             CollectionViewSource colViewSource = FindResource("source") as CollectionViewSource;
@@ -518,13 +517,23 @@ namespace RepoManager
         }
 
 
-
         /// <summary>
-        /// Handles request on visualize items in flat view  mode.
+        /// Handles request on group available items list into groups by RevisionNumber
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void OnFlatViewCommand(object sender, ExecutedRoutedEventArgs args)
+        private void OnGroupByRevisionNumberCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            SetUpGroupByRevision();
+        }
+
+
+
+
+        /// <summary>
+        /// Setups FlatView on UI
+        /// </summary>
+        private void SetUpFlatView()
         {
             RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.FlatView;
             CollectionViewSource colViewSource = FindResource("source") as CollectionViewSource;
@@ -533,6 +542,18 @@ namespace RepoManager
 
             colViewSource.GroupDescriptions.Clear();
         }
+
+        /// <summary>
+        /// Handles request on visualize items in flat view  mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnFlatViewCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            SetUpFlatView();
+        }
+
+
 
 
 

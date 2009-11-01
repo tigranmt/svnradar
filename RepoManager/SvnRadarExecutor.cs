@@ -17,7 +17,7 @@ namespace RepoManager
     /// <summary>
     /// Class contains the function set to operate over the chosen repository
     /// </summary>
-    public sealed class RepoExecutor : INotifyPropertyChanged
+    public sealed class SvnRadarExecutor : INotifyPropertyChanged
     {
         #region fields
         /// <summary>
@@ -146,7 +146,7 @@ namespace RepoManager
         /// <summary>
         /// ctor
         /// </summary>      
-        public RepoExecutor()
+        public SvnRadarExecutor()
         {
 
         }

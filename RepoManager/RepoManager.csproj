@@ -8,8 +8,8 @@
     <ProjectGuid>{B1CC1272-F2E2-4990-9ECC-5618EF7A9E7F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RepoManager</RootNamespace>
-    <AssemblyName>RepoManager</AssemblyName>
+    <RootNamespace>SvnRadar</RootNamespace>
+    <AssemblyName>SvnRadar</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -113,13 +113,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RepoBrowser.xaml">
+    <Page Include="SvnRadar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestSurface.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateTraceWindow.xaml">
       <SubType>Designer</SubType>
@@ -129,9 +125,9 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RepoBrowser.xaml.cs">
+    <Compile Include="SvnRadar.xaml.cs">
       <SubType>Code</SubType>
-      <DependentUpon>RepoBrowser.xaml</DependentUpon>
+      <DependentUpon>SvnRadar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -144,16 +140,13 @@
     <Compile Include="Common\Controls\RepoTabItem.cs" />
     <Compile Include="FormatConverters\IsGroupLayoutConverter.cs" />
     <Compile Include="FormatConverters\IsFlatLayoutConverter.cs" />
-    <Compile Include="RepoBrowserAbout.cs">
+    <Compile Include="SvnRadarAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RepoBrowserAbout.Designer.cs">
-      <DependentUpon>RepoBrowserAbout.cs</DependentUpon>
+    <Compile Include="SvnRadarAbout.Designer.cs">
+      <DependentUpon>SvnRadarAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="RepoBrowserWindow.EventHadlers.cs" />
-    <Compile Include="TestSurface.xaml.cs">
-      <DependentUpon>TestSurface.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="SvnRadar.EventHadlers.cs" />
     <Compile Include="Util\CommandStringsManager.cs" />
     <Compile Include="Util\CustomColumn.cs" />
     <Compile Include="Util\ErrorManager.cs" />
@@ -185,9 +178,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RepoBrowser.Commands.cs" />
+    <Compile Include="SvnRadar.Commands.cs" />
     <Compile Include="DataTemplateSelectors.cs" />
-    <Compile Include="RepoExecutor.cs" />
+    <Compile Include="SvnRadarExecutor.cs" />
     <Compile Include="RepoProcess.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -213,8 +206,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="RepoBrowserAbout.resx">
-      <DependentUpon>RepoBrowserAbout.cs</DependentUpon>
+    <EmbeddedResource Include="SvnRadarAbout.resx">
+      <DependentUpon>SvnRadarAbout.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

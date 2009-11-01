@@ -94,7 +94,7 @@
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(294, 17);
             this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "Product Name: Repository notifier";
+            this.labelProductName.Text = "Product Name: Svn Radar";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // logoPictureBox
@@ -142,12 +142,12 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "RepoBrowserAbout";
+            this.Name = "SvnRadarAbout";
             this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Repository notifier";
+            this.Text = "Svn Radar";
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);

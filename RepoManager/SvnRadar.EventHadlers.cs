@@ -145,7 +145,7 @@ namespace RepoManager
 
 
             /*Updating executing property in order to refersh UI elements on the user view*/
-            RepoExecutor.ExecutingCommand = false;
+            RadarExecutor.ExecutingCommand = false;
 
         }
 
