@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hardcodet.Wpf.TaskbarNotification;
-using RepoManager.Common.Controls;
+using SvnRadar.Common.Controls;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows;
 using System.Collections.ObjectModel;
 
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Manages interaction and model of the Task notifier
@@ -343,7 +343,7 @@ namespace RepoManager.Util
 
 
                     /*Show the notification on system tray*/
-                    ShowNotification(information);
+                 //   ShowNotification(information);
 
                 }
 
@@ -356,7 +356,7 @@ namespace RepoManager.Util
                 notificationList.Add(information);
                
                 ///*Show the notification on system tray*/
-                ShowNotification(information);
+              //  ShowNotification(information);
                
             }
         }

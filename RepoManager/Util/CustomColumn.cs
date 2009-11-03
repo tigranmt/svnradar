@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Defines special, CustomColumn column

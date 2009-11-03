@@ -10,13 +10,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.ComponentModel;
-using RepoManager.Common.Intefaces;
+using SvnRadar.Common.Intefaces;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
 
-namespace RepoManager
+namespace SvnRadar
 {
     /// <summary>
     /// Interaction logic for RevisionInfoWindow.xaml
@@ -207,7 +207,7 @@ namespace RepoManager
                 /*Remove my information from the shared base, to not waste the memory*/
                 if(this.Process != null &&  this.RevisionInformation != null) 
                 {
-                    RepoManager.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.Revision);
+                    SvnRadar.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.Revision);
                 }
 
 

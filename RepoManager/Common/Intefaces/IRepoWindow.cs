@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RepoManager.Common.Intefaces
+namespace SvnRadar.Common.Intefaces
 {
     /// <summary>
     /// Common interface that every window in application that handles the repository command output

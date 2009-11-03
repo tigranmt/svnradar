@@ -19,7 +19,7 @@
     <ManifestKeyFile>RepoManager_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
-    <PublishUrl>http://code.google.com/p/svnradar/</PublishUrl>
+    <PublishUrl>C:\Develop\RepoManagerGc\RepoManager\Deploy\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,10 +29,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://code.google.com/p/svnradar/</InstallUrl>
     <UpdateUrl>http://localhost/RepoManager/</UpdateUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -149,6 +150,7 @@
       <DependentUpon>SvnRadarAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="SvnRadar.EventHadlers.cs" />
+    <Compile Include="Util\BugReportData.cs" />
     <Compile Include="Util\CommandStringsManager.cs" />
     <Compile Include="Util\CustomColumn.cs" />
     <Compile Include="Util\ErrorManager.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Util\LogManager.cs" />
     <Compile Include="Util\RepoBrowserConfiguration.cs" />
     <Compile Include="Util\RepoInfo.cs" />
+    <Compile Include="Util\ResourceManager.cs" />
     <Compile Include="Util\RevisionInfo.cs" />
     <Compile Include="Util\SearchTextBox.cs" />
     <Compile Include="Util\TaskNotifier.cs" />

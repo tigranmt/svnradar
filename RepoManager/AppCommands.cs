@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace RepoManager
+namespace SvnRadar
 {
     public class AppCommands
     {

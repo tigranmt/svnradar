@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using RepoManager.Common.Intefaces;
+using SvnRadar.Common.Intefaces;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     public static class WindowsManager
     {

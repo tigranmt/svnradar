@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RepoManager.Common.MulticultureDictionary
+namespace SvnRadar.Common.MulticultureDictionary
 {
     public static  class MulticultureMessageDictionary
     {

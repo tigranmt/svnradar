@@ -11,14 +11,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RepoManager.Util;
+using SvnRadar.Util;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using RepoManager.Common.Controls;
+using SvnRadar.Common.Controls;
 using System.ComponentModel;
 
-namespace RepoManager
+namespace SvnRadar
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -356,8 +356,7 @@ namespace RepoManager
             RepoBrowserConfiguration.Instance.RepositoryPaths.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(RepositoryPaths_CollectionChanged);
 
             /*sign data context of the UI cotrols*/
-            txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;
-            txtTortoisePath.DataContext = RepoBrowserConfiguration.Instance;
+            txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;            
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
 
@@ -483,9 +482,16 @@ namespace RepoManager
             this.Visibility = Visibility.Hidden;
         }
 
+
+        /// <summary>
+        /// Hanldes Bug signal report 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BugSignal_Click(object sender, RoutedEventArgs e)
         {
-
+            /* show Bug report window */
+            new BugReportWindow().ShowDialog();
         }
 
        

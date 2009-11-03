@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using RepoManager.Common.Controls;
+using SvnRadar.Common.Controls;
 using System.Windows.Data;
 
-namespace RepoManager
+namespace SvnRadar
 {
 
 

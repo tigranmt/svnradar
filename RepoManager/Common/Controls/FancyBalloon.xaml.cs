@@ -14,10 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hardcodet.Wpf.TaskbarNotification;
-using RepoManager;
-using RepoManager.Util;
+using SvnRadar;
+using SvnRadar.Util;
 
-namespace RepoManager.Common.Controls
+namespace SvnRadar.Common.Controls
 {
     /// <summary>
     /// Interaction logic for FancyBalloon.xaml

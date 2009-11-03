@@ -41,7 +41,7 @@
 
     <system:String x:Key="MI_HELP">Help</system:String>
     <system:String x:Key="MI_ABOUT">About</system:String>
-    <system:String x:Key="MI_BUGSIGNAL">Signal a Bug</system:String>
+    <system:String x:Key="MI_BUGORSENDAMESSAGESIGNAL">Signal a Bug or send a Message</system:String>
     
 
     <system:String x:Key="MI_SHOWCHANGESSEQUENCE">Show changes</system:String>
@@ -71,6 +71,13 @@
     <system:String x:Key="MSG_MULTIPLEUPDATECOMMANDS">There is already one Update command executing over specified repository.</system:String>
     <system:String x:Key="MSG_REPOUPDATEBREAK">The update of repository is not terminateed. Closing the window can affect the state of the working copy by locking, so CleanUp command will need to be executed on folder. Do you want to terminate Updating of the working copy? </system:String>
 
+    <system:String x:Key="MSG_REPORTERNAMEMANDATORY">Can not have blank reporter name or email</system:String>
+    <system:String x:Key="MSG_MESSAGEMANDATORY">Can not have blank message</system:String>
+
+    <system:String x:Key="MSG_DESIRIALIZATIONEXCEPTION">Not able to desirailize the configufaton file. </system:String>
+
+    
+
 
 
     <system:String x:Key="STATE_NAME">State</system:String>
@@ -79,6 +86,9 @@
     <system:String x:Key="ITEM_NAME">Item</system:String>
     <system:String x:Key="DATE_NAME">Date</system:String>
     <system:String x:Key="REPOSITORY_NAME">Repository</system:String>
+    
+    
+    <system:String x:Key="BTN_OK_TITLE">Ok</system:String>
 
 
 

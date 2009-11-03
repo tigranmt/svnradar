@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Data;
 using System.ComponentModel;
 
-namespace RepoManager.DataBase
+namespace SvnRadar.DataBase
 {
     
 

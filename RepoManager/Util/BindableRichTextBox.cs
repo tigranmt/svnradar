@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Rich text box that allow binding on DocumentContent property

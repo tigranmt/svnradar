@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace RepoManager.Common.Controls
+namespace SvnRadar.Common.Controls
 {
     public class RepositoryRoutedEventArgs  :RoutedEventArgs
     {

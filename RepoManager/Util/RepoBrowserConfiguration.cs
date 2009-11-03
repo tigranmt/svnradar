@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     [DataContractAttribute(Name="ConfigDataContact")]
     internal sealed class RepoBrowserConfiguration : INotifyPropertyChanged
@@ -351,7 +351,16 @@ namespace RepoManager.Util
             using (FileStream fs = new FileStream(fPath, FileMode.Open))
             {
                 DataContractSerializer serializer = new DataContractSerializer(typeof(RepoBrowserConfiguration));
-                browser = serializer.ReadObject(fs) as RepoBrowserConfiguration;
+                try
+                {
+                    browser = serializer.ReadObject(fs) as RepoBrowserConfiguration;
+                }
+                catch (SerializationException serEx)
+                {
+                    ErrorManager.ShowCommonError(AppResourceManager.FindResource("MSG_DESIRIALIZATIONEXCEPTION") as string,true);
+                    ErrorManager.LogException(serEx);
+
+                }
             }
 
 

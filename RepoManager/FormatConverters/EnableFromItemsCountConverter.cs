@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace RepoManager.FormatConverters
+namespace SvnRadar.FormatConverters
 {
     public class EnableFromItemsCountConverter : IValueConverter
     {

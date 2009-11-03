@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Manages general visulaistion and data management of the appication raised error in roder to notify or log the error data
     /// </summary>
-    public static class ErrorManager
+    internal static class ErrorManager
     {
 
         #region show error methods
@@ -64,6 +64,8 @@ namespace RepoManager.Util
 
         }
 
+
+     
 
         /// <summary>
         /// Shows common error dialog filled with secified string
@@ -120,6 +122,25 @@ namespace RepoManager.Util
                 LogManager.LogThis(logString, LogManager.LogMessageStatus.Message);
 
         }
+
+        /// <summary>
+        /// Logs the pecified exception object in the main log  file of application.
+        /// </summary>
+        /// <param name="ex">Exception object to log</param>
+        public static void LogException(Exception ex)
+        {
+            if (ex == null)
+                return;
+
+            string strExceptionMessage = "Exception message: " + ex.Message +
+               System.Environment.NewLine +
+               "Exception stack trace: " + ex.StackTrace.ToString() +
+               System.Environment.NewLine;
+
+            LogMessage(strExceptionMessage, true);
+
+        }
+
         #endregion
 
     }

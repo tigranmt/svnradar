@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Manages loggin of the application with predefined format

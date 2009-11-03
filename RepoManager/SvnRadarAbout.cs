@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace RepoManager
+namespace SvnRadar
 {
     partial class RepoBrowserAbout : Form
     {
@@ -100,5 +100,7 @@ namespace RepoManager
             }
         }
         #endregion
+
+     
     }
 }

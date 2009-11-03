@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.Windows.Input;
-using RepoManager.Common.Controls;
+using SvnRadar.Common.Controls;
 using System.Windows.Data;
-using RepoManager.DataBase;
+using SvnRadar.DataBase;
+using System.Collections.ObjectModel;
 
-namespace RepoManager
+namespace SvnRadar
 {
     public partial class RepoBrowserWindow : Window
     {
@@ -232,8 +233,10 @@ namespace RepoManager
         private void UpdateRepositoryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = false;
-            if (RepoTabItem.MyListView != null && RepoTabItem.MyListView.Items != null &&
-                RepoTabItem.MyListView.Items.Count > 0)
+            
+            RepoTabItem repoTabItem  = mainTab.SelectedItem as RepoTabItem;
+            ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryName);
+            if (col != null && col.Count > 0)
                 e.CanExecute = true;
         }
 
@@ -372,19 +375,25 @@ namespace RepoManager
                 return;
 
 
-            if (RepoTabItem.MyListView == null)
-                return;
+            //if (RepoTabItem.MyListView == null)
+            //    return;
 
-            /*Can not show information for more then one item at a time so do not to anything*/
-            if (RepoTabItem.MyListView.SelectedItems.Count > 1)
-                return;
+            ///*Can not show information for more then one item at a time so do not to anything*/
+            //if (RepoTabItem.MyListView.SelectedItems.Count > 1)
+            //    return;
 
-            object SelObject = RepoManager.Common.Controls.RepoTabItem.MyListView.SelectedItem;
+            //object SelObject = SvnRadar.Common.Controls.RepoTabItem.MyListView.SelectedItem;
 
-            if (SelObject == null)
-                SelObject = e.OriginalSource;
+            //if (SelObject == null)
+            //    SelObject = e.OriginalSource;
 
-            RepoInfo repositoryInfo = SelObject as RepoInfo;
+            //RepoInfo repositoryInfo = SelObject as RepoInfo;
+            //if (repositoryInfo == null)
+            //    return;
+
+
+
+            RepoInfo repositoryInfo = RepoInfo.SelectedInfo;
             if (repositoryInfo == null)
                 return;
 

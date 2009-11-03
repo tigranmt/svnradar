@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows;
 
-namespace RepoManager.FormatConverters
+namespace SvnRadar.FormatConverters
 {
     class RepositoryItemStateConverter : IValueConverter
     {
@@ -27,31 +27,31 @@ namespace RepoManager.FormatConverters
 
 
 
-        char CharFromRepoItemState(RepoManager.Util.RepoInfo.RepoItemState itemState)
+        char CharFromRepoItemState(SvnRadar.Util.RepoInfo.RepoItemState itemState)
         {
-            if (itemState == RepoManager.Util.RepoInfo.RepoItemState.Add)
+            if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Add)
                 return '+';
-            else if (itemState == RepoManager.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
                 return 'M';
-            else if (itemState == RepoManager.Util.RepoInfo.RepoItemState.Modified)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
                 return '%';
             return
                 'o';
         }
 
 
-        object ImagefromRepoItemState(RepoManager.Util.RepoInfo.RepoItemState itemState)
+        object ImagefromRepoItemState(SvnRadar.Util.RepoInfo.RepoItemState itemState)
         {
             if (ImageVsRepoItemState.ContainsKey((int)itemState))
                 return ImageVsRepoItemState[(int)itemState];
 
-            if (itemState == RepoManager.Util.RepoInfo.RepoItemState.Add)
+            if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Add)
                 ImageVsRepoItemState[(int)itemState] =  FindResource("AddImage") as System.Windows.Controls.Image;
-            else if (itemState == RepoManager.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
-            else if (itemState == RepoManager.Util.RepoInfo.RepoItemState.Modified)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
-            else if (itemState == RepoManager.Util.RepoInfo.RepoItemState.Deleted)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Deleted)
                 ImageVsRepoItemState[(int)itemState] = FindResource("DeleteImage") as System.Windows.Controls.Image;
             else
                 ImageVsRepoItemState[(int)itemState] = FindResource("EmptyImage") as System.Windows.Controls.Image;
@@ -70,7 +70,7 @@ namespace RepoManager.FormatConverters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            RepoManager.Util.RepoInfo.RepoItemState itemState = (RepoManager.Util.RepoInfo.RepoItemState)Enum.Parse(typeof(RepoManager.Util.RepoInfo.RepoItemState),
+            SvnRadar.Util.RepoInfo.RepoItemState itemState = (SvnRadar.Util.RepoInfo.RepoItemState)Enum.Parse(typeof(SvnRadar.Util.RepoInfo.RepoItemState),
                 value.ToString());
             System.Windows.Controls.Image im = ImagefromRepoItemState(itemState) as System.Windows.Controls.Image;
 

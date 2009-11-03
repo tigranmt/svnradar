@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.Windows;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Controls.Primitives;
-using RepoManager.DataBase;
+using SvnRadar.DataBase;
 
-namespace RepoManager.Common.Controls
+namespace SvnRadar.Common.Controls
 {
     /// <summary>
     /// Common tab item for holding arbitrary repository content visualization

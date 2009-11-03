@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace RepoManager.FormatConverters
+namespace SvnRadar.FormatConverters
 {
     public class IsFlatLayoutConverter : IValueConverter
     {
@@ -15,10 +15,10 @@ namespace RepoManager.FormatConverters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            RepoManager.Util.RepoBrowserConfiguration.ListViewLayoutEnum curValue = (RepoManager.Util.RepoBrowserConfiguration.ListViewLayoutEnum)Enum.Parse(typeof(RepoManager.Util.RepoBrowserConfiguration.ListViewLayoutEnum),
-                 RepoManager.Util.RepoBrowserConfiguration.Instance.ViewLayout.ToString());
+            SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum curValue = (SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum)Enum.Parse(typeof(SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum),
+                 SvnRadar.Util.RepoBrowserConfiguration.Instance.ViewLayout.ToString());
 
-            return (curValue == RepoManager.Util.RepoBrowserConfiguration.ListViewLayoutEnum.FlatView);
+            return (curValue == SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum.FlatView);
            
         }
 

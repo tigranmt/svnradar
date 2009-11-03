@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     public static class CommandStringsManager
     {

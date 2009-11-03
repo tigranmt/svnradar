@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using RepoManager.Util;
-using RepoManager.Common.Controls;
+using SvnRadar.Util;
+using SvnRadar.Common.Controls;
 using System.Windows.Controls;
 
-namespace RepoManager
+namespace SvnRadar
 {
     public partial class RepoBrowserWindow : Window
     {

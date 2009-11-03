@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Class for holding revision related information 

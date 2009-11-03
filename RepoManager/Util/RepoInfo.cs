@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Documents;
+using SvnRadar.Util;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Holds the complete repository informatino about given item.
@@ -27,7 +28,7 @@ namespace RepoManager.Util
         #endregion
 
 
-
+        #region fields
         /// <summary>
         /// String contains XML output stream of the command
         /// </summary>
@@ -72,7 +73,30 @@ namespace RepoManager.Util
         string strDate = string.Empty;
 
 
+        /// <summary>
+        /// Is an object is a selecte itam in ListView
+        /// </summary>
+        bool isSelected = false;
 
+
+        /// <summary>
+        /// If the  data populating on the object starts
+        /// </summary>
+        internal bool StartPopulating = false;
+
+
+        /// <summary>
+        /// Lines count in the log comment
+        /// </summary>
+        internal int logLinesCount = -1;
+
+
+        static RepoInfo selectedRepoInfo = null;
+
+        #endregion
+
+
+        #region properties
         public string StateDescription
         {
             get
@@ -133,39 +157,61 @@ namespace RepoManager.Util
             {
                 if (this.Revision < 0)
                     throw new ArgumentException("Can not set comment on revision, without associated number. Set furst the number of revision.");
-               
-               // revNumVsUserCommentDic[this.Revision] = value.Replace(".", System.Environment.NewLine);
+
+                // revNumVsUserCommentDic[this.Revision] = value.Replace(".", System.Environment.NewLine);
                 revNumVsUserCommentDic[this.Revision] = value;
             }
         }
 
 
-      
+
         /// <summary>
         /// Change date time
         /// </summary>
-        public string Date 
+        public string Date
         {
             get { return strDate; }
-            set {
+            set
+            {
 
 
                 DateTime dtResult;
                 if (DateTime.TryParse(value, out dtResult))
-                    strDate = dtResult.ToLongDateString() + "    " + dtResult.ToLongTimeString();    
+                    strDate = dtResult.ToLongDateString() + "    " + dtResult.ToLongTimeString();
             }
         }
 
-
-
-
-        public override string ToString()
+        /// <summary>
+        /// Handles via data binding the item selection event
+        /// </summary>
+        public bool IsSelectedInfo
         {
-            return this.RepositoryItemState + " " + Item;
+            get { return isSelected; }
+            set
+            {
+                isSelected = value;
+                if (isSelected)
+                {
+                    if (selectedRepoInfo != null)
+                        selectedRepoInfo.IsSelectedInfo = false;
+                    selectedRepoInfo = this;
+                }
+            }
         }
 
+        /// <summary>
+        /// Returns current selected item's object 
+        /// </summary>
+        public static RepoInfo SelectedInfo
+        {
+            get
+            {
+                return selectedRepoInfo;
+            }
+        }
+        #endregion
 
-
+        #region methods
         /// <summary>
         /// Retruns revision related user comment from the global base
         /// </summary>
@@ -175,68 +221,39 @@ namespace RepoManager.Util
         {
             string userComment = null;
             revNumVsUserCommentDic.TryGetValue(revNumber, out userComment);
-            return userComment; 
+            return userComment;
         }
-
-        /// <summary>
-        /// If the  data populating on the object starts
-        /// </summary>
-        internal bool StartPopulating = false;
-
-
-        /// <summary>
-        /// Lines count in the log comment
-        /// </summary>
-        internal int logLinesCount = -1;
-
-      
-
-        /// <summary>
-        /// Finds the requested resource from the application's resource dictionary
-        /// </summary>
-        /// <param name="esourceKey">Resource key</param>
-        /// <returns>Resource object if exists, Null otherwise</returns>
-        static object FindResource(string resourceKey)
-        {
-            if (string.IsNullOrEmpty(resourceKey))
-                return null;
-
-            return System.Windows.Application.Current.FindResource(resourceKey);
-        }
-
-
-
 
 
         /// <summary>
         /// Returns human readable string dscription of the state of the current item
         /// </summary>
-        public static string StateDescriptionFromEnum(RepoManager.Util.RepoInfo.RepoItemState repostate)
+        public static string StateDescriptionFromEnum(SvnRadar.Util.RepoInfo.RepoItemState repostate)
         {
             if (repostate == RepoItemState.Add)
-                return FindResource("ADD_STR") as string;
+                return AppResourceManager.FindResource("ADD_STR") as string;
             else if (repostate == RepoItemState.Conflict)
-                return FindResource("CONFLICT_STR") as string;
+                return AppResourceManager.FindResource("CONFLICT_STR") as string;
             else if (repostate == RepoItemState.Deleted)
-                return FindResource("DELETED_STR") as string;
+                return AppResourceManager.FindResource("DELETED_STR") as string;
             else if (repostate == RepoItemState.ExternalDefinition)
-                return FindResource("EXTERNALDEF_STR") as string;
+                return AppResourceManager.FindResource("EXTERNALDEF_STR") as string;
             else if (repostate == RepoItemState.Ignored)
-                return FindResource("IGNORED_STR") as string;
+                return AppResourceManager.FindResource("IGNORED_STR") as string;
             else if (repostate == RepoItemState.Missing)
-                return FindResource("MISSING_STR") as string;
+                return AppResourceManager.FindResource("MISSING_STR") as string;
             else if (repostate == RepoItemState.Modified)
-                return FindResource("MODIFIED_STR") as string;
+                return AppResourceManager.FindResource("MODIFIED_STR") as string;
             else if (repostate == RepoItemState.NeedToBeUpdatedFromRepo)
-                return FindResource("NEEDTOBEUPDATED_STR") as string;
+                return AppResourceManager.FindResource("NEEDTOBEUPDATED_STR") as string;
             else if (repostate == RepoItemState.Normal)
-                return FindResource("NORMAL_STR") as string;
+                return AppResourceManager.FindResource("NORMAL_STR") as string;
             else if (repostate == RepoItemState.NotVersioned)
-                return FindResource("NOTVERSIONED_STR") as string;
+                return AppResourceManager.FindResource("NOTVERSIONED_STR") as string;
             else if (repostate == RepoItemState.Replaced)
-                return FindResource("REPLACED_STR") as string;
+                return AppResourceManager.FindResource("REPLACED_STR") as string;
             else
-                return FindResource("DIFFERENTKIND_STR") as string;
+                return AppResourceManager.FindResource("DIFFERENTKIND_STR") as string;
         }
 
 
@@ -323,6 +340,8 @@ namespace RepoManager.Util
         }
 
 
+        #endregion
+
         #region ICloneable Members
 
         public object Clone()
@@ -340,6 +359,13 @@ namespace RepoManager.Util
             };
         }
 
+        #endregion
+
+        #region overrides
+        public override string ToString()
+        {
+            return this.RepositoryItemState + " " + Item;
+        }
         #endregion
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows;
 
-namespace RepoManager.FormatConverters
+namespace SvnRadar.FormatConverters
 {
     class SliderFormatConverter : IValueConverter
     {

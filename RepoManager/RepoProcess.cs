@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using RepoManager.Util;
+using SvnRadar.Util;
 
-namespace RepoManager
+namespace SvnRadar
 {
     /// <summary>
     /// Repo process extends Process class in order to hold more properties for any type of command execution

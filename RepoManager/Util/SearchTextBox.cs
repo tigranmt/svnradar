@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace RepoManager.Util
+namespace SvnRadar.Util
 {
     /// <summary>
     /// Custom class or managing search text box . Actaully is supprots surch on TexBlock object type content

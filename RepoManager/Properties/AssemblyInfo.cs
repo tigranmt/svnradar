@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Svn Radar")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Subversion desktop notifier for Windows family platforms")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Tigran Martirosyan")]
 [assembly: AssemblyProduct("Svn Radar")]

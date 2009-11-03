@@ -1,9 +1,9 @@
-﻿<Window x:Class="RepoManager.UpdateTraceWindow"
+﻿<Window x:Class="SvnRadar.UpdateTraceWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:util="clr-namespace:RepoManager.Util"
-    xmlns:converter="clr-namespace:RepoManager.FormatConverters"
-    xmlns:repoManager="clr-namespace:RepoManager"
+    xmlns:util="clr-namespace:SvnRadar.Util"
+    xmlns:converter="clr-namespace:SvnRadar.FormatConverters"
+    xmlns:repoManager="clr-namespace:SvnRadar"
     Title="{StaticResource UdateWindowTitle}" 
     Height="188" 
     Width="570" 
@@ -71,7 +71,6 @@
                     </StatusBarItem>
                 </StackPanel>
             </StatusBar>
-
-
+        <Button Grid.Row="1" HorizontalAlignment="Right" Margin="0,4,9,4" Name="btnOk" Width="75" Content="{StaticResource BTN_OK_TITLE}" Visibility="Hidden" Click="btnOk_Click"/>
     </Grid>
 </Window>

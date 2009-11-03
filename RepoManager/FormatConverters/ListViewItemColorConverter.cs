@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
-using RepoManager.Common.Controls;
-using RepoManager.DataBase;
+using SvnRadar.Common.Controls;
+using SvnRadar.DataBase;
 using System.Windows.Controls;
-using RepoManager.Util;
+using SvnRadar.Util;
 
-namespace RepoManager.FormatConverters
+namespace SvnRadar.FormatConverters
 {
     public sealed class ListViewItemColorConverter : IValueConverter
     {

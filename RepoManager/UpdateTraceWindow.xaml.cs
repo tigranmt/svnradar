@@ -10,12 +10,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.Collections.ObjectModel;
-using RepoManager.DataBase;
-using RepoManager.Common.Intefaces;
+using SvnRadar.DataBase;
+using SvnRadar.Common.Intefaces;
 
-namespace RepoManager
+namespace SvnRadar
 {
 
     /// <summary>
@@ -97,11 +97,6 @@ namespace RepoManager
         }
 
 
-
-
-
-
-
         #region IRepoWindow Members
         /*Repository process responsable for operation handled by the window*/
         RepositoryProcess repoProcess = null;
@@ -147,6 +142,7 @@ namespace RepoManager
                 UpdateTraceListView.Cursor = Cursors.Arrow;
                 TextOnStatusBar.Text = "";
                 progressBar.Visibility = Visibility.Hidden;
+                btnOk.Visibility = Visibility.Visible;
             }));
         }
 
@@ -196,6 +192,11 @@ namespace RepoManager
                 }
 
             }
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

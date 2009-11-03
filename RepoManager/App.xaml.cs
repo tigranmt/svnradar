@@ -4,9 +4,9 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
-using RepoManager.Util;
+using SvnRadar.Util;
 
-namespace RepoManager
+namespace SvnRadar
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -42,7 +42,7 @@ namespace RepoManager
         /// <param name="e"></param>
         private void repoView_Loaded(object sender, RoutedEventArgs e)
         {
-            RepoManager.Common.Controls.RepoTabItem.MyListView = e.OriginalSource as System.Windows.Controls.ListView;
+            SvnRadar.Common.Controls.RepoTabItem.MyListView = e.OriginalSource as System.Windows.Controls.ListView;
         }
 
 
@@ -64,12 +64,12 @@ namespace RepoManager
            items collection selected item is always Null. (???)*/
 
 
-            if (RepoManager.Common.Controls.RepoTabItem.MyListView.SelectedItem == null)
+            if (SvnRadar.Common.Controls.RepoTabItem.MyListView.SelectedItem == null)
             {
                 //RepoManager.Common.Controls.RepoTabItem.AttachListViewToTab(sender as System.Windows.Controls.ListView);
             }
 
-            if (RepoManager.Common.Controls.RepoTabItem.MyListView == null)
+            if (SvnRadar.Common.Controls.RepoTabItem.MyListView == null)
             {
                 ErrorManager.ShowCommonError("Fata error occured in application. Please restart application in order to fix the problem.", true);
                 ErrorManager.LogMessage("MyListView is Null. Method: ShowRevisionInfo_Click", true);

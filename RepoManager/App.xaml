@@ -1,12 +1,12 @@
-﻿<Application x:Class="RepoManager.App"
+﻿<Application x:Class="SvnRadar.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="clr-namespace:RepoManager.FormatConverters"
-    xmlns:util="clr-namespace:RepoManager.Util"
+    xmlns:converter="clr-namespace:SvnRadar.FormatConverters"
+    xmlns:util="clr-namespace:SvnRadar.Util"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:repoManager="clr-namespace:RepoManager"    
-    xmlns:repoCC="clr-namespace:RepoManager.Common.Controls"            
-    xmlns:database="clr-namespace:RepoManager.DataBase"
+    xmlns:repoManager="clr-namespace:SvnRadar"    
+    xmlns:repoCC="clr-namespace:SvnRadar.Common.Controls"            
+    xmlns:database="clr-namespace:SvnRadar.DataBase"
     xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'
     StartupUri="SvnRadar.xaml">
     <Application.Resources>
@@ -80,6 +80,7 @@
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
+          
             <!--- Images -->
 
 
@@ -182,8 +183,8 @@
 
                     <DataTrigger Binding="{Binding Revision, Converter={StaticResource ListViewItemColorConverter} }" Value="false">
                         <Setter Property="Background" Value="WhiteSmoke" />
-                    </DataTrigger>                    
-                  
+                    </DataTrigger>
+
                     <Trigger Property="IsSelected" Value="true">
                         <Setter Property="Background" Value="Green" />
                         <Setter Property="Foreground" Value="WhiteSmoke" />
@@ -197,6 +198,7 @@
                 </Style.Triggers>
 
                 <EventSetter Event="MouseDoubleClick" Handler="ListViewItemDoubleClick"/>
+                <Setter Property="IsSelected" Value="{Binding IsSelectedInfo, Mode=TwoWay}"/>
 
 
 

@@ -1,18 +1,18 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using RepoManager.Util;
+using SvnRadar.Util;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.ComponentModel;
 using System.Threading;
 using System;
 using System.Collections.Generic;
-using RepoManager.DataBase;
+using SvnRadar.DataBase;
 using System.Linq.Expressions;
-using RepoManager.Common.Controls;
+using SvnRadar.Common.Controls;
 using System.Xml.XPath;
 
-namespace RepoManager
+namespace SvnRadar
 {
     /// <summary>
     /// Class contains the function set to operate over the chosen repository
@@ -1061,7 +1061,7 @@ namespace RepoManager
                     return null;// throw new NullReferenceException("Not able get the repository folder information");
                 }
 
-                if (repoInfo.Revision > wcInfo.Revision)
+                if (repoInfo.LastRevisionNumber > wcInfo.LastRevisionNumber)
                 {
                     repoInfo.FolderPath = wcInfo.FolderPath;
                     return repoInfo;
