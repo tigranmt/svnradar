@@ -235,6 +235,8 @@ namespace SvnRadar
             e.CanExecute = false;
             
             RepoTabItem repoTabItem  = mainTab.SelectedItem as RepoTabItem;
+            if (repoTabItem == null)
+                return;
             ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryName);
             if (col != null && col.Count > 0)
                 e.CanExecute = true;
