@@ -356,7 +356,7 @@ namespace SvnRadar
             RepoBrowserConfiguration.Instance.RepositoryPaths.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(RepositoryPaths_CollectionChanged);
 
             /*sign data context of the UI cotrols*/
-            txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;            
+            txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
 
@@ -433,7 +433,7 @@ namespace SvnRadar
         /// </summary>
         private void AddNewSvnPath()
         {
-           
+
             FolderBrowserDialog obd = new FolderBrowserDialog();
             System.Windows.Forms.DialogResult res = obd.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
@@ -494,7 +494,42 @@ namespace SvnRadar
             new BugReportWindow().ShowDialog();
         }
 
-       
+        /// <summary>
+        /// handles drop of the folder(s) on the listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbSvnPaths_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            System.Windows.DataObject dobj = e.Data as System.Windows.DataObject;
+            if (dobj != null)
+            {
+                /* Get the collection of files, if there is*/
+                System.Collections.Specialized.StringCollection folderCollection = dobj.GetFileDropList();
+                if (folderCollection != null && folderCollection.Count > 0)
+                {
+                    try
+                    {
+                        foreach (string folderPath in folderCollection)
+                        {
+                            /*If IO obect is a folder*/
+                            if (System.IO.Directory.Exists(folderPath))
+                            {
+                                /*Add to the configuration*/
+                                RepoBrowserConfiguration.Instance.AddRepoPath(folderPath);
+                            }
+                        }
+                    }
+                    catch (System.IO.IOException ioExc)
+                    {
+                        ErrorManager.ShowExceptionError(ioExc, true);
+                    }
+                }
+            }
+        }
+
+
+
 
 
     }

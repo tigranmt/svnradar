@@ -31,10 +31,13 @@ namespace SvnRadar.Util
 
 
             string stdErrorMessage = process.StandardError.ReadToEnd();
-            System.Windows.MessageBox.Show(stdErrorMessage, "Error", System.Windows.MessageBoxButton.OK,
-                System.Windows.MessageBoxImage.Error);
+            if (!string.IsNullOrEmpty(stdErrorMessage))
+            {
+                System.Windows.MessageBox.Show(stdErrorMessage, "Error", System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
 
-            LogMessage(stdErrorMessage, true);
+                LogMessage(stdErrorMessage, true);
+            }
 
         }
 
@@ -65,7 +68,7 @@ namespace SvnRadar.Util
         }
 
 
-     
+
 
         /// <summary>
         /// Shows common error dialog filled with secified string
@@ -78,7 +81,7 @@ namespace SvnRadar.Util
                 System.Windows.MessageBoxImage.Error);
 
             if (bLog)
-                LogMessage(strToShow,true);
+                LogMessage(strToShow, true);
 
         }
 
