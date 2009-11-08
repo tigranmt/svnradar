@@ -243,7 +243,7 @@ namespace SvnRadar.Common.Controls
             if (dataProviderForListView != null)
             {
                 dataProviderForListView.MethodParameters.Clear();
-                dataProviderForListView.MethodParameters.Add(repoName);
+                dataProviderForListView.MethodParameters.Add(this.RepositoryCompletePath.Trim());
             }
 
             //Update the columns bindings

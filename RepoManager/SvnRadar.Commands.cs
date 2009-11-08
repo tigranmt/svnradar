@@ -119,9 +119,9 @@ namespace SvnRadar
         }
 
         /// <summary>
-        /// Retrives the RepoExecutor object from the Application resources
+        /// Retrives the RadarExecutor object from the Application resources
         /// </summary>
-        /// <returns>Returns RepoExecutor object</returns>
+        /// <returns>Returns RadarExecutor object</returns>
         SvnRadarExecutor RadarExecutor
         {
             get
@@ -176,7 +176,7 @@ namespace SvnRadar
             if (folderRepoInfo != null)
             {
                 /*Clear previously loadd information*/
-                RepoInfoBase.ClearRepoInfo(selRepo.RepositoryName);
+                RepoInfoBase.ClearRepoInfo(selRepo.RepositoryCompletePath);
 
 
                 /*Assign to the executor current folder repo info, to pass it to the executor process in the future*/
@@ -237,7 +237,7 @@ namespace SvnRadar
             RepoTabItem repoTabItem  = mainTab.SelectedItem as RepoTabItem;
             if (repoTabItem == null)
                 return;
-            ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryName);
+            ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryCompletePath);
             if (col != null && col.Count > 0)
                 e.CanExecute = true;
         }
@@ -254,20 +254,7 @@ namespace SvnRadar
 
 
             string repoName = System.IO.Path.GetFileNameWithoutExtension(repositoryPath);
-            if (!string.IsNullOrEmpty(repoName))
-            {
-                RepositoryProcess availableRepoProcess = RadarExecutor.IsProcesStillAvailable(repoName);
-                if (availableRepoProcess != null)
-                {
-                    if (CommandStringsManager.IsUpdateCommand(availableRepoProcess.Command))
-                    {
-                        string msg = FindResource("MSG_MULTIPLEUPDATECOMMANDS") as string;
-                        if (!string.IsNullOrEmpty(msg))
-                            MessageBox.Show(msg, App.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-                }
-            }
+           
 
             RepoTabItem selRepo = mainTab.SelectedItem as RepoTabItem;
             string selRepoCompletePath = string.Empty;
@@ -296,6 +283,24 @@ namespace SvnRadar
                 return;
 
 
+            /*If there is already Update executing over specified repository do not call again, as the folder is alreday locked by Subversion.*/
+            if (!string.IsNullOrEmpty(selRepoCompletePath))
+            {
+                
+                RepositoryProcess availableRepoProcess = RadarExecutor.IsProcesStillAvailable(selRepoCompletePath);
+                if (availableRepoProcess != null)
+                {
+                    if (CommandStringsManager.IsUpdateCommand(availableRepoProcess.Command))
+                    {
+                        string msg = FindResource("MSG_MULTIPLEUPDATECOMMANDS") as string;
+                        if (!string.IsNullOrEmpty(msg))
+                            MessageBox.Show(msg, App.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                }
+            }
+
+
             try
             {
                 System.IO.Directory.SetCurrentDirectory(selRepoCompletePath);
@@ -310,7 +315,7 @@ namespace SvnRadar
             //Creating trace window
             UpdateTraceWindow utw = new UpdateTraceWindow();
             if (selRepo != null)
-                utw.Title += "   /" + selRepo.RepositoryName;
+                utw.Title += "   /" + selRepoCompletePath;
             else if (!string.IsNullOrEmpty(selRepoCompletePath))
             {
                 utw.Title += "   /" + System.IO.Path.GetDirectoryName(selRepoCompletePath);
@@ -564,6 +569,36 @@ namespace SvnRadar
             SetUpFlatView();
         }
 
+
+
+        /// <summary>
+        /// Hanldes request on break the repository changes request
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnBreakLogLoadingCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            RepoTabItem repoTabItem = RepoBrowserWindow.SelectedRepoTabItem;
+            if (repoTabItem == null)
+                return;
+
+
+            RepositoryProcess repoProcess = svnRadarExecutor.IsProcesStillAvailable(repoTabItem.RepositoryCompletePath);
+
+
+            try
+            {
+                repoProcess.Kill();
+                repoProcess.Dispose();
+            }
+            catch(Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+        }
+
+
+        
 
 
 

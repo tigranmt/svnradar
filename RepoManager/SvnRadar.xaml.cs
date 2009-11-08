@@ -266,6 +266,10 @@ namespace SvnRadar
                         upToDateRepositories.Add(repositoryPath);
 
 
+
+                    /*Block the current therad for a few seconds to let to the system to free allocated resources. */
+                    System.Threading.Thread.CurrentThread.Join(4000);
+
                 }//foreach
 
 

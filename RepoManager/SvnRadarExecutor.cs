@@ -11,6 +11,7 @@ using SvnRadar.DataBase;
 using System.Linq.Expressions;
 using SvnRadar.Common.Controls;
 using System.Xml.XPath;
+using System.Windows.Threading;
 
 namespace SvnRadar
 {
@@ -265,8 +266,21 @@ namespace SvnRadar
             process.Start();
             process.BeginOutputReadLine();
 
-            /*wait approximately 20 seconds, after break the execution */
+           
             process.WaitForExit();
+
+
+            /*Try to kill the process and release all resources relayted to it.
+             Handle any kind of exception, but do not log or notify it,
+             * by the way almost DEAD prcess will be killedby the System itself later. */
+            try
+            {
+                process.Kill();
+                process.Dispose();
+            }
+            catch
+            {
+            }
 
             if (diInfoStrings.Count < 2)
             {
@@ -526,8 +540,8 @@ namespace SvnRadar
 
             try
             {
-                System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(repoPath);
-                CurrentRepositoryInQueryName = dirInfo.Name;
+                if(System.IO.Directory.Exists(repoPath))
+                    CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
                     return;
@@ -577,8 +591,8 @@ namespace SvnRadar
 
             try
             {
-                System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(repoPath);
-                CurrentRepositoryInQueryName = dirInfo.Name;
+                if(System.IO.Directory.Exists(repoPath))
+                    CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
                     return;
@@ -628,8 +642,8 @@ namespace SvnRadar
 
             try
             {
-                System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(workingCopyCompletePath);
-                CurrentRepositoryInQueryName = dirInfo.Name;
+                if(System.IO.Directory.Exists(workingCopyCompletePath))
+                    CurrentRepositoryInQueryName = workingCopyCompletePath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
                     return;
@@ -673,8 +687,8 @@ namespace SvnRadar
 
             try
             {
-                System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(repoPath);
-                CurrentRepositoryInQueryName = dirInfo.Name;
+                if(System.IO.Directory.Exists(repoPath))
+                    CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
                     return;
@@ -802,9 +816,6 @@ namespace SvnRadar
             process.UpdateTraceWindowObject = currentUpdateTraceWindow;
 
 
-
-
-
             //Add the newly created process to the processes list
             processes.Add(process);
 
@@ -894,6 +905,8 @@ namespace SvnRadar
                         DataBase.RepoInfoBase.AddRepoInfo(rName, repoInfo);
                     },
                         new object[] { repoProc.RelatedRepositoryName, ProcessRepoStatusCommandOutputLine(e.Data) });
+
+                    
                 }
                 /*Process REVISION INFO command*/
                 else if (repoProc.Command == CommandStringsManager.RevisionInfoCommand)
@@ -942,7 +955,9 @@ namespace SvnRadar
                                 /* Catch any kind of exception and proceed */
                                 try
                                 {
+                                    repoProc.Kill();
                                     repoProc.Close();
+                                    repoProc.Dispose();
                                  //   repoProc.Kill();
                                   
                                 }
@@ -967,7 +982,7 @@ namespace SvnRadar
                             return;
                         }
 
-                        Application.Current.Dispatcher.Invoke((AddRepoListInfoDelegate)delegate(string rName, List<RepoInfo> repoInfo)
+                        Application.Current.Dispatcher.BeginInvoke((AddRepoListInfoDelegate)delegate(string rName, List<RepoInfo> repoInfo)
                         {
                             DataBase.RepoInfoBase.AddRepoInfoList(rName, repoInfo);
                         },
@@ -1017,8 +1032,8 @@ namespace SvnRadar
         bool IsProcesStillAvailable()
         {
             if (RepoBrowserWindow.SelectedRepoTabItem != null &&
-                    !string.IsNullOrEmpty(RepoBrowserWindow.SelectedRepoTabItem.RepositoryName))
-                return (IsProcesStillAvailable(RepoBrowserWindow.SelectedRepoTabItem.RepositoryName) != null);
+                    !string.IsNullOrEmpty(RepoBrowserWindow.SelectedRepoTabItem.RepositoryCompletePath))
+                return (IsProcesStillAvailable(RepoBrowserWindow.SelectedRepoTabItem.RepositoryCompletePath) != null);
 
             return false;
         }
@@ -1033,9 +1048,9 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(processRepositoryName))
                 return null;
 
-            return (processes.Find((x) => x.RelatedRepositoryName.Equals(processRepositoryName,
+            RepositoryProcess found = (processes.Find((x) => x.RelatedRepositoryName.Trim().Equals(processRepositoryName.Trim(),
                 StringComparison.InvariantCultureIgnoreCase)));
-
+            return found;
 
         }
 
@@ -1051,16 +1066,18 @@ namespace SvnRadar
                 return null;
 
 
-
+            /*Get working copy information*/
             FolderRepoInfo wcInfo = GetFolderRepoInfo(repositoryUrl, true);
             if (wcInfo != null)
             {
+                /*Get repository information*/
                 FolderRepoInfo repoInfo = GetFolderRepoInfo(wcInfo.Url, true);
                 if (repoInfo == null)
                 {
                     return null;// throw new NullReferenceException("Not able get the repository folder information");
                 }
 
+                /*Verify Last revisions on Wc and Repository*/
                 if (repoInfo.LastRevisionNumber > wcInfo.LastRevisionNumber)
                 {
                     repoInfo.FolderPath = wcInfo.FolderPath;
@@ -1146,6 +1163,17 @@ namespace SvnRadar
                 string errorMessage = proc.StandardError.ReadToEnd();
                 if (!string.IsNullOrEmpty(errorMessage))
                     ErrorManager.ShowCommonError(errorMessage, true);
+                else
+                {
+                    /* Clearing the information from the base about the repository that we have just updated */
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        if (CommandStringsManager.IsCommonUpdateCommand(proc.Command))
+                        {
+                            RepoInfoBase.ClearRepoInfo(proc.RelatedRepositoryName);
+                        }
+                    }));
+                }
             }
             catch
             {
@@ -1153,6 +1181,8 @@ namespace SvnRadar
 
             WindowsManager.NotifyRepositoryProcessExit(proc.RelatedRepositoryName, proc.Command);
 
+
+          
             ExecutingCommand = false;
 
 

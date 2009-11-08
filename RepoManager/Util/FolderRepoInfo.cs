@@ -114,5 +114,11 @@ namespace SvnRadar.Util
 
         #endregion
 
+        #region ctor 
+        public FolderRepoInfo() 
+        {
+        }
+        #endregion
+
     }
 }

@@ -22,7 +22,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// Maximum comment length in chars
         /// </summary>
-        public static readonly int MAX_AVAILABLE_COMMENT_LENGTH = 10;
+        public static readonly int MAX_AVAILABLE_COMMENT_LENGTH = 500;
         #endregion 
 
 
@@ -107,7 +107,14 @@ namespace SvnRadar.Util
         public MessageMotivation Motivation
         {
             get { return motivation; }
-            set { motivation = value; }
+            set { 
+
+
+                motivation = value;
+
+                OnPropertyChanged("Motivation");
+            
+            }
         }
 
         #endregion

@@ -61,6 +61,14 @@ namespace SvnRadar
         public StringBuilder notRecognizedData = new StringBuilder();
 
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        public RepositoryProcess()
+        {
+        }
+
+
 
 
 

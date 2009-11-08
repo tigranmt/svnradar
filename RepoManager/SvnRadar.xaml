@@ -24,6 +24,7 @@
 
         <CommandBinding Command="repomanager:AppCommands.GroupByRevisionNumberCommand" Executed="OnGroupByRevisionNumberCommand"  />
         <CommandBinding Command="repomanager:AppCommands.FlatViewCommand" Executed="OnFlatViewCommand"  />
+        <CommandBinding Command="repomanager:AppCommands.BreakLogLoadingCommand" Executed="OnBreakLogLoadingCommand"  />
 
     </Window.CommandBindings>
     
@@ -97,7 +98,7 @@
                             VerticalAlignment="Bottom" Content="{StaticResource DiscardButtonTitle}" Name="btnDiscardChanges"></Button>
                     
                    
-                    <TextBox  Height="23" Margin="142,19,62,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" />
+                    <TextBox  Height="23" Margin="0,19,62,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" HorizontalAlignment="Right" Width="619" />
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,19,17,0" Name="btnFindSVNPath" VerticalAlignment="Top" Width="31" Content="..." />
                     <Slider Margin="19,0,17,43" Name="frequencySlider" TickPlacement="BottomRight" SelectionStart="1" SelectionEnd="60" SmallChange="1" Minimum="1" Maximum="60" Height="22.04" VerticalAlignment="Bottom" IsTabStop="True" ValueChanged="frequencySlider_ValueChanged" Value="{Binding ControlRate}" />
                     <TextBlock Margin="19,0,0,66" Text="{StaticResource SVNControlTimeRate}" HorizontalAlignment="Left" Width="134" Height="22.04" VerticalAlignment="Bottom" />
@@ -112,7 +113,7 @@
                     <ListBox Margin="20,141,54,99" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                     	-</Button>
-               
+                    
                 </Grid> 
             </TabItem>
         </TabControl>

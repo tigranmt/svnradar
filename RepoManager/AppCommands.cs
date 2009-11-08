@@ -64,9 +64,16 @@ namespace SvnRadar
         public static readonly ICommand GroupByRevisionNumberCommand = new RoutedCommand("GroupByRevisionNumberCommand", typeof(AppCommands));
 
         /// <summary>
-        /// Command thta shows recovered information in simple flat GridView mode
+        /// Command that shows recovered information in simple flat GridView mode
         /// </summary>
         public static readonly ICommand FlatViewCommand = new RoutedCommand("FlatViewCommand", typeof(AppCommands));
+
+
+
+        /// <summary>
+        /// Command that breaks the chenges view loading on the user view
+        /// </summary>
+        public static readonly ICommand BreakLogLoadingCommand = new RoutedCommand("BreakLogLoadingCommand", typeof(AppCommands));
         
     }
 

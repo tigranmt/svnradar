@@ -238,6 +238,9 @@ namespace SvnRadar.DataBase
             if (DataBase.TryGetValue(repoName, out list))
                 list.Clear();
 
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+
         }
         #endregion
 

@@ -26,6 +26,9 @@ namespace SvnRadar
             InitializeComponent();
         }
 
+
+
+
         /// <summary>
         /// Handles report button click
         /// </summary>
@@ -34,22 +37,44 @@ namespace SvnRadar
         private void btnReportBug_Click(object sender, RoutedEventArgs e)
         {
             BindingExpression be = txtContent.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
             if (be.HasError)
             {
                 string appExcetionString = AppResourceManager.FindResource("MSG_MESSAGEMANDATORY") as string;
                 MessageBox.Show(appExcetionString, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Handled = true;
                 return;
             }
 
             be = txtReporterName.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
             if (be.HasError)
             {
                 string appExcetionString = AppResourceManager.FindResource("MSG_REPORTERNAMEMANDATORY") as string;
                 MessageBox.Show(appExcetionString, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Handled = true;
                 return;
             }
 
-           // MailMessage message = new MailMessage(txtReporterName.Text,toEmailAddress,
+            BugReportData reportData = ((ObjectDataProvider)FindResource("ErrorData")).ObjectInstance as BugReportData;
+            if (reportData == null)
+                return;
+
+
+            try
+            {
+                MailMessage message = new MailMessage(reportData.ReporterName, toEmailAddress, reportData.Motivation.ToString(), reportData.Comment);
+                SmtpClient smtpCl = new SmtpClient();
+                smtpCl.Host = "";
+                smtpCl.Send(message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+                return;
+            }
+
+            this.Close();
         }
 
         /// <summary>
@@ -67,6 +92,23 @@ namespace SvnRadar
         {
             BindingExpression be = txtContent.GetBindingExpression(TextBox.TextProperty);
             be.UpdateSource();
+        }
+
+
+        /// <summary>
+        /// Handles motivation button click. So the Data source property will vary, so the property changed event will be triggered.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MotivationButton_Click(object sender, RoutedEventArgs e)
+        {
+            BugReportData reportData = ((ObjectDataProvider)FindResource("ErrorData")).ObjectInstance as BugReportData;
+            if (reportData == null)
+                return;
+            if (reportData.Motivation == BugReportData.MessageMotivation.Error)
+                reportData.Motivation = BugReportData.MessageMotivation.UserComment;
+            else
+                reportData.Motivation = BugReportData.MessageMotivation.Error;
         }
 
        
