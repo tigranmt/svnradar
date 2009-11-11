@@ -272,7 +272,7 @@ namespace SvnRadar
 
             /*Try to kill the process and release all resources relayted to it.
              Handle any kind of exception, but do not log or notify it,
-             * by the way almost DEAD prcess will be killedby the System itself later. */
+             * by the way almost DEAD prcess will be killed by the System itself later. */
             try
             {
                 process.Kill();
@@ -291,7 +291,16 @@ namespace SvnRadar
                 return null;
             }
 
-            FolderRepoInfo frInfo = new FolderRepoInfo();
+            FolderRepoInfo frInfo = null;
+
+            /*Use factory only if the query aout current state is about the working copy, so save that information 
+             into the static base of the FolderRepoInfoFactory class. If his is the URL request, so repository state request,
+             create a new object.*/
+            if (!UrlPassed)
+                frInfo = FolderRepoInfoFactory.GetFolderRepoObject(folderPath);
+            else
+                frInfo = new FolderRepoInfo();
+
             frInfo.FolderPath = folderPath;
 
             try
@@ -678,11 +687,12 @@ namespace SvnRadar
         /// <param name="fileName">File name of interest</param>
         /// <param name="folderRepoInfo">Folder repository information object</param>
         /// <param name="isCallForSysTray">If True the RepositoryProcess for sys tray will be used</param>
-        public void GetRevisionInfo(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo, bool isCallForSysTray)
+        ///<returns>True if execution succeeds, otherwise False</returns>
+        public bool GetRevisionInfo(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo, bool isCallForSysTray)
         {
 
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
-                return;
+                return false;
 
 
             try
@@ -691,14 +701,14 @@ namespace SvnRadar
                     CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
-                    return;
+                    return false;
             }
             catch (Exception ex)
             {
 #if DEBUG
                 throw ex;
 #endif
-                return;
+                return false;
             }
 
 
@@ -713,7 +723,7 @@ namespace SvnRadar
                 try
                 {
                     string relativeUrl = folderRepoInfo.RepoRelativeUrl;
-                    if (!fileRelativeUrl.Equals(relativeUrl, StringComparison.InvariantCultureIgnoreCase))
+                    if (!string.IsNullOrEmpty(relativeUrl) && !fileRelativeUrl.Equals(relativeUrl, StringComparison.InvariantCultureIgnoreCase))
                         fileRelativeUrl = fileName.Substring(fileName.IndexOf(relativeUrl) + relativeUrl.Length + 1);
                 }
                 catch (Exception ex)
@@ -721,7 +731,7 @@ namespace SvnRadar
 #if DEBUG
                     throw ex;
 #endif
-                    return;
+                    return false;
                 }
             }
 
@@ -732,9 +742,9 @@ namespace SvnRadar
 
             if (!System.IO.File.Exists(changesMadeInfoParams))
             {
-                ErrorManager.ShowCommonError("Can not lcate " + changesMadeInfoParams +
+                ErrorManager.ShowCommonError("Can not locate " + changesMadeInfoParams +
                     " file", true);
-                return;
+                return false;
             }
 
 
@@ -760,6 +770,9 @@ namespace SvnRadar
             /*Execute command*/
             Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
                 " " + logInfoParams + " " + fileNaturalName, isCallForSysTray);
+
+
+            return true;
         }
 
 
@@ -909,7 +922,7 @@ namespace SvnRadar
                     
                 }
                 /*Process REVISION INFO command*/
-                else if (repoProc.Command == CommandStringsManager.RevisionInfoCommand)
+                else if (CommandStringsManager.IsRevisionInfoCommand(repoProc.Command ))
                 {
                     Application.Current.Dispatcher.Invoke((AddRevisionInfoDelegate)delegate(string rName, int revisonNumber, string itemName, string dateStr, string madeChanges)
                     {
@@ -920,7 +933,7 @@ namespace SvnRadar
 
 
                  /*Process REVISION LOG command*/
-                else if (repoProc.Command == CommandStringsManager.Repo_LogCommand)
+                else if (CommandStringsManager.IsRepoLogCommand(repoProc.Command))
                 {
 
                     if (repoProc.repoLogInformation == null)
@@ -1081,8 +1094,11 @@ namespace SvnRadar
                 if (repoInfo.LastRevisionNumber > wcInfo.LastRevisionNumber)
                 {
                     repoInfo.FolderPath = wcInfo.FolderPath;
+                    wcInfo = null;
                     return repoInfo;
                 }
+
+                wcInfo = null;
             }
 
 

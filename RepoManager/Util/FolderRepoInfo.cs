@@ -102,6 +102,9 @@ namespace SvnRadar.Util
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(this.Url))
+                        return null;
+
                     return this.Url.Substring(this.Url.IndexOf(this.RepositoryRoot) + this.RepositoryRoot.Length);
 
                 }

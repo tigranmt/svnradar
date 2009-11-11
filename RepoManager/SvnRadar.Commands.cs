@@ -171,7 +171,7 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(selRepoString))
                 return;
 
-            FolderRepoInfo folderRepoInfo = GetFolderRepoInfo(selRepoString, false);
+            FolderRepoInfo folderRepoInfo = FolderRepoInfoFactory.GetFolderRepoObject(selRepoString);
 
             if (folderRepoInfo != null)
             {
@@ -406,18 +406,27 @@ namespace SvnRadar
 
             /*Add revison object to the base, in order to populate it from the
              commands output in the future. The strong key, in this case, is the Revision number*/
-            RevisionInfo revi = RepoInfoBase.AddRevisionInfoString(selRepo.RepositoryName, repositoryInfo.Revision, repositoryInfo.Item, repositoryInfo.Date, string.Empty);
+            RevisionInfo revi = RepoInfoBase.AddRevisionInfoString(selRepo.RepositoryCompletePath, repositoryInfo.Revision, repositoryInfo.Item, repositoryInfo.Date, string.Empty);
             RevisionInfoWindow reviwWnd = new RevisionInfoWindow(revi);
             reviwWnd.Topmost = true;
-            reviwWnd.RelatedRepositoryName = selRepo.RepositoryName;
+            reviwWnd.RelatedRepositoryName = selRepo.RepositoryCompletePath;
 
+            bool bSuccess = svnRadarExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
+            if (bSuccess)
+            {
+                WindowsManager.AddNewWindow(reviwWnd);
 
-            WindowsManager.AddNewWindow(reviwWnd);
-
-            svnRadarExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
-            reviwWnd.Process = SvnRadarExecutor.LastExecutedProcess;
-            reviwWnd.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
-            reviwWnd.Show();
+                reviwWnd.Process = SvnRadarExecutor.LastExecutedProcess;
+                reviwWnd.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
+                reviwWnd.Show();
+            }
+            else
+            {
+                /* Something went wrong in the execution, so do not open window and clear the data*/
+                RepoInfoBase.RemoveRevisonInfoStringFromBase(selRepo.RepositoryCompletePath, repositoryInfo.Revision);
+                revi = null;
+                reviwWnd = null;
+            }
 
         }
 

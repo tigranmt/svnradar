@@ -28,7 +28,7 @@ namespace SvnRadar
         private RevisionInfo revisionInformation = null;
 
         private const int MAXIMUM_ALOWED_COUNT = 100;
-        private static ObservableCollection<object> texts = new ObservableCollection<object>();
+      
 
         
      
@@ -86,8 +86,8 @@ namespace SvnRadar
         {
             RevisionInformation = rInfo;
 
-            ///*Subscribe to the property chnage notification, as it's imposible to DataBind the Document of the RichText box
-            // So we will recieve notification about a change in the property in the mothod and update rich text box content*/
+            ///*Subscribe to the property change notification. So we will recieve notification about a change in the property in the mothod and update UI .*/
+            
             revisionInformation.PropertyChanged += new PropertyChangedEventHandler(revisionInformation_PropertyChanged);
         }
 
@@ -213,26 +213,18 @@ namespace SvnRadar
 
                 /*Destroying object event handler*/
                 revisionInformation.PropertyChanged -= new PropertyChangedEventHandler(revisionInformation_PropertyChanged);
+                revisionInformation = null;
                 ChangesView.Inlines.Clear();
 
 
 
-                GC.SuppressFinalize(true);
+                GC.SuppressFinalize(this);
+                GC.Collect();
 
 
             }
         }
 
-
-        /// <summary>
-        /// Returns the list of available TextBlocks
-        /// </summary>
-        /// <param name="repositoryName"></param>
-        /// <returns></returns>
-        public static ObservableCollection<Object> GetTextDataList()
-        {
-            return texts;
-        }
 
 
     }

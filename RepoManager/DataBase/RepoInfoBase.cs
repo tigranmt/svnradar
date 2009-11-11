@@ -125,7 +125,7 @@ namespace SvnRadar.DataBase
             ObservableCollection<RepoInfo> list = null;
 
             if (DataBase.TryGetValue(repoName, out list))
-            {
+            {                
                 list.Add(repo);
             }
             else
@@ -133,6 +133,7 @@ namespace SvnRadar.DataBase
                 list = new ObservableCollection<RepoInfo>();
                 list.Add(repo);
                 DataBase.Add(repoName, list);
+              
             }
 
             
@@ -223,7 +224,13 @@ namespace SvnRadar.DataBase
                 {
                     r.ClearData();
                     list.Remove(r);
+
+                    GC.SuppressFinalize(r);
                 }
+
+
+              
+                GC.Collect();
             }
         }
 
@@ -238,6 +245,7 @@ namespace SvnRadar.DataBase
             if (DataBase.TryGetValue(repoName, out list))
                 list.Clear();
 
+            GC.SuppressFinalize(list);
             GC.Collect();
             GC.WaitForFullGCComplete();
 

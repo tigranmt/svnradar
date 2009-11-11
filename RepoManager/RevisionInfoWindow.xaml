@@ -50,7 +50,7 @@
 
 
 
-            <ObjectDataProvider ObjectType="{x:Type sys:Object}" MethodName="GetTextDataList" x:Key="InlineData"/>
+            <!--<ObjectDataProvider ObjectType="{x:Type sys:Object}" MethodName="GetTextDataList" x:Key="InlineData"/>-->
         </ResourceDictionary>      
    
     </Window.Resources>
@@ -72,8 +72,7 @@
                                         ScrollViewer.IsDeferredScrollingEnabled="True"
                                         ScrollViewer.CanContentScroll="True"
                                         ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                                        ScrollViewer.VerticalScrollBarVisibility="Auto"                                         
-                                        DataContext="{StaticResource InlineData}"/>
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
 
         </ScrollViewer>
         <GridSplitter x:Name="GridSplitter" Grid.Row="1"
@@ -103,8 +102,8 @@
                 </StatusBarItem>
             </StackPanel>
         </StatusBar>
-        <util:SearchTextBox Grid.Row="3" HorizontalAlignment="Right" Margin="0,3,12,4" x:Name="txtSearch" Width="213" 
+        <!--<util:SearchTextBox Grid.Row="3" HorizontalAlignment="Right" Margin="0,3,12,4" x:Name="txtSearch" Width="213" 
                        Background="IndianRed" BorderThickness="1" SearchTarget="{Binding ElementName=ChangesView}"
-                       BorderBrush="White" FontWeight="Bold" Foreground="White" Visibility="Hidden"/>
+                       BorderBrush="White" FontWeight="Bold" Foreground="White" Visibility="Hidden"/>-->
     </Grid>
 </Window>

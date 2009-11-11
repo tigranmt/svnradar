@@ -16,7 +16,7 @@ namespace SvnRadar.Util
     public class RepoInfo : ICloneable
     {
 
-        #region base user comments statis dictionary
+        #region base user comments static dictionary
         /// <summary>
         /// Static table for holding all user omments for all available revisions, as on the view we show the information to 
         /// the user in flat format. Every ro in on the view correspodn to a single item, so user will find multiple times same revision

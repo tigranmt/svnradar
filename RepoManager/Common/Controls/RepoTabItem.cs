@@ -44,10 +44,6 @@ namespace SvnRadar.Common.Controls
         static ListView myView = null;
 
 
-        /*Identify if the given tab item's repository need to be updated*/
-        enum WorkingCopyState { NeedToBeUpdated, NoUpdate };
-
-        WorkingCopyState workingCopyState = WorkingCopyState.NoUpdate;
     
         /// <summary>
         /// Data provider that provides update son the current ListView control
@@ -233,11 +229,10 @@ namespace SvnRadar.Common.Controls
         /// </summary>
         public void UpdateListViewBinding()
         {
-            //Get Data provider fro the current ListView
+            //Get Data provider for the current ListView
             if (dataProviderForListView == null)
             {
-                dataProviderForListView = FindResource("DataProviderForListView") as ObjectDataProvider;
-                dataProviderForListView.DataChanged += new EventHandler(dataProviderForListView_DataChanged);
+                dataProviderForListView = FindResource("DataProviderForListView") as ObjectDataProvider;              
             }
 
             if (dataProviderForListView != null)
@@ -257,45 +252,12 @@ namespace SvnRadar.Common.Controls
 
         }
 
-        /// <summary>
-        /// Returns true if the given repository need to be updated. False otherwise.
-        /// </summary>
-        /// <returns></returns>
-        public bool VerifyOnUpdate()
-        {
-            bool needToBeUpdated = (RepoInfoBase.GetRepoInfoCount(this.repoName) > 0);
-            if (needToBeUpdated)
-                workingCopyState = WorkingCopyState.NeedToBeUpdated;
-            else
-                workingCopyState = WorkingCopyState.NoUpdate;
-
-            return needToBeUpdated;
-
-
-        }
+     
         #endregion
 
         #region event handlers
 
-        /// <summary>
-        /// Handles data provider data chaned event. In case of positive change the tabItem will be higlighted to
-        /// notify to the user that ther are some updates to do on related repository
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void dataProviderForListView_DataChanged(object sender, EventArgs e)
-        {
-            if (workingCopyState == WorkingCopyState.NoUpdate)
-            {
-                if (VerifyOnUpdate())
-                {
-                    /*Change tab item color*/
-                    //this.HeaderTemplate = Brushes.Brown;
-                    workingCopyState = WorkingCopyState.NeedToBeUpdated;
-                }
-              
-            }
-        }
+       
         #endregion
 
         #region UI tree navigator
