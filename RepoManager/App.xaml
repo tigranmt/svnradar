@@ -30,11 +30,10 @@
             <converter:BreakExecutionVisibilityConverter x:Key="BreakExecutionVisibilityConverter" />
 
 
-            
 
-            
-            
-            
+      
+
+
 
             <LinearGradientBrush x:Key="GridBackBrush"  EndPoint="0.908,0.594" StartPoint="-0.091,0.532">
                 <GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -300,9 +299,9 @@
                     </ListView>
 
                     <!-- Buttons  -->
-                    <ToggleButton x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="22"  Foreground="Black"  Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
-                    <ToggleButton x:Name="rbUpdateRepository"   Grid.Row="2"  Width="160" Height="22"  Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="200,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
-                    <ToggleButton x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="22"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="400,0,0,0" 
+                    <Button Template="{StaticResource GlassButton}"   x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  Foreground="White" FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
+                    <Button Template="{StaticResource GlassButton}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  Foreground="White" FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
+                    <Button Template="{StaticResource BlockGlassButton}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
                                   Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
                     <ProgressBar  x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                  

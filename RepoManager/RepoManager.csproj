@@ -141,6 +141,8 @@
     <Compile Include="Common\Controls\RepositoryRoutedEventArgs.cs" />
     <Compile Include="Common\Controls\RepoAliasTextBox.cs" />
     <Compile Include="Common\Controls\RepoTabItem.cs" />
+    <Compile Include="DataVirtualization\IItemsProvider.cs" />
+    <Compile Include="DataVirtualization\VirtualizingCollection.cs" />
     <Compile Include="FormatConverters\BreakExecutionVisibilityConverter.cs" />
     <Compile Include="FormatConverters\IsGroupLayoutConverter.cs" />
     <Compile Include="FormatConverters\IsFlatLayoutConverter.cs" />
