@@ -95,15 +95,8 @@
                             VerticalAlignment="Bottom" Content="{StaticResource SaveButtonTitle}" Name="btnSave"/>
                     
                     <Button Margin="0,0,17,14" HorizontalAlignment="Right" Width="115" Height="23"
-                            VerticalAlignment="Bottom" Content="{StaticResource DiscardButtonTitle}" Name="btnDiscardChanges" Opacity="0.865">
-                    	<Button.Background>
-                    		<RadialGradientBrush>
-                    			<GradientStop Color="#FFF3F3F3" Offset="0"/>
-                    			<GradientStop Color="#FF08870E" Offset="0.21"/>
-                    		</RadialGradientBrush>
-                    	</Button.Background>
-                    </Button>
-                    
+                            VerticalAlignment="Bottom" Content="{StaticResource DiscardButtonTitle}" Name="btnDiscardChanges" />
+                   
                    
                     <TextBox  Height="23" Margin="0,19,62,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" HorizontalAlignment="Right" Width="619" />
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,19,17,0" Name="btnFindSVNPath" VerticalAlignment="Top" Width="31" Content="..." />

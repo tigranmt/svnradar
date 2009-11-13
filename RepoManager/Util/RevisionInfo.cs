@@ -135,14 +135,14 @@ namespace SvnRadar.Util
                 {
                     TextBlock tb = new TextBlock();
                     tb.Text = line;
-                    tb.Foreground = System.Windows.Media.Brushes.LimeGreen;
+                    tb.Foreground = System.Windows.Media.Brushes.Gray;
                     return tb;
                 }
                 else if (line.StartsWith("-"))
                 {
                     TextBlock tb = new TextBlock();
                     tb.Text = line;
-                    tb.Foreground = System.Windows.Media.Brushes.Red;
+                    tb.Foreground = System.Windows.Media.Brushes.Green;
                     return tb;
                 }
             }
