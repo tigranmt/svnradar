@@ -348,6 +348,11 @@ namespace SvnRadar
                     AddTabFromPath(repoPath);
                 }
             }
+
+            if (RepoBrowserConfiguration.Instance.RunOnStartUp)
+                InstallMeOnStartUp();
+            else
+                UnInstallMeOnStartUp();
         }
 
 
@@ -363,6 +368,7 @@ namespace SvnRadar
             txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
+            chbSetOnAutorun.DataContext = RepoBrowserConfiguration.Instance;
 
             /*sign data context of the Menu*/
             ApplicationMenu.DataContext = RepoBrowserConfiguration.Instance;

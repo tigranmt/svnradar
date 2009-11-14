@@ -36,6 +36,9 @@ namespace SvnRadar.Util
 
         static RepoBrowserConfiguration browser = null;
 
+
+        bool bRunOnStartUp = true;
+
         #endregion
 
         #region ctor
@@ -122,6 +125,27 @@ namespace SvnRadar.Util
         /// </summary>
         [DataMember()]
         public int ControlRate { get; set; }
+
+
+
+
+        /// <summary>
+        /// If true program will run on Startup
+        /// </summary>
+        [DataMember()]
+        public bool RunOnStartUp 
+        { 
+            get 
+            {
+                return bRunOnStartUp;
+            }
+            set
+            {
+                bRunOnStartUp = value;
+                OnPropertyChanged("RunOnStartUp");
+            }
+        
+        }
 
 
 

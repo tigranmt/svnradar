@@ -291,15 +291,7 @@ namespace SvnRadar
                 return null;
             }
 
-            FolderRepoInfo frInfo = null;
-
-            /*Use factory only if the query aout current state is about the working copy, so save that information 
-             into the static base of the FolderRepoInfoFactory class. If his is the URL request, so repository state request,
-             create a new object.*/
-            if (!UrlPassed)
-                frInfo = FolderRepoInfoFactory.GetFolderRepoObject(folderPath);
-            else
-                frInfo = new FolderRepoInfo();
+            FolderRepoInfo frInfo = new FolderRepoInfo(); 
 
             frInfo.FolderPath = folderPath;
 
@@ -1154,6 +1146,9 @@ namespace SvnRadar
             RemoveProcessFromCollection(proc);
 
             WindowsManager.NotifyRepositoryProcessExit(proc.RelatedRepositoryName, proc.Command);
+
+
+            
 
             ExecutingCommand = false;
 

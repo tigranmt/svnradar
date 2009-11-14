@@ -24,14 +24,14 @@ namespace SvnRadar
     public partial class RevisionInfoWindow : Window, IRepoWindow
     {
 
-     
+
         private RevisionInfo revisionInformation = null;
 
         private const int MAXIMUM_ALOWED_COUNT = 100;
-      
 
-        
-     
+
+
+
 
         /// <summary>
         /// Holds the revision object on which the information must be shown
@@ -46,8 +46,8 @@ namespace SvnRadar
                 if (value != null)
                 {
                     this.Title = revisionInformation.Revision.ToString() + " : " + revisionInformation.Item;
-                    this.DataContext = value;    
-                    
+                    this.DataContext = value;
+
                 }
             }
         }
@@ -57,26 +57,26 @@ namespace SvnRadar
         /// Initialize the new instance of the TextBox
         /// </summary>
         void InitTextBox()
-        {         
-          
+        {
+
             ChangesView.Cursor = Cursors.Wait;
             string statusBarString = FindResource("GETCHANGELOGSTATUSBARMSG") as string;
             if (!string.IsNullOrEmpty(statusBarString))
                 TextOnStatusBar.Text = new string(' ', 2) + statusBarString + new string(' ', 2);
             progressBar.Visibility = Visibility.Visible;
-             
+
 
         }
 
 
 
-      
+
 
         public RevisionInfoWindow()
         {
             InitializeComponent();
-            
-            InitTextBox();         
+
+            InitTextBox();
 
         }
 
@@ -87,7 +87,7 @@ namespace SvnRadar
             RevisionInformation = rInfo;
 
             ///*Subscribe to the property change notification. So we will recieve notification about a change in the property in the mothod and update UI .*/
-            
+
             revisionInformation.PropertyChanged += new PropertyChangedEventHandler(revisionInformation_PropertyChanged);
         }
 
@@ -98,7 +98,7 @@ namespace SvnRadar
         /// <param name="e"></param>
         void revisionInformation_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Dispatcher.Invoke(new  Action(()=>
+            Dispatcher.Invoke(new Action(() =>
             {
                 TextBlock block = RevisionInformation.ParseMadeChangesToBlock();
                 if (block != null)
@@ -106,7 +106,7 @@ namespace SvnRadar
 
                     ChangesView.Inlines.Add(block);
                     ChangesView.Inlines.Add(new LineBreak());
-                    
+
                     //texts.Add(block);
                     //texts.Add(new LineBreak());
                 }
@@ -128,10 +128,10 @@ namespace SvnRadar
             {
                 //Set process only once per window
                 if (repoProcess == null)
-                {                  
+                {
 
-                    repoProcess = value;     
-                 
+                    repoProcess = value;
+
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace SvnRadar
         public void ProcessExited()
         {
             SetDefaultState();
-           
+
         }
 
         #endregion
@@ -168,16 +168,17 @@ namespace SvnRadar
                 ChangesView.Cursor = Cursors.Arrow;
                 TextOnStatusBar.Text = "";
                 progressBar.Visibility = Visibility.Hidden;
-               // txtSearch.Visibility = Visibility.Visible;
+                GoToSourceButton.Visibility = Visibility.Visible;
+                // txtSearch.Visibility = Visibility.Visible;
             }));
         }
 
-       
-      
+
+
 
         #endregion
 
-        
+
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
@@ -193,7 +194,7 @@ namespace SvnRadar
                         this.Process.Dispose();
                     }
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -205,7 +206,7 @@ namespace SvnRadar
                 WindowsManager.RemoveWindow(this);
 
                 /*Remove my information from the shared base, to not waste the memory*/
-                if(this.Process != null &&  this.RevisionInformation != null) 
+                if (this.Process != null && this.RevisionInformation != null)
                 {
                     SvnRadar.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.Revision);
                 }
@@ -223,6 +224,57 @@ namespace SvnRadar
 
 
             }
+        }
+
+
+        /// <summary>
+        /// Handles Go to source button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GoToSourceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Process == null || Process.FolderRepoInformation == null)
+                return;
+
+            /*Ger repository local path*/
+            string repoPath = Process.RelatedRepositoryName;
+
+            /*Get file relative URL on repository*/
+            string fileRelativeUrl = Process.FileName;
+
+            if (!string.IsNullOrEmpty(fileRelativeUrl))
+            {
+                /*Try to compose complete local path to the specified source file*/
+                string repoRealtiveUrl = Process.FolderRepoInformation.RepoRelativeUrl;
+                if (fileRelativeUrl.IndexOf(repoRealtiveUrl) == 0)
+                {
+                    if (repoRealtiveUrl.Length < fileRelativeUrl.Length)
+                    {
+                        fileRelativeUrl = fileRelativeUrl.Substring(repoRealtiveUrl.Length);
+                        string fileIOPath = fileRelativeUrl.Replace("/", @"\");
+                        string fileCompletePath = repoPath + fileIOPath;
+
+                        if (System.IO.File.Exists(fileCompletePath))
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start("explorer.exe", fileCompletePath);
+                            }
+                            catch (Win32Exception winExc)
+                            {
+                                ErrorManager.ShowExceptionError(winExc,true);
+                            }
+
+
+                        }
+
+                    }
+                }
+            }
+
+
+
         }
 
 

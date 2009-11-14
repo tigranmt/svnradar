@@ -68,12 +68,18 @@ namespace SvnRadar
         /// </summary>
         public static readonly ICommand FlatViewCommand = new RoutedCommand("FlatViewCommand", typeof(AppCommands));
 
-
-
         /// <summary>
         /// Command that breaks the chenges view loading on the user view
         /// </summary>
         public static readonly ICommand BreakLogLoadingCommand = new RoutedCommand("BreakLogLoadingCommand", typeof(AppCommands));
+
+
+          /// <summary>
+        /// Command that installs or unistall the the programm from the StartUp execution
+        /// </summary>
+        public static readonly ICommand RunOnStartupCommand = new RoutedCommand("RunOnStartupCommand", typeof(AppCommands));
+
+        
         
     }
 

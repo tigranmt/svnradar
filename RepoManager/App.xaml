@@ -15,8 +15,17 @@
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Strings-EN.xaml" />
-                <ResourceDictionary Source="ButtonTemplates.xaml" />
+                <ResourceDictionary Source="Templates/ButtonTemplates.xaml" />
                 <ResourceDictionary Source="ExpanderStyle.xaml"/>
+                <ResourceDictionary Source="Templates/progressbar.xaml"/>
+                <ResourceDictionary Source="Templates/tabcontrol.xaml"/>
+                <ResourceDictionary Source="Templates/slider.xaml"/>
+                <ResourceDictionary Source="Templates/button.xaml"/>
+                <!--<ResourceDictionary Source="Templates/menu.xaml"/>-->
+                <ResourceDictionary Source="Templates/checkbox.xaml"/>
+
+
+
             </ResourceDictionary.MergedDictionaries>
 
             <!--- Converters -->
@@ -83,7 +92,8 @@
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
-          
+            
+
             <!--- Images -->
 
 
@@ -105,7 +115,7 @@
 
 
             <!-- Context menu on sys tray -->
-            <ContextMenu x:Key="ListViewItemContextMenu" >
+            <ContextMenu  x:Key="ListViewItemContextMenu" >
                 <MenuItem  Header="{StaticResource MI_SHOWREVISIONINFO}" Click="ShowRevisionInfo_Click" Icon="{StaticResource ShowRevisionInfo}" />
             </ContextMenu>
 
@@ -298,12 +308,13 @@
 
                     </ListView>
 
-                    <!-- Buttons  -->
-                    <Button Template="{StaticResource GlassButton}"   x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  Foreground="White" FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
-                    <Button Template="{StaticResource GlassButton}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  Foreground="White" FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
-                    <Button Template="{StaticResource BlockGlassButton}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
+                    <!-- Buttons  Template="{StaticResource GlassButton}"-->
+                    
+                    <Button   Style="{StaticResource SimpleButtonStyle}" x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
+                    <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
+                    <Button Style="{StaticResource BlockButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
                                   Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
-                    <ProgressBar  x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ProgressBar Style="{StaticResource ProgressBarStyle}" x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                  
                     <!-- Buttons  -->
                 </Grid>

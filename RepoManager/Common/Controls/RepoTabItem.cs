@@ -144,6 +144,7 @@ namespace SvnRadar.Common.Controls
 
             /*Assign control template*/
             this.ContentTemplate = FindResource("TabItemDataTemplate") as DataTemplate;
+            this.Style = FindResource("TabItemStyle") as Style;
 
         }
 

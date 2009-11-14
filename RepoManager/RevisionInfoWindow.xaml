@@ -12,6 +12,9 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            
+            
+            <Image x:Key="GoToSourceImage" Source="Images/GoToSource.png"/>
             <!--- Splitter custom style -->
             <Style x:Key="gridSplitterStyle" TargetType="{x:Type GridSplitter}">
                 <Setter Property="FrameworkElement.Height" Value="8"/>
@@ -102,6 +105,8 @@
                 </StatusBarItem>
             </StackPanel>
         </StatusBar>
+        <Button ToolTip="{StaticResource GoToSourceToolTip}" Style="{StaticResource SimpleButtonStyle}" Grid.Row="3" HorizontalAlignment="Right" Margin="0,4,27,3" Name="GoToSourceButton" Width="25" Content="{StaticResource GoToSourceImage}" Visibility="Hidden" Click="GoToSourceButton_Click"/>
+           
         <!--<util:SearchTextBox Grid.Row="3" HorizontalAlignment="Right" Margin="0,3,12,4" x:Name="txtSearch" Width="213" 
                        Background="IndianRed" BorderThickness="1" SearchTarget="{Binding ElementName=ChangesView}"
                        BorderBrush="White" FontWeight="Bold" Foreground="White" Visibility="Hidden"/>-->
