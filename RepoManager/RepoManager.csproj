@@ -428,7 +428,7 @@
     <Resource Include="Images\GotoSource.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DocImages\" />
+    <Resource Include="Manifest\ReleaseManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

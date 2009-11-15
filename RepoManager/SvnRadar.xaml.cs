@@ -156,6 +156,15 @@ namespace SvnRadar
 
 
         /// <summary>
+        /// Controls availablity of the new application version on the server
+        /// </summary>
+        void ControlApplicationNewVersion()
+        {
+            /*Look inside AsseblyInfo file in order to verify of a*/
+            string httpString = "https://svnradar.googlecode.com/hg/RepoManager/Properties/AssemblyInfo.cs";
+        }
+
+        /// <summary>
         /// Starts the repository control timer
         /// </summary>
         void StartTimer()
