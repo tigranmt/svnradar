@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application>
-  <Version Value="2.0"/>
-  <DownloadFrom Value=""/>  
+  <Version Value="2.0.0.0"/>
+  <DownloadFrom Value="http://code.google.com/p/svnradar/downloads/list"/>  
   <Feautures Value=""/>
   <Authors>
     <Author Value="Tigran Martirosyan"/>
