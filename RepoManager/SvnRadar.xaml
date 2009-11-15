@@ -94,7 +94,7 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="19,0,0,14" HorizontalAlignment="Left" Width="105" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource SaveButtonTitle}" Name="btnSave"/>
 
-                    <CheckBox Height="16" HorizontalAlignment="Left" Margin="6,40,0,0" Name="chbSetOnAutorun" VerticalAlignment="Top" Width="120" IsChecked="{Binding RunOnStartUp}"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Height="16" HorizontalAlignment="Left" Margin="144,52,0,0" Name="chbSetOnAutorun" VerticalAlignment="Top" Width="19" IsChecked="{Binding RunOnStartUp}"/>
 
 
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="0,0,17,14" HorizontalAlignment="Right" Width="115" Height="23"
@@ -116,7 +116,7 @@
                     <ListBox Margin="20,141,54,99" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                     	-</Button>
-                 
+                    <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" HorizontalAlignment="Left" Margin="169,51,0,0" Name="textBox1" VerticalAlignment="Top" Width="151" />
                 </Grid> 
             </TabItem>
         </TabControl>
