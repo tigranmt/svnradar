@@ -581,56 +581,8 @@ namespace SvnRadar
 
 
 
-        /// <summary>
-        /// Handles request to install or unistall program from startup execution
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void OnRunOnStartupCommand(object sender, ExecutedRoutedEventArgs args)
-        {
-            bool installOnStartup = (bool)args.Parameter;
 
-            if (installOnStartup)
-                InstallMeOnStartUp();
-            else
-                UnInstallMeOnStartUp();
-                
-        }
-
-
-        /// <summary>
-        /// Installs the porgramm on start up
-        /// </summary>
-        void InstallMeOnStartUp()
-        {
-            try
-            {
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                Assembly curAssembly = Assembly.GetExecutingAssembly();
-                key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
-            }
-            catch (Exception ex)
-            {
-                ErrorManager.ShowExceptionError(ex, true);
-            }
-        }
-
-        /// <summary>
-        /// Unistalls program from startup
-        /// </summary>
-        void UnInstallMeOnStartUp()
-        {
-            try
-            {
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                Assembly curAssembly = Assembly.GetExecutingAssembly();
-                key.DeleteValue(curAssembly.GetName().Name, false);
-            }
-            catch (Exception ex)
-            {
-                ErrorManager.ShowExceptionError(ex,true);
-            }
-        }
+    
 
         /// <summary>
         /// Hanldes request on break the repository changes request

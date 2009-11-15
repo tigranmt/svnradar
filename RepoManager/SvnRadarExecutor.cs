@@ -1345,6 +1345,25 @@ namespace SvnRadar
             return repoInfoList;
         }
 
+
+        /// <summary>
+        /// Executes explorer.exe process with the specified arguments
+        /// </summary>
+        /// <param name="arguments">The arguments need to pass to explorer process</param>
+        public void ExecuteExplorerProcess(string arguments)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(arguments))
+                    System.Diagnostics.Process.Start("explorer.exe", arguments);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+        }
+
+
         /// <summary>
         /// Process Repository STATUS command output 
         /// </summary>

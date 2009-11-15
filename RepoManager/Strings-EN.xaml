@@ -29,9 +29,21 @@
 
     <system:String x:Key="GoToSourceToolTip">Go to source file</system:String>
     <system:String x:Key="SetOnAutorunTitle">Run program on Start up</system:String>
+    <system:String x:Key="CloseTitle">Close</system:String>
+    <system:String x:Key="GoToTitle">Go to</system:String>
+    <system:String x:Key="VersionControlWindowTitle">Version control</system:String>
+    <system:String x:Key="NewVersionApplicationString">New {0} version of the applcation was detected</system:String>
+    <system:String x:Key="AboutWindowTitle">About SvnRadar</system:String>
+    
+    <system:String x:Key="Version">Version</system:String>
+    <system:String x:Key="Author">Author</system:String>
+    <system:String x:Key="AuthorProfile">Author's profile</system:String>
+    <system:String x:Key="ProjectSite">Project site</system:String>
+    
+    
     
 
-
+    
 
 
 

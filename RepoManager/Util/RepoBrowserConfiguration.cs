@@ -179,6 +179,10 @@ namespace SvnRadar.Util
         /// </summary>
         public void Save()
         {
+            if (this.RunOnStartUp)
+                InstallMeOnStartUp();
+            else
+                UnInstallMeOnStartUp();
 
             using (FileStream fs = new FileStream(ConfigFileCompletePath, FileMode.Create))
             {
@@ -190,6 +194,39 @@ namespace SvnRadar.Util
         }
 
 
+        /// <summary>
+        /// Installs the porgramm on start up
+        /// </summary>
+        void InstallMeOnStartUp()
+        {
+            try
+            {
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+        }
+
+        /// <summary>
+        /// Unistalls program from startup
+        /// </summary>
+        void UnInstallMeOnStartUp()
+        {
+            try
+            {
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                key.DeleteValue(curAssembly.GetName().Name, false);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+        }
 
         /// <summary>
         /// Exports current configuration to the specified file path

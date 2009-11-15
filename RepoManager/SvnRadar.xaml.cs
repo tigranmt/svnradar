@@ -17,6 +17,10 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using SvnRadar.Common.Controls;
 using System.ComponentModel;
+using System.Net;
+using System.IO;
+using System.Xml.XPath;
+using System.Xml;
 
 namespace SvnRadar
 {
@@ -151,6 +155,10 @@ namespace SvnRadar
             /*Hide the main window after that it becomes rendered and databinding was setupped*/
             this.Visibility = Visibility.Hidden;
 
+
+            /* Control if new version of an application exists on the server */
+            ControlApplicationNewVersion();
+
         }
 
 
@@ -160,8 +168,73 @@ namespace SvnRadar
         /// </summary>
         void ControlApplicationNewVersion()
         {
-            /*Look inside AsseblyInfo file in order to verify of a*/
-            string httpString = "https://svnradar.googlecode.com/hg/RepoManager/Properties/AssemblyInfo.cs";
+            /* Look inside ReleaseMifest.xml file in order to verify  availability of ane version on server */
+            string httpString = VersionInfo.ProjectManifestHttpAddress;
+
+            try
+            {
+                /* Prepare Http request */
+                HttpWebRequest request = WebRequest.Create(httpString) as HttpWebRequest;
+
+                /* Execute the request */
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+                /* Read the data in Stream */
+                Stream xmlStream = response.GetResponseStream();               
+              
+                XPathDocument xPathDoc = new XPathDocument(xmlStream);
+                XPathNavigator navigator = xPathDoc.CreateNavigator();
+
+
+                XPathNodeIterator nodeIterator = navigator.Evaluate("/Application/Version/@Value") as XPathNodeIterator;
+                nodeIterator.MoveNext();
+
+            
+                /* Get server side Version string */
+                string serverSideVersionString = nodeIterator.Current.ToString();
+                if (string.IsNullOrEmpty(serverSideVersionString))
+                    return;
+
+                Version curVersion = new Version(VersionInfo.AssemblyVersion);
+
+                Version serverSideVersion = new Version(serverSideVersionString);
+
+                /* Most recent version detected on server */
+                if (serverSideVersion.CompareTo(curVersion) > 0)
+                {
+                    /* Get Download from path*/
+                    nodeIterator = navigator.Evaluate("/Application/DownloadFrom/@Value") as XPathNodeIterator;
+                    nodeIterator.MoveNext();
+
+                    string downloadfrom = nodeIterator.Current.ToString(); ;
+                    new VersionControlWindow(serverSideVersion,downloadfrom).Show();
+                }
+
+                
+                
+
+            }
+            catch (WebException webEx)
+            {
+                ErrorManager.ShowExceptionError(webEx, true);
+            }
+            catch (IOException ioEx)
+            {
+                ErrorManager.ShowExceptionError(ioEx, true);
+            }
+            catch (XmlException xmlEx)
+            {
+                ErrorManager.ShowExceptionError(xmlEx, true);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+            
+
+
+
+
         }
 
         /// <summary>
@@ -358,10 +431,7 @@ namespace SvnRadar
                 }
             }
 
-            if (RepoBrowserConfiguration.Instance.RunOnStartUp)
-                InstallMeOnStartUp();
-            else
-                UnInstallMeOnStartUp();
+           
         }
 
 
@@ -510,7 +580,7 @@ namespace SvnRadar
         private void BugSignal_Click(object sender, RoutedEventArgs e)
         {
             /* show Bug report window */
-            new BugReportWindow().ShowDialog();
+           // new BugReportWindow().ShowDialog();
         }
 
         /// <summary>

@@ -237,40 +237,40 @@ namespace SvnRadar
             if (Process == null || Process.FolderRepoInformation == null)
                 return;
 
-            /*Ger repository local path*/
-            string repoPath = Process.RelatedRepositoryName;
-
-            /*Get file relative URL on repository*/
-            string fileRelativeUrl = Process.FileName;
-
-            if (!string.IsNullOrEmpty(fileRelativeUrl))
+            try
             {
-                /*Try to compose complete local path to the specified source file*/
-                string repoRealtiveUrl = Process.FolderRepoInformation.RepoRelativeUrl;
-                if (fileRelativeUrl.IndexOf(repoRealtiveUrl) == 0)
+                /*Ger repository local path*/
+                string repoPath = Process.RelatedRepositoryName;
+
+                /*Get file relative URL on repository*/
+                string fileRelativeUrl = Process.FileName;
+
+                if (!string.IsNullOrEmpty(fileRelativeUrl))
                 {
-                    if (repoRealtiveUrl.Length < fileRelativeUrl.Length)
+                    /*Try to compose complete local path to the specified source file*/
+                    string repoRealtiveUrl = Process.FolderRepoInformation.RepoRelativeUrl;
+                    if (fileRelativeUrl.IndexOf(repoRealtiveUrl) == 0)
                     {
-                        fileRelativeUrl = fileRelativeUrl.Substring(repoRealtiveUrl.Length);
-                        string fileIOPath = fileRelativeUrl.Replace("/", @"\");
-                        string fileCompletePath = repoPath + fileIOPath;
-
-                        if (System.IO.File.Exists(fileCompletePath))
+                        if (repoRealtiveUrl.Length < fileRelativeUrl.Length)
                         {
-                            try
-                            {
-                                System.Diagnostics.Process.Start("explorer.exe", fileCompletePath);
-                            }
-                            catch (Win32Exception winExc)
-                            {
-                                ErrorManager.ShowExceptionError(winExc,true);
-                            }
+                            fileRelativeUrl = fileRelativeUrl.Substring(repoRealtiveUrl.Length);
+                            string fileIOPath = fileRelativeUrl.Replace("/", @"\");
+                            string fileCompletePath = repoPath + fileIOPath;
 
+                            SvnRadarExecutor svnExecutor = (SvnRadarExecutor)((ObjectDataProvider)AppResourceManager.FindResource("svnRadarExecutor")).ObjectInstance;
+
+                            if (System.IO.File.Exists(fileCompletePath))
+                            {
+                                svnExecutor.ExecuteExplorerProcess(fileCompletePath);
+                            }
 
                         }
-
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex,true);
             }
 
 

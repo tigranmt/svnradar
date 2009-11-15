@@ -74,11 +74,6 @@ namespace SvnRadar
         public static readonly ICommand BreakLogLoadingCommand = new RoutedCommand("BreakLogLoadingCommand", typeof(AppCommands));
 
 
-          /// <summary>
-        /// Command that installs or unistall the the programm from the StartUp execution
-        /// </summary>
-        public static readonly ICommand RunOnStartupCommand = new RoutedCommand("RunOnStartupCommand", typeof(AppCommands));
-
         
         
     }

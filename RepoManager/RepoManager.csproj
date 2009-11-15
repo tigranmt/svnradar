@@ -92,7 +92,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BugReportWindow.xaml">
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VersionControlWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,26 +242,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppCommands.cs" />
-    <Compile Include="BugReportWindow.xaml.cs">
-      <DependentUpon>BugReportWindow.xaml</DependentUpon>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppCommands.cs" />
     <Compile Include="Common\Controls\RepositoryRoutedEventArgs.cs" />
     <Compile Include="Common\Controls\RepoAliasTextBox.cs" />
     <Compile Include="Common\Controls\RepoTabItem.cs" />
     <Compile Include="DataVirtualization\IItemsProvider.cs" />
     <Compile Include="DataVirtualization\VirtualizingCollection.cs" />
+    <Compile Include="VersionControlWindow.xaml.cs">
+      <DependentUpon>VersionControlWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FormatConverters\BreakExecutionVisibilityConverter.cs" />
     <Compile Include="FormatConverters\IsGroupLayoutConverter.cs" />
     <Compile Include="FormatConverters\IsFlatLayoutConverter.cs" />
     <Compile Include="FormatConverters\MotivationToBrushConverter.cs" />
     <Compile Include="FormatConverters\MotivationToTextConverter.cs" />
-    <Compile Include="SvnRadarAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SvnRadarAbout.Designer.cs">
-      <DependentUpon>SvnRadarAbout.cs</DependentUpon>
-    </Compile>
     <Compile Include="SvnRadar.EventHadlers.cs" />
     <Compile Include="Util\BugReportData.cs" />
     <Compile Include="Util\CommandStringsManager.cs" />
@@ -316,13 +317,11 @@
     <Compile Include="Util\TaskNotifier.cs" />
     <Compile Include="Util\UIConstants.cs" />
     <Compile Include="Util\UpdateTraceRow.cs" />
+    <Compile Include="Util\VersionInfo.cs" />
     <Compile Include="Util\WindowsManager.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SvnRadarAbout.resx">
-      <DependentUpon>SvnRadarAbout.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -429,6 +428,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Manifest\ReleaseManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\linkedin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SvnRadarLinkLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

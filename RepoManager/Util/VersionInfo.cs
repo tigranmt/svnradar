@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Reflection;
-using System.Windows.Forms;
 
-namespace SvnRadar
+namespace SvnRadar.Util
 {
-    partial class RepoBrowserAbout : Form
+    public static  class VersionInfo
     {
-        public RepoBrowserAbout()
-        {
-            InitializeComponent();
-            this.Text = String.Format("About {0} {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0} {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-           
-        }
+
+        public static readonly string ProjectManifestHttpAddress = "https://svnradar.googlecode.com/hg/RepoManager/Manifest/ReleaseManifest.xml";
+        public static readonly string ProjectHttpAddress = "http://code.google.com/p/svnradar/";
+        public static readonly string Author = "Tigran Martirosyan";
+        public static readonly string AuthorSite = "http://it.linkedin.com/pub/tigran-martirosyan/7/226/675";
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -40,7 +33,7 @@ namespace SvnRadar
             }
         }
 
-        public string AssemblyVersion
+        public static string AssemblyVersion
         {
             get
             {
@@ -48,7 +41,7 @@ namespace SvnRadar
             }
         }
 
-        public string AssemblyDescription
+        public static string AssemblyDescription
         {
             get
             {
@@ -61,7 +54,7 @@ namespace SvnRadar
             }
         }
 
-        public string AssemblyProduct
+        public static string AssemblyProduct
         {
             get
             {
@@ -74,7 +67,7 @@ namespace SvnRadar
             }
         }
 
-        public string AssemblyCopyright
+        public static string AssemblyCopyright
         {
             get
             {
@@ -87,7 +80,7 @@ namespace SvnRadar
             }
         }
 
-        public string AssemblyCompany
+        public static string AssemblyCompany
         {
             get
             {
@@ -100,7 +93,5 @@ namespace SvnRadar
             }
         }
         #endregion
-
-     
     }
 }

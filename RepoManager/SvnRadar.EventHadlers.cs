@@ -193,7 +193,7 @@ namespace SvnRadar
 
         private void AboutMI_Click(object sender, RoutedEventArgs e)
         {
-            new RepoBrowserAbout().ShowDialog();
+            new AboutWindow().ShowDialog();
         }
 
         #endregion
