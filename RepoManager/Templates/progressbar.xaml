@@ -18,13 +18,13 @@
               Background="{StaticResource PressedBrush}"
               BorderBrush="{StaticResource SolidBorderBrush}"
               BorderThickness="1" />
-            <Border 
+            <!--<Border 
               Name="PART_Indicator" 
               CornerRadius="2" 
               Background="{StaticResource DarkBrush}" 
               BorderBrush="{StaticResource NormalBorderBrush}" 
               BorderThickness="1" 
-              HorizontalAlignment="Left" />
+              HorizontalAlignment="Left" />-->
           </Grid>
         </ControlTemplate>
       </Setter.Value>

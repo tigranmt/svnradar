@@ -17,7 +17,7 @@
                 <ResourceDictionary Source="Strings-EN.xaml" />
                 <ResourceDictionary Source="Templates/ButtonTemplates.xaml" />
                 <ResourceDictionary Source="ExpanderStyle.xaml"/>
-                <ResourceDictionary Source="Templates/progressbar.xaml"/>
+                <!--<ResourceDictionary Source="Templates/progressbar.xaml"/>-->
                 <ResourceDictionary Source="Templates/tabcontrol.xaml"/>
                 <ResourceDictionary Source="Templates/slider.xaml"/>
                 <ResourceDictionary Source="Templates/button.xaml"/>
@@ -314,7 +314,7 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
                     <Button Style="{StaticResource BlockButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
                                   Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
-                    <ProgressBar Style="{StaticResource ProgressBarStyle}" x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                  
                     <!-- Buttons  -->
                 </Grid>

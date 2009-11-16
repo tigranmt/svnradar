@@ -100,7 +100,7 @@
                 <TextBlock Text="           "/>
                 <StatusBarItem x:Name="ProgressBarItemOnStatusBar" Width="156" >
                    
-                    <ProgressBar x:Name="progressBar" Width="150" Background="Black"  IsIndeterminate="True"  VerticalAlignment="Stretch" Height="22" />
+                    <ProgressBar x:Name="progressBar" Width="150"  IsIndeterminate="True"  VerticalAlignment="Stretch" Height="22" />
                         
                 </StatusBarItem>
             </StackPanel>
