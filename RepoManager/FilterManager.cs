@@ -54,8 +54,8 @@ namespace SvnRadar
                 return true;
 
 
-            if (fc.RepositoryName.Equals(this.RepositoryName, StringComparison.InvariantCultureIgnoreCase) &&
-                fc.ColumnName.Equals(this.ColumnName, StringComparison.InvariantCultureIgnoreCase))
+            if (fc.RepositoryName.Trim().Equals(this.RepositoryName.Trim(), StringComparison.InvariantCultureIgnoreCase) &&
+                fc.ColumnName.Trim().Equals(this.ColumnName.Trim(), StringComparison.InvariantCultureIgnoreCase))
                 return true;
 
 

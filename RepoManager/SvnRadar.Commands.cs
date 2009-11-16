@@ -448,7 +448,7 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(colName))
                 return;
 
-            if (FilterManager.RemoveFilter(selRepo.RepositoryName, colName))
+            if (FilterManager.RemoveFilter(selRepo.RepositoryCompletePath, colName))
             {
                 selRepo.UpdateColumnBinding(colName);
 
@@ -482,7 +482,7 @@ namespace SvnRadar
             //TODO : Add textbox control to the column header
 
             /*Register requested filter in the database*/
-            if (FilterManager.AddFilterToColumn(selRepo.RepositoryName, gvCh.Column.Header.ToString(), string.Empty))
+            if (FilterManager.AddFilterToColumn(selRepo.RepositoryCompletePath, gvCh.Column.Header.ToString(), string.Empty))
             {
                 gvCh.Column.UpdateColumnHeaderBindings();
             }
@@ -506,7 +506,7 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(colName))
                 return;
 
-            FilterManager.UpdateFilterOnColumn(selRepo.RepositoryName, colName, tb.Text);
+            FilterManager.UpdateFilterOnColumn(selRepo.RepositoryCompletePath, colName, tb.Text);
 
 
             UpdateObjectDataProvider();

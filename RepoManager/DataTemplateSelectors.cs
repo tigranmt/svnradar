@@ -70,7 +70,7 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(columnName))
                 return null;
 
-            return SelectTemplate(selTab.RepositoryName, columnName.Trim());      
+            return SelectTemplate(selTab.RepositoryCompletePath, columnName.Trim());      
         }
 
 

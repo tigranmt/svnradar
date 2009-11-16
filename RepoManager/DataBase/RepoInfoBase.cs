@@ -372,17 +372,34 @@ namespace SvnRadar.DataBase
 
             if (FilterManager.HasFiltersApplied)
             {
+                /* Save original cursor and set WaitCursor*/
+                System.Windows.Input.Cursor originalCursor = Application.Current.MainWindow.Cursor;
+                Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
 
                 IEnumerable<RepoInfo> filtered = FilterList(repositoryName, list);
                 try
                 {
                     if (filtered != null)
+                    {
+
+                        /*Reset to default cursor*/
+                        Application.Current.MainWindow.Cursor = originalCursor;
+
                         return new ObservableCollection<RepoInfo>(filtered);
+                    }
                 }
                 catch (NullReferenceException nulRefEx)
                 {
+
+
+                    /*Reset to default cursor*/
+                    Application.Current.MainWindow.Cursor = originalCursor;
+
                     return new ObservableCollection<RepoInfo>(list);
                 }
+
+                /*Reset to default cursor*/
+                Application.Current.MainWindow.Cursor = originalCursor;
             }
             
             return list;
