@@ -51,7 +51,7 @@ namespace SvnRadar
         /// <summary>
         /// Command that updtes only sleected item from repository 
         /// </summary>
-        public static readonly ICommand UpdateSelectedCommand = new RoutedCommand("UpdateSelectedCommand", typeof(AppCommands));
+        public static readonly ICommand UpdateSingleFileCommand = new RoutedCommand("UpdateSingleFileCommand", typeof(AppCommands));
 
         /// <summary>
         /// Command that updates entire repositry

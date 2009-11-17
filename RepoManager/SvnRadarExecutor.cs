@@ -627,6 +627,58 @@ namespace SvnRadar
 
 
 
+        /// <summary>
+        /// Updates single file from the specified repository to the specified revision
+        /// </summary>
+        /// <param name="workingCopyCompletePath">The complete path to the working copy of repository</param>
+        /// <param name="revision">Revision number to which the fild must be updated</param>
+        /// <param name="itemName">The file relative URL</param>
+        public void UpdateReposiotrySingleFile(string workingCopyCompletePath, int revision, string itemName)
+        {
+
+            if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
+                return;
+
+
+            if (string.IsNullOrEmpty(workingCopyCompletePath) ||
+                string.IsNullOrEmpty(itemName))
+                return;
+
+            if (revision < 0)
+                return;
+
+            try
+            {
+                if (System.IO.Directory.Exists(workingCopyCompletePath))
+                    CurrentRepositoryInQueryName = workingCopyCompletePath;
+
+                if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
+                    return;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            //Assign last executed command
+            LastExecutedCommand = CommandStringsManager.UpdateCommand;
+
+            //Assign last revison number 
+            LastRevisionNumber = -1;
+
+
+            System.IO.Directory.SetCurrentDirectory(workingCopyCompletePath);
+
+
+            string parameters = " -r " + revision.ToString() + " " + itemName;
+
+
+            /*For now there is no any possiblity to updte single file form SyTray, so pass an argument always FALSE*/
+            //Execute command
+            Execute(RepoBrowserConfiguration.Instance.SubversionPath,
+                " " + CommandStringsManager.UpdateCommand + parameters, false);
+
+        }
+
 
         /// <summary>
         /// Updates specfied repository.
@@ -663,7 +715,7 @@ namespace SvnRadar
             System.IO.Directory.SetCurrentDirectory(workingCopyCompletePath);
 
            
-        
+          
 
             //Execute command
             Execute(RepoBrowserConfiguration.Instance.SubversionPath,

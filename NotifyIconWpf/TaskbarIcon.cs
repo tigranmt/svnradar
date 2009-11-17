@@ -264,7 +264,7 @@ namespace Hardcodet.Wpf.TaskbarNotification
         {
             if (IsDisposed) return;
 
-        
+
             if (!Application.Current.Dispatcher.CheckAccess())
             {
                 Action action = CloseBalloon;
@@ -318,7 +318,7 @@ namespace Hardcodet.Wpf.TaskbarNotification
             Dispatcher.Invoke(new Action(() =>
             {
                 if (CustomBalloon != null && CustomBalloon.IsMouseOver)
-                    skip = true; ;               
+                    skip = true; ;
             }));
 
             if (skip)
@@ -894,6 +894,20 @@ namespace Hardcodet.Wpf.TaskbarNotification
                     IsTaskbarIconCreated = true;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Flips icon between IconSource and ChangedIconSource
+        /// </summary>
+        /// <param name="flip">True to point the Icon to the ChangedImageSource, False to ImageSource property </param>
+        public void FlipIcon(bool flip)
+        {
+
+            if (flip)
+                this.Icon = ChangedIconSource.ToIcon();
+            else
+                this.Icon = IconSource.ToIcon();
         }
 
 

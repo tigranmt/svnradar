@@ -217,6 +217,28 @@ namespace Hardcodet.Wpf.TaskbarNotification
     }
 
 
+
+    /// <summary>
+    /// Resolves an image source and updates the <see cref="Icon" /> property accordingly.
+    /// </summary>
+    public static readonly DependencyProperty ChangedIconSourceProperty =
+        DependencyProperty.Register("ChangedIconSource",
+                                    typeof(ImageSource),
+                                    typeof(TaskbarIcon));
+
+    /// <summary>
+    /// A property wrapper for the <see cref="ChangedIconSourceProperty"/>
+    /// dependency property.<br/>    
+    /// </summary>
+    [Category(CategoryName)]
+    [Description("Sets the displayed taskbar changed icon.")]
+    public ImageSource ChangedIconSource
+    {
+        get { return (ImageSource)GetValue(ChangedIconSourceProperty); }
+        set { SetValue(ChangedIconSourceProperty, value); }
+    }
+
+
     /// <summary>
     /// A static callback listener which is being invoked if the
     /// <see cref="IconSourceProperty"/> dependency property has

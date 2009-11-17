@@ -214,12 +214,86 @@ namespace SvnRadar
 
 
         /// <summary>
-        /// Handles execution of request to update working copy from the repository on specified items
+        /// Handles execution of request to update working copy from the repository on specified file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnUpdateSelectedCommand(object sender, ExecutedRoutedEventArgs e)
+        private void OnUpdateSingleFileCommand(object sender, ExecutedRoutedEventArgs e)
         {
+
+
+            RepoTabItem selRepo = mainTab.SelectedItem as RepoTabItem;
+
+            /*Only UI access, I must have some Tab selected in ordder to be able to slect any item from the list*/
+            if (selRepo == null)
+                return;
+
+            RepoInfo selectedSingleInfo = RepoInfo.SelectedInfo;
+            
+            if (selectedSingleInfo == null)
+                return;
+
+            if (string.IsNullOrEmpty(selectedSingleInfo.Item))
+                return;
+
+
+        
+            /*If there is already Update executing over specified repository do not call again, as the folder is alreday locked by Subversion.*/
+            if (!string.IsNullOrEmpty(selRepo.RepositoryCompletePath))
+            {
+
+                RepositoryProcess availableRepoProcess = RadarExecutor.IsProcesStillAvailable(selRepo.RepositoryCompletePath);
+                if (availableRepoProcess != null)
+                {
+                    if (CommandStringsManager.IsUpdateCommand(availableRepoProcess.Command))
+                    {
+                        string msg = FindResource("MSG_MULTIPLEUPDATECOMMANDS") as string;
+                        if (!string.IsNullOrEmpty(msg))
+                            MessageBox.Show(msg, App.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                }
+            }
+
+
+            try
+            {
+                System.IO.Directory.SetCurrentDirectory(selRepo.RepositoryCompletePath);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+                return;
+            }
+
+
+            //Creating trace window
+            UpdateTraceWindow utw = new UpdateTraceWindow();
+            if (selRepo != null)
+                utw.Title += "   /" + selRepo.RepositoryCompletePath;
+            else if (!string.IsNullOrEmpty(selRepo.RepositoryCompletePath))
+            {
+                utw.Title += "   /" + System.IO.Path.GetDirectoryName(selRepo.RepositoryCompletePath);
+            }
+            else
+                return;
+            utw.Topmost = true;
+
+
+            /*Assign to the executor current folder repo info, to pass it to the executor process in the future*/
+            SvnRadarExecutor.currentUpdateTraceWindow = utw;
+
+            /* Register window in the window manager */
+            WindowsManager.AddNewWindow(utw);
+            RadarExecutor.UpdateReposiotrySingleFile(selRepo.RepositoryCompletePath, selectedSingleInfo.Revision, selectedSingleInfo.Item);
+
+            /*Initialize properties of the window */
+            utw.Process = SvnRadarExecutor.LastExecutedProcess;
+            utw.RelatedRepositoryName = SvnRadarExecutor.LastExecutedProcess.RelatedRepositoryName;
+            utw.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
+
+
+            utw.Show();
 
 
 

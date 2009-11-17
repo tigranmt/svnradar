@@ -21,6 +21,7 @@
         <CommandBinding Command="repomanager:AppCommands.RemoveFilterFromColumnCommand" Executed="OnRemoveFilterFromColumnCommand"  />
         <CommandBinding Command="repomanager:AppCommands.ShowRevisionInfoCommand" Executed="OnShowRevisionInfoCommand"  />    
         <CommandBinding Command="repomanager:AppCommands.UpdateRepositoryCommand" Executed="OnUpdateRepositoryCommand" CanExecute="UpdateRepositoryCommand_CanExecute"  />
+        <CommandBinding Command="repomanager:AppCommands.UpdateSingleFileCommand" Executed="OnUpdateSingleFileCommand" CanExecute="UpdateRepositoryCommand_CanExecute"  />
 
         <CommandBinding Command="repomanager:AppCommands.GroupByRevisionNumberCommand" Executed="OnGroupByRevisionNumberCommand"  />
         <CommandBinding Command="repomanager:AppCommands.FlatViewCommand" Executed="OnFlatViewCommand"  />
@@ -80,6 +81,7 @@
         <tb:TaskbarIcon
                 x:Name="MainNotifyIcon"
                 IconSource="/Images/systrayicon.ico"
+                ChangedIconSource="/Images/check_for_updatesico.ico"
                 ToolTipText="{StaticResource MainWindowTitle}" 
                 TrayMouseDoubleClick="MainNotifyIcon_TrayMouseDoubleClick"
                 TrayLeftMouseUp="MainNotifyIcon_TrayLeftMouseUp"

@@ -98,6 +98,12 @@ namespace SvnRadar
 
         }
 
+        private void UpdateOnlyThisFile_Click(object sender, RoutedEventArgs e)
+        {
+            //Show revison info to user
+            AppCommands.UpdateSingleFileCommand.Execute(sender);
+        }
+
      
 
      

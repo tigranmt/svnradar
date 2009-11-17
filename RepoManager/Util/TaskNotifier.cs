@@ -36,10 +36,10 @@ namespace SvnRadar.Util
 
 
 
-        /// <summary>
-        /// Timer for flip the icon on sys tray
-        /// </summary>
-        static System.Timers.Timer fliptimer = new System.Timers.Timer();
+        ///// <summary>
+        ///// Timer for flip the icon on sys tray
+        ///// </summary>
+        //static System.Timers.Timer fliptimer = new System.Timers.Timer();
 
 
         /// <summary>
@@ -280,26 +280,29 @@ namespace SvnRadar.Util
 
             if (signal)
             {
-                if (fliptimer == null)
-                    fliptimer = new System.Timers.Timer();
-                else if (fliptimer.Enabled)
-                    return;
+                //if (fliptimer == null)
+                //    fliptimer = new System.Timers.Timer();
+                //else if (fliptimer.Enabled)
+                //    return;
 
-                fliptimer.Elapsed += new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
-                fliptimer.Interval = 800;
-                fliptimer.Start();
+                //fliptimer.Elapsed += new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
+                //fliptimer.Interval = 800;
+                //fliptimer.Start();
+
+                taskBarIcon.FlipIcon(true);
             }
             else
             {
-                if (fliptimer == null)
-                    return;
-                fliptimer.Stop();
-                fliptimer.Elapsed -= new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
-                fliptimer.Dispose();
-                fliptimer = null;
+                //if (fliptimer == null)
+                //    return;
+                //fliptimer.Stop();
+                //fliptimer.Elapsed -= new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
+                //fliptimer.Dispose();
+                //fliptimer = null;
 
-                if (originalSysTrayIcon != null)
-                    taskBarIcon.Icon = originalSysTrayIcon;
+                //if (originalSysTrayIcon != null)
+                //    taskBarIcon.Icon = originalSysTrayIcon;
+                taskBarIcon.FlipIcon(false);
 
                 notificationList.Clear();
             }
@@ -308,16 +311,7 @@ namespace SvnRadar.Util
 
         }
 
-        static void fliptimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (originalSysTrayIcon == null)
-                originalSysTrayIcon = taskBarIcon.Icon;
 
-            if (taskBarIcon.Icon == null)
-                taskBarIcon.Icon = originalSysTrayIcon;
-            else
-                taskBarIcon.Icon = null;
-        }
         #endregion
 
 

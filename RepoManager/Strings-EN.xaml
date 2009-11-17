@@ -71,11 +71,14 @@
 
     <system:String x:Key="MI_SHOWCHANGESSEQUENCE">Show changes</system:String>
     <system:String x:Key="MI_SHOWMAINWINDOW">Show window</system:String>
-    <system:String x:Key="MI_SHOWREVISIONINFO">Show diff</system:String>
-    
 
-    
-    
+   
+    <system:String x:Key="MI_SHOWREVISIONINFO">Show diff</system:String>
+    <system:String x:Key="MI_UPDATEONYTHISFILE">Update only this file</system:String>
+
+
+
+
 
 
     <system:String x:Key="FilterOnHeaderToolTip">Click to filter on column content</system:String>
