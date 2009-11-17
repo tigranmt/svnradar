@@ -10,10 +10,10 @@ using System.ComponentModel;
 
 namespace SvnRadar.DataBase
 {
-    
+
 
     #region delegates for handling the method calls in multithreading envirounment
-    public delegate void AddRevisionInfoDelegate(string repoName, int revisionNum, string itemName,string dateTime, string madeChanges);
+    public delegate void AddRevisionInfoDelegate(string repoName, int revisionNum, string itemName, string dateTime, string madeChanges);
     public delegate void AddRepoListInfoDelegate(string repoName, List<RepoInfo> revision);
     public delegate void AddRepoInfoDelegate(string repoName, RepoInfo repo);
     public delegate void AddUpdateTraceInfo(string updateTraceString);
@@ -22,7 +22,7 @@ namespace SvnRadar.DataBase
     /// <summary>
     /// Holds tha data base of application all available repositories information 
     /// </summary>
-    public  sealed class RepoInfoBase
+    public sealed class RepoInfoBase
     {
 
         #region fields
@@ -32,7 +32,7 @@ namespace SvnRadar.DataBase
         const short REV_NUM_TO_IGNORE = -1;
 
 
-        private static  FilterManager filterManager = null;
+        private static FilterManager filterManager = null;
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace SvnRadar.DataBase
         /// Key: RepoName-the name of repository 
         /// Value: List<RepoINfo>-list of available repository informations
         /// </summary>
-        static Dictionary<string, ObservableCollection<RepoInfo>> DataBase = 
+        static Dictionary<string, ObservableCollection<RepoInfo>> DataBase =
             new Dictionary<string, ObservableCollection<RepoInfo>>(StringComparer.InvariantCultureIgnoreCase);
 
 
@@ -116,7 +116,7 @@ namespace SvnRadar.DataBase
         /// </summary>
         /// <param name="repoName">Repository name</param>
         /// <param name="repo">RepoInfo object to add to the relational list</param>
-        public static void AddRepoInfo(string repoName,RepoInfo repo) 
+        public static void AddRepoInfo(string repoName, RepoInfo repo)
         {
             if (repo == null ||
                 repo.Revision == REV_NUM_TO_IGNORE)
@@ -125,7 +125,7 @@ namespace SvnRadar.DataBase
             ObservableCollection<RepoInfo> list = null;
 
             if (DataBase.TryGetValue(repoName, out list))
-            {                
+            {
                 list.Add(repo);
             }
             else
@@ -133,10 +133,10 @@ namespace SvnRadar.DataBase
                 list = new ObservableCollection<RepoInfo>();
                 list.Add(repo);
                 DataBase.Add(repoName, list);
-              
+
             }
 
-            
+
             DataProvider.Refresh();
         }
 
@@ -168,12 +168,12 @@ namespace SvnRadar.DataBase
         /// <param name="dateStr">DateTime string </param>
         /// <param name="diffString">Diff string</param>            
         /// <returns>Revision info object that was added or updated</returns>
-        public static RevisionInfo  AddRevisionInfoString(string repoName, int revisonNumber, string itemName, string dateStr,string diffString)
+        public static RevisionInfo AddRevisionInfoString(string repoName, int revisonNumber, string itemName, string dateStr, string diffString)
         {
             if (string.IsNullOrEmpty(repoName))
                 return null;
 
-            if (revisonNumber< 0)
+            if (revisonNumber < 0)
                 return null;
 
             ObservableCollection<RevisionInfo> list = null;
@@ -196,7 +196,7 @@ namespace SvnRadar.DataBase
             else
             {
                 list = new ObservableCollection<RevisionInfo>();
-                list.Add(new RevisionInfo { Revision = revisonNumber, Date= dateStr, Item = itemName, TextChanged=diffString });
+                list.Add(new RevisionInfo { Revision = revisonNumber, Date = dateStr, Item = itemName, TextChanged = diffString });
                 RevisionInfoBase.Add(repoName, list);
 
                 return list[list.Count - 1];
@@ -229,7 +229,7 @@ namespace SvnRadar.DataBase
                 }
 
 
-              
+
                 GC.Collect();
             }
         }
@@ -243,11 +243,13 @@ namespace SvnRadar.DataBase
         {
             ObservableCollection<RepoInfo> list = null;
             if (DataBase.TryGetValue(repoName, out list))
+            {
                 list.Clear();
+            }
 
-           
-            GC.SuppressFinalize(list);
-           
+            if (list != null)
+                GC.SuppressFinalize(list);
+
 
         }
         #endregion
@@ -300,7 +302,7 @@ namespace SvnRadar.DataBase
                 return null;
 
             return list.First(rObject => rObject.Revision == repositoryRevisionNumber);
-        
+
         }
 
 
@@ -359,7 +361,7 @@ namespace SvnRadar.DataBase
 
             const string NULL_PARAMETER = "Empty";
 
-            if(string.IsNullOrEmpty(repositoryName.Trim()) ||
+            if (string.IsNullOrEmpty(repositoryName.Trim()) ||
                 repositoryName.Equals(NULL_PARAMETER, StringComparison.InvariantCultureIgnoreCase))
                 return new ObservableCollection<RepoInfo>();
 
@@ -367,7 +369,7 @@ namespace SvnRadar.DataBase
             if (!DataBase.TryGetValue(repositoryName, out list))
             {
                 list = new ObservableCollection<RepoInfo>();
-                DataBase.Add(repositoryName, list);               
+                DataBase.Add(repositoryName, list);
             }
 
             if (FilterManager.HasFiltersApplied)
@@ -401,7 +403,7 @@ namespace SvnRadar.DataBase
                 /*Reset to default cursor*/
                 Application.Current.MainWindow.Cursor = originalCursor;
             }
-            
+
             return list;
 
         }
@@ -417,7 +419,7 @@ namespace SvnRadar.DataBase
         /// <param name="RepositoryName">Repository name on which content the ffilter must be executed</param>
         /// <param name="list">The initial content of the repository</param>       
         /// <returns>Returns the filterd content of the repository, if any filter exists, otherwise the original list will be returned.</returns>
-        static IEnumerable<RepoInfo> FilterList(string RepositoryName, IEnumerable<RepoInfo> list) 
+        static IEnumerable<RepoInfo> FilterList(string RepositoryName, IEnumerable<RepoInfo> list)
         {
             if (string.IsNullOrEmpty(RepositoryName))
                 return null;
