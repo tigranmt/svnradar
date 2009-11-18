@@ -280,31 +280,28 @@ namespace SvnRadar.Util
 
             if (signal)
             {
-                //if (fliptimer == null)
-                //    fliptimer = new System.Timers.Timer();
-                //else if (fliptimer.Enabled)
-                //    return;
 
-                //fliptimer.Elapsed += new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
-                //fliptimer.Interval = 800;
-                //fliptimer.Start();
+                /*Updates counter textbox*/
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    taskBarIcon.FlipIcon(true);
+                   
+                }));
 
-                taskBarIcon.FlipIcon(true);
+                
             }
             else
             {
-                //if (fliptimer == null)
-                //    return;
-                //fliptimer.Stop();
-                //fliptimer.Elapsed -= new System.Timers.ElapsedEventHandler(fliptimer_Elapsed);
-                //fliptimer.Dispose();
-                //fliptimer = null;
 
-                //if (originalSysTrayIcon != null)
-                //    taskBarIcon.Icon = originalSysTrayIcon;
-                taskBarIcon.FlipIcon(false);
 
-                notificationList.Clear();
+                /*Updates counter textbox*/
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    taskBarIcon.FlipIcon(false);
+                    notificationList.Clear();
+                }));
+               
+               
             }
 
 
