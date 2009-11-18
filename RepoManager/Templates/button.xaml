@@ -31,7 +31,7 @@
     <Setter Property="SnapsToDevicePixels" Value="true"/>
     <Setter Property="OverridesDefaultStyle" Value="true"/>
     <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-    <Setter Property="MinHeight" Value="23"/>
+    <Setter Property="MinHeight" Value="18"/>
     <Setter Property="MinWidth" Value="25"/>
     <Setter Property="Template">
       <Setter.Value>

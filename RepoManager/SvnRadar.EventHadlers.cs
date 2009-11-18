@@ -163,8 +163,6 @@ namespace SvnRadar
             /*Disposing NotifyIcon framework element*/
             MainNotifyIcon.Dispose();
 
-            /*Destroy all resources allocated by task notifier before*/
-            TaskNotifierManager.DestroyNotifier();
         }
 
 

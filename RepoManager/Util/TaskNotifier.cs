@@ -28,33 +28,21 @@ namespace SvnRadar.Util
         /// </summary>
         static ObservableCollection<FolderRepoInfo> notificationList = new ObservableCollection<FolderRepoInfo>();
 
-        /// <summary>
-        /// Timer for itarating over the notificaion list
-        /// </summary>
-        /// 
-        static System.Timers.Timer timer = new System.Timers.Timer();
-
-
-
+      
         ///// <summary>
         ///// Timer for flip the icon on sys tray
         ///// </summary>
         //static System.Timers.Timer fliptimer = new System.Timers.Timer();
 
 
-        /// <summary>
-        /// Original sys tray icon
-        /// </summary>
-        static System.Drawing.Icon originalSysTrayIcon = null;
-
-
+    
         /// <summary>
         /// Index of the current FolderRepoInfo object being processed in the list
         /// </summary>
         static int currentNotificationIndex = 0;
 
 
-        static Stack<FolderRepoInfo> waitingInformation = new Stack<FolderRepoInfo>();
+        
         #endregion
 
 
@@ -64,82 +52,13 @@ namespace SvnRadar.Util
         #region ctor
         static TaskNotifierManager()
         {
-            InitializeData();
+           
         }
         #endregion
 
-        #region Timer elapsed handler
-        static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (waitingInformation.Count == 0)
-                return;
+     
 
-            FolderRepoInfo waitingToNotify = null;
-
-            if (fancyBalloon.IsVisible)
-                return;
-
-            /*Pops the information from the waiting stack*/
-            lock (waitingInformation)
-            {
-                waitingToNotify = waitingInformation.Pop();
-            }
-
-            if (waitingToNotify != null)
-            {
-                /*Get next bject in the notification list*/
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    ShowNotification(waitingToNotify);
-                }));
-            }
-
-
-
-        }
-        #endregion
-
-
-        /// <summary>
-        /// Pushes specified information on waiting stack, that will be processed by the timer
-        /// </summary>
-        /// <param name="info"></param>
-        public static void PushInfoOnWait(FolderRepoInfo info)
-        {
-            waitingInformation.Push(info);
-        }
-
-        /// <summary>
-        /// Initialize the data of the class
-        /// </summary>
-        public static void InitializeData()
-        {
-            /*Subscribing to collection change event , in order to notify to the user via balloon about new information available in repository */
-            notificationList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(notificationList_CollectionChanged);
-
-            /*Initializing timer object*/
-            timer = new System.Timers.Timer();
-            timer.AutoReset = true;
-            timer.Interval = 5000;
-
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
-            timer.Start();
-        }
-
-
-
-
-        #region notification list changes handler
-        static void notificationList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            /*Notify to the user only if somethig was add to colleciton */
-
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-            {
-
-            }
-        }
-        #endregion
+      
 
 
         /// <summary>
@@ -170,35 +89,6 @@ namespace SvnRadar.Util
         }
 
 
-        /// <summary>
-        /// Frees all allocated resource of the TaskNotifierManager
-        /// </summary>
-        public static void DestroyNotifier()
-        {
-            try
-            {
-                if (timer != null)
-                {
-                    timer.Stop();
-                    timer.Dispose();
-                }
-
-                if (taskBarIcon != null && !taskBarIcon.IsDisposed)
-                {
-                    taskBarIcon.CloseBalloon();
-                    taskBarIcon.Dispose();
-                }
-
-                if (notificationList != null)
-                    notificationList.Clear();
-
-            }
-            finally
-            {
-
-            }
-        }
-
 
         /// <summary>
         /// Shows first notification if exists
@@ -213,25 +103,23 @@ namespace SvnRadar.Util
 
 
         /// <summary>
-        /// Notifies to the ballon the list of the repositories that are up to date.
+        /// Notifies to the ballon the repository that is up to date.
         /// </summary>
-        /// <param name="listOfUpToDaterepositories">The list of repositories</param>
-        public static void UpToDateRepositories(List<string> listOfUpToDaterepositories)
+        /// <param name="upToDateRepositoryCompletePath">The repository working copy complete path</param>
+        public static void UpToDateRepository(string upToDateRepositoryCompletePath)
         {
-            if (listOfUpToDaterepositories == null ||
-                listOfUpToDaterepositories.Count == 0)
+            if (string.IsNullOrEmpty(upToDateRepositoryCompletePath))
                 return;
 
             /*need to update notiication list, by removing all that repositories that are up to date*/
             IEnumerable<FolderRepoInfo> repoInfoListToRemove = null; 
             lock (notificationList)
             {
-                repoInfoListToRemove = notificationList.Where<FolderRepoInfo>((x) => listOfUpToDaterepositories.Contains(x.FolderPath));
-
-
+                repoInfoListToRemove = notificationList.Where<FolderRepoInfo>((x) => x.FolderPath.Trim().Equals(upToDateRepositoryCompletePath.Trim(),StringComparison.InvariantCultureIgnoreCase));
+                
                 if (repoInfoListToRemove != null)
                 {
-                    foreach (FolderRepoInfo fri in repoInfoListToRemove.ToArray())
+                    foreach (FolderRepoInfo fri in repoInfoListToRemove)
                     {
                         int removalIndex = notificationList.IndexOf(fri);
                        
@@ -250,6 +138,9 @@ namespace SvnRadar.Util
 
                             }
                         }
+
+                        /*There couldn't be more then one repository */
+                        break;
 
                     }
                 }
@@ -385,7 +276,7 @@ namespace SvnRadar.Util
 
             if (fancyBalloon.IsVisible)
             {
-                PushInfoOnWait(information);
+                //PushInfoOnWait(information);
                 UpdateCounterTextBox();
                 return;
             }

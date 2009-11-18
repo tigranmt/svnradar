@@ -296,7 +296,7 @@ namespace SvnRadar
                 /*Fil an array of object , becaus until the loop checks for repository user can delete some of them*/
                 string[] paths = RepoBrowserConfiguration.Instance.RepositoryPaths.ToArray<string>();
 
-                List<string> upToDateRepositories = new List<string>();
+                //List<string> upToDateRepositories = new List<string>();
                 bool needUpdate = false;
 
                 /*On every tick check all available repositories*/
@@ -317,8 +317,10 @@ namespace SvnRadar
                                  configuration list*/
                                 lock (RepoBrowserConfiguration.Instance.RepositoryPaths)
                                 {
-                                    if (!upToDateRepositories.Contains(repositoryPath))
-                                        upToDateRepositories.Add(repositoryPath);
+                                    //if (!upToDateRepositories.Contains(repositoryPath))
+                                    //    upToDateRepositories.Add(repositoryPath);
+
+                                    TaskNotifierManager.UpToDateRepository(repositoryPath);
 
                                     Dispatcher.Invoke(new Action(() =>
                                     {
@@ -344,9 +346,12 @@ namespace SvnRadar
                             NotifyChanges(repoInfo);
                         }));
                     }
-                    else if (!upToDateRepositories.Contains(repositoryPath))
-                        upToDateRepositories.Add(repositoryPath);
-
+                    //else if (!upToDateRepositories.Contains(repositoryPath))
+                    //    upToDateRepositories.Add(repositoryPath);
+                    else
+                    {
+                        TaskNotifierManager.UpToDateRepository(repositoryPath);
+                    }
 
 
                     /*Block the current therad for a few seconds to let to the system to free allocated resources. */
@@ -357,10 +362,9 @@ namespace SvnRadar
 
                 if (!needUpdate)
                     TaskNotifierManager.SignalChangesOnSysTray(false);
-                else
-                {
-                    TaskNotifierManager.UpToDateRepositories(upToDateRepositories);
-                }
+              
+                   
+                
 
             };
 

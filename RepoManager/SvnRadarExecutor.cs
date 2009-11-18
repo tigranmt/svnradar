@@ -1234,6 +1234,8 @@ namespace SvnRadar
                         if (CommandStringsManager.IsCommonUpdateCommand(proc.Command))
                         {
                             RepoInfoBase.ClearRepoInfo(proc.RelatedRepositoryName);
+                            TaskNotifierManager.UpToDateRepository(proc.RelatedRepositoryName);
+
                         }
                     }));
                 }
