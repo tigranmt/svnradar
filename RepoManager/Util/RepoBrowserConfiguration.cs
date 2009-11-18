@@ -21,7 +21,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// Configuration file name 
         /// </summary>
-        static readonly string CONFIG_FILE_NAME = "confid.dat";
+        static readonly string CONFIG_FILE_NAME = "config.dat";
 
         /// <summary>
         /// List view initial layout.
