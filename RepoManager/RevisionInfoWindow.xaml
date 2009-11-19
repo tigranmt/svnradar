@@ -71,7 +71,9 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto"   Grid.Row="0">
             <TextBlock x:Name="ChangesView"  VerticalAlignment="Stretch"  Background="White"  
-                                        FontFamily="Courier New"                                           
+                                        FontFamily="Courier New"       
+                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                        VirtualizingStackPanel.VirtualizationMode="Recycling"
                                         ScrollViewer.IsDeferredScrollingEnabled="True"
                                         ScrollViewer.CanContentScroll="True"
                                         ScrollViewer.HorizontalScrollBarVisibility="Auto" 

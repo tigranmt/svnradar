@@ -373,7 +373,14 @@ namespace SvnRadar.Util
         static void BindToDataContextFromArray(int index)
         {
             if (notificationList == null || notificationList.Count == 0)
+            {
+               
+                /*Set data binding on fancy balloon*/
+                fancyBalloon.DataContext = null;
+                taskBarIcon.CloseBalloon();
+                taskBarIcon.FlipIcon(false);
                 return;
+            }
 
             /*If index is out of array bounds, assign 0*/
             if(currentNotificationIndex  >= notificationList.Count) 
