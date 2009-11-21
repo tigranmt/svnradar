@@ -17,7 +17,7 @@ in order to be notified about any change via (Sound, Mail, Popup...)
 and notified before. (Need to validate this request. Do we really nead this functionallity ?) 
 
 6. Add from the ContextMenu possibility to open file location 
-7. Put the program in autorun 
+
 
                            
 

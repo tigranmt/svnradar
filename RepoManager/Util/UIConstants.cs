@@ -13,6 +13,12 @@ namespace SvnRadar.Util
          public static  readonly string  BTN_FIND_SVN_PATH = "btnFindSVNPath";
          public static  readonly string  BTN_ADDNEW_SVN_PATH = "btnAddNewSvnPath";
          public static readonly string   BTN_DELETE_SVN_PATH = "btnDeleteSvnPath";
+         public static readonly string   BTN_FIND_WINMERGE_PATH = "btnFindWinMergePath";
+         public static readonly string   BTN_REMOVE_WINMERGE_PATH = "btnRemoveWinMergePath";
+
+
+        
+        
         
          public static  readonly string  BTN_SHOW_WC_INFO = "btnWorkingCopy";
          public static  readonly string  BTN_SHOW_REPO_INFO = "btnRepository";

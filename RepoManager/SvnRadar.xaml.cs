@@ -21,6 +21,7 @@ using System.Net;
 using System.IO;
 using System.Xml.XPath;
 using System.Xml;
+using System.IO.IsolatedStorage;
 
 namespace SvnRadar
 {
@@ -81,6 +82,81 @@ namespace SvnRadar
             InitializeComponent();
         }
 
+
+
+        internal void GenerateBatchFile()
+        {
+            try
+            {
+                /*Generate the batch file and save it into the assembly root directory */
+                string batchFileContent = RepoBrowserConfiguration.Instance.GenerateBatchFileContent();
+                if (!string.IsNullOrEmpty(batchFileContent))
+                {
+
+                  
+                    string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                    string assemblyDirectory = System.IO.Path.GetDirectoryName(assemblyPath) + System.IO.Path.DirectorySeparatorChar;
+
+                    using (FileStream batchFileData = new FileStream(assemblyDirectory + RepoBrowserConfiguration.BATCH_FILE_NAME,
+                           FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        using (StreamWriter w = new StreamWriter(batchFileData))
+                        {
+                            w.Write(batchFileContent);
+                        }
+                    }
+
+
+
+                }
+
+
+            }                
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// Removes the WinMerge path definition from the application configuration
+        /// </summary>
+        internal void RemoveWinMergePath()
+        {
+            RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
+            try
+            {
+                if (File.Exists(RepoBrowserConfiguration.Instance.BatchFileCompletePath))
+                    File.Delete(RepoBrowserConfiguration.Instance.BatchFileCompletePath);
+            }
+            catch(Exception ex)
+            {
+                ErrorManager.LogException(ex);
+            }
+            txtWinMergePath.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Shows the open file dialog to find the WinMerge exe path
+        /// </summary>
+        internal void SetupWinMergePath()
+        {
+            System.Windows.Forms.OpenFileDialog opfDlg = new System.Windows.Forms.OpenFileDialog();
+            opfDlg.Filter = "*Exe files (*.exe)|*.exe";
+            opfDlg.ValidateNames = true;
+
+            if (opfDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txtWinMergePath.Text = opfDlg.FileName;
+                RepoBrowserConfiguration.Instance.WinMergePath = txtWinMergePath.Text;
+            }
+
+            GenerateBatchFile();
+
+        }
 
         /// <summary>
         /// Shows the open file dialog to find the Subversion exe path
@@ -180,8 +256,8 @@ namespace SvnRadar
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
                 /* Read the data in Stream */
-                Stream xmlStream = response.GetResponseStream();               
-              
+                Stream xmlStream = response.GetResponseStream();
+
                 XPathDocument xPathDoc = new XPathDocument(xmlStream);
                 XPathNavigator navigator = xPathDoc.CreateNavigator();
 
@@ -189,7 +265,7 @@ namespace SvnRadar
                 XPathNodeIterator nodeIterator = navigator.Evaluate("/Application/Version/@Value") as XPathNodeIterator;
                 nodeIterator.MoveNext();
 
-            
+
                 /* Get server side Version string */
                 string serverSideVersionString = nodeIterator.Current.ToString();
                 if (string.IsNullOrEmpty(serverSideVersionString))
@@ -207,11 +283,11 @@ namespace SvnRadar
                     nodeIterator.MoveNext();
 
                     string downloadfrom = nodeIterator.Current.ToString(); ;
-                    new VersionControlWindow(serverSideVersion,downloadfrom).Show();
+                    new VersionControlWindow(serverSideVersion, downloadfrom).Show();
                 }
 
-                
-                
+
+
 
             }
             catch (WebException webEx)
@@ -230,7 +306,7 @@ namespace SvnRadar
             {
                 ErrorManager.ShowExceptionError(ex, true);
             }
-            
+
 
 
 
@@ -362,9 +438,9 @@ namespace SvnRadar
 
                 if (!needUpdate)
                     TaskNotifierManager.SignalChangesOnSysTray(false);
-              
-                   
-                
+
+
+
 
             };
 
@@ -435,7 +511,7 @@ namespace SvnRadar
                 }
             }
 
-           
+
         }
 
 
@@ -449,6 +525,7 @@ namespace SvnRadar
 
             /*sign data context of the UI cotrols*/
             txtSubversionPath.DataContext = RepoBrowserConfiguration.Instance;
+            txtWinMergePath.DataContext = RepoBrowserConfiguration.Instance;
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
             chbSetOnAutorun.DataContext = RepoBrowserConfiguration.Instance;
@@ -584,7 +661,7 @@ namespace SvnRadar
         private void BugSignal_Click(object sender, RoutedEventArgs e)
         {
             /* show Bug report window */
-           // new BugReportWindow().ShowDialog();
+            // new BugReportWindow().ShowDialog();
         }
 
         /// <summary>

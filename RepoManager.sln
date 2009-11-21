@@ -9,14 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramTest", "ProgramTest\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C72A54A2-AFF1-4AEC-9959-4A2A12CEF55B}"
 	ProjectSection(SolutionItems) = preProject
+		diff.bat = diff.bat
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		RepoManager.vsmdi = RepoManager.vsmdi
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = RepoManager.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

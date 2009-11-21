@@ -96,14 +96,14 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="19,0,0,14" HorizontalAlignment="Left" Width="105" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource SaveButtonTitle}" Name="btnSave"/>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle}" Height="16" HorizontalAlignment="Left" Margin="144,52,0,0" Name="chbSetOnAutorun" VerticalAlignment="Top" Width="19" IsChecked="{Binding RunOnStartUp}"/>
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Height="16" HorizontalAlignment="Right" Margin="0,91,252,0" Name="chbSetOnAutorun" VerticalAlignment="Top" Width="19" IsChecked="{Binding RunOnStartUp}"/>
 
 
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="0,0,17,14" HorizontalAlignment="Right" Width="115" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource DiscardButtonTitle}" Name="btnDiscardChanges" Opacity="0.865"/>
                     
                    
-                    <TextBox  Height="23" Margin="142,19,0,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" HorizontalAlignment="Left" Width="590" />
+                    <TextBox  Height="23" Margin="142,19,91,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" />
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,19,20,0" Name="btnFindSVNPath" VerticalAlignment="Top" Width="31" Content="..." />
                     <Slider Style="{StaticResource SliderStyle}" Margin="19,0,17,43" Name="frequencySlider" TickPlacement="BottomRight" SelectionStart="1" SelectionEnd="60" SmallChange="1" Minimum="1" Maximum="60" Height="22.04" VerticalAlignment="Bottom" IsTabStop="True" ValueChanged="frequencySlider_ValueChanged" Value="{Binding ControlRate}" />
                     <TextBlock Margin="19,0,0,66" Text="{StaticResource SVNControlTimeRate}" HorizontalAlignment="Left" Width="134" Height="22.04" VerticalAlignment="Bottom" />
@@ -118,7 +118,11 @@
                     <ListBox Margin="20,141,54,99" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                     	-</Button>
-                    <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" HorizontalAlignment="Left" Margin="169,51,0,0" Name="textBox1" VerticalAlignment="Top" Width="151" />
+                    <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" HorizontalAlignment="Right" Margin="0,90,89,0" Name="textBox1" VerticalAlignment="Top" Width="151" />
+                    <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="38,56,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="99" />
+                    <TextBox Height="23" IsReadOnly="True" Margin="0,55,91,0" Name="txtWinMergePath" Text="{Binding Path=WinMergePath}" VerticalAlignment="Top" HorizontalAlignment="Right" Width="590" />
+                    <Button Height="23" HorizontalAlignment="Right" Margin="0,55,54,0" Name="btnFindWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">...</Button>
+                    <Button Height="23" HorizontalAlignment="Right" Margin="0,56,17,0" Name="btnRemoveWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">-</Button>
                 </Grid> 
             </TabItem>
         </TabControl>

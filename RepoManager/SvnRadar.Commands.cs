@@ -43,6 +43,14 @@ namespace SvnRadar
             {
                 SetupSvnPath();
             }
+            else if (btn.Name == UIConstants.BTN_FIND_WINMERGE_PATH)
+            {
+                SetupWinMergePath();
+            }
+            else if (btn.Name == UIConstants.BTN_REMOVE_WINMERGE_PATH)
+            {
+                RemoveWinMergePath();
+            }
             else if (btn.Name == UIConstants.BTN_NAME_DISCARDCHANGES)
             {
                 ResetConfiguration();
@@ -457,50 +465,57 @@ namespace SvnRadar
                 return;
 
 
-            //if (RepoTabItem.MyListView == null)
-            //    return;
-
-            ///*Can not show information for more then one item at a time so do not to anything*/
-            //if (RepoTabItem.MyListView.SelectedItems.Count > 1)
-            //    return;
-
-            //object SelObject = SvnRadar.Common.Controls.RepoTabItem.MyListView.SelectedItem;
-
-            //if (SelObject == null)
-            //    SelObject = e.OriginalSource;
-
-            //RepoInfo repositoryInfo = SelObject as RepoInfo;
-            //if (repositoryInfo == null)
-            //    return;
-
-
-
             RepoInfo repositoryInfo = RepoInfo.SelectedInfo;
             if (repositoryInfo == null)
                 return;
 
-            /*Add revison object to the base, in order to populate it from the
-             commands output in the future. The strong key, in this case, is the Revision number*/
-            RevisionInfo revi = RepoInfoBase.AddRevisionInfoString(selRepo.RepositoryCompletePath, repositoryInfo.Revision, repositoryInfo.Item, repositoryInfo.Date, string.Empty);
-            RevisionInfoWindow reviwWnd = new RevisionInfoWindow(revi);
-            reviwWnd.Topmost = true;
-            reviwWnd.RelatedRepositoryName = selRepo.RepositoryCompletePath;
-
-            bool bSuccess = svnRadarExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
-            if (bSuccess)
+            /*If Batch file doesn't exist but the merge path defined , try to recreate batch file*/
+            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists && RepoBrowserConfiguration.Instance.IsWinMergeDefined)
             {
-                WindowsManager.AddNewWindow(reviwWnd);
+                GenerateBatchFile();
 
-                reviwWnd.Process = SvnRadarExecutor.LastExecutedProcess;
-                reviwWnd.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
-                reviwWnd.Show();
+                /*If Batch file doesn't exist, means there is somethign wrong with the batch file generation so remove also WinMerge 
+                 * definition from  the application configuration, and application will make diff via built in future*/
+                if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+                {
+                    /*Reset WinMerge path to emtpy*/
+                    RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
+
+
+                    //TODO: Warning to the user about it...
+                }
+            }
+
+            /*If there is no any batch file in the system, manage in built in way*/
+            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+            {
+                /*Add revison object to the base, in order to populate it from the
+                 commands output in the future. The strong key, in this case, is the Revision number*/
+                RevisionInfo revi = RepoInfoBase.AddRevisionInfoString(selRepo.RepositoryCompletePath, repositoryInfo.Revision, repositoryInfo.Item, repositoryInfo.Date, string.Empty);
+                RevisionInfoWindow reviwWnd = new RevisionInfoWindow(revi);
+                reviwWnd.Topmost = true;
+                reviwWnd.RelatedRepositoryName = selRepo.RepositoryCompletePath;
+
+                bool bSuccess = svnRadarExecutor.GetRevisionInfo(selRepoString, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation, false);
+                if (bSuccess)
+                {
+                    WindowsManager.AddNewWindow(reviwWnd);
+
+                    reviwWnd.Process = SvnRadarExecutor.LastExecutedProcess;
+                    reviwWnd.RelatedCommand = SvnRadarExecutor.LastExecutedProcess.Command;
+                    reviwWnd.Show();
+                }
+                else
+                {
+                    /* Something went wrong in the execution, so do not open window and clear the data*/
+                    RepoInfoBase.RemoveRevisonInfoStringFromBase(selRepo.RepositoryCompletePath, repositoryInfo.Revision);
+                    revi = null;
+                    reviwWnd = null;
+                }
             }
             else
             {
-                /* Something went wrong in the execution, so do not open window and clear the data*/
-                RepoInfoBase.RemoveRevisonInfoStringFromBase(selRepo.RepositoryCompletePath, repositoryInfo.Revision);
-                revi = null;
-                reviwWnd = null;
+                svnRadarExecutor.ShowDiffWithExternalDiffProgram(selRepo.RepositoryCompletePath, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation);
             }
 
         }

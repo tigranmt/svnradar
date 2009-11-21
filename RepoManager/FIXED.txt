@@ -47,3 +47,5 @@
 	 
 9.   Double click between column on list view will cause strange behaviour on entire application. Need to figure out.
 Fixed by disabling double click in between of the column' space
+
+10. Put the program in autorun 

@@ -723,6 +723,87 @@ namespace SvnRadar
         }
 
 
+        public bool ShowDiffWithExternalDiffProgram(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo)
+        {
+            if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
+                return false;
+
+
+
+            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+                return false;
+
+            try
+            {
+                if (System.IO.Directory.Exists(repoPath))
+                    CurrentRepositoryInQueryName = repoPath;
+
+                if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw ex;
+#endif
+                return false;
+            }
+
+
+            if (!System.IO.Path.IsPathRooted(fileName))
+                fileName = System.IO.Path.GetFullPath(fileName);
+
+
+            string logInfoParams = "  -r " + revisionNum.ToString();
+            string fileRelativeUrl = fileName;
+            if (folderRepoInfo != null)
+            {
+                try
+                {
+                    string relativeUrl = folderRepoInfo.RepoRelativeUrl;
+                    if (!string.IsNullOrEmpty(relativeUrl) && !fileRelativeUrl.Equals(relativeUrl, StringComparison.InvariantCultureIgnoreCase))
+                        fileRelativeUrl = fileName.Substring(fileName.IndexOf(relativeUrl) + relativeUrl.Length + 1);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    throw ex;
+#endif
+                    return false;
+                }
+            }
+
+
+
+            /*Svn special parameters for requesting the repository info*/
+            string changesMadeInfoParams = " " + folderRepoInfo.Path + @"\" + fileRelativeUrl.Replace("/", @"\");
+
+            if (!System.IO.File.Exists(changesMadeInfoParams))
+            {
+                ErrorManager.ShowCommonError("Can not locate " + changesMadeInfoParams +
+                    " file", true);
+                return false;
+            }
+
+
+            /*Move OS pointer to the directory of interest*/
+            string folderCompletePath = System.IO.Path.GetDirectoryName(changesMadeInfoParams);
+            if (!string.IsNullOrEmpty(folderCompletePath))
+                System.IO.Directory.SetCurrentDirectory(folderCompletePath);
+            else
+                throw new InvalidOperationException("Can not get the specified folder location. Path: " + changesMadeInfoParams);
+
+            /*Get file name */
+            string fileNaturalName = System.IO.Path.GetFileName(changesMadeInfoParams);
+
+            /*Execute command*/
+            Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
+                " " + logInfoParams + " " + fileNaturalName + " --diff-cmd " + RepoBrowserConfiguration.Instance.BatchFileCompletePath, false);
+
+
+            return true;
+        }
+
         /// <summary>
         /// Get the information about given revision
         /// </summary>
@@ -806,7 +887,7 @@ namespace SvnRadar
             if (!string.IsNullOrEmpty(folderCompletePath))
                 System.IO.Directory.SetCurrentDirectory(folderCompletePath);
             else
-                throw new InvalidOperationException("Can not get the specofoed folder location. Path: " + changesMadeInfoParams);
+                throw new InvalidOperationException("Can not get the specified folder location. Path: " + changesMadeInfoParams);
 
             /*Get file name */
             string fileNaturalName = System.IO.Path.GetFileName(changesMadeInfoParams);

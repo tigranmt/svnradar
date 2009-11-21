@@ -23,6 +23,9 @@ namespace SvnRadar.Util
         /// </summary>
         static readonly string CONFIG_FILE_NAME = "config.dat";
 
+
+        public static readonly string BATCH_FILE_NAME = "diff.bat";
+
         /// <summary>
         /// List view initial layout.
         /// </summary>
@@ -38,6 +41,21 @@ namespace SvnRadar.Util
 
 
         bool bRunOnStartUp = true;
+
+
+        static readonly string BatchFileDefaultContent = "@echo OFF "+ System.Environment.NewLine +
+        " rem Configure WinMerge. " + System.Environment.NewLine + 
+        " set DIFF=\"{0}\"" +  System.Environment.NewLine + 
+        " set LEFT_TITLE=%3 "  +  System.Environment.NewLine + 
+        " set RIGHT_TITLE=%5 " +  System.Environment.NewLine + 
+        " set LEFT=%6 "  +  System.Environment.NewLine + 
+        " set RIGHT=%7 "  +  System.Environment.NewLine + 
+        " %DIFF%    /e /ub /dl %LEFT_TITLE% /dr %RIGHT_TITLE%   %LEFT%  %RIGHT%";
+
+
+
+
+
 
         #endregion
 
@@ -87,6 +105,44 @@ namespace SvnRadar.Util
         }
 
 
+        /// <summary>
+        /// True if the file exists, so diff will be manged by the external WinMerge program, False otherwise
+        /// </summary>
+        public bool IsBatchFileExists
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(BatchFileCompletePath))
+                    return false;
+
+                if (!File.Exists(BatchFileCompletePath))
+                    return false;
+
+              
+                return true;
+            }
+        }
+
+
+        /// <summary>
+        /// True if the WinMerge path defined
+        /// </summary>
+        public bool IsWinMergeDefined
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(WinMergePath))
+                    return false;
+
+                if (!File.Exists(WinMergePath))
+                    return false;
+
+
+                return true;
+            }
+        }
+
+
 
         /// <summary>
         /// Subversion exe file complete path
@@ -95,6 +151,43 @@ namespace SvnRadar.Util
         public string SubversionPath { get; set; }
 
 
+        /// <summary>
+        /// WinMerge external tool  exe file complete path
+        /// </summary>
+        [DataMember()]
+        public string WinMergePath { get; set; }
+
+
+
+        /// <summary>
+        /// Contains complete path of the batch file present on the client machine's isolated storage folder
+        /// </summary>
+        public string BatchFileCompletePath 
+        {
+            get
+            {
+                try
+                {
+                    string asemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                    if (!string.IsNullOrEmpty(asemblyPath))
+                    {
+                        string assemblyDir = System.IO.Path.GetDirectoryName(asemblyPath);
+                        if (!string.IsNullOrEmpty(assemblyDir))
+                        {
+                            return assemblyDir + System.IO.Path.DirectorySeparatorChar + BATCH_FILE_NAME;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorManager.LogException(ex);
+                }
+
+
+                return string.Empty;
+            }
+        
+        }
 
         /// <summary>
         /// Client repository path
@@ -467,12 +560,41 @@ namespace SvnRadar.Util
             this.RepositoryPaths.Clear();
             this.SubversionPath = string.Empty;
             this.TortoisePath = string.Empty;
+            this.WinMergePath = string.Empty;
+
+            try
+            {
+                if (File.Exists(RepoBrowserConfiguration.Instance.BatchFileCompletePath))
+                    File.Delete(RepoBrowserConfiguration.Instance.BatchFileCompletePath);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.LogException(ex);
+            }
+            
             ViewLayout = ListViewLayoutEnum.FlatView;
 
         }
 
 
       
+        #endregion
+
+        #region batch methodds
+
+        /// <summary>
+        /// Generate BatchFile content. If the WinMerge path is empty or not correct the result will be an empty string.
+        /// </summary>
+        /// <returns>Returns the content of batch file</returns>
+        public string GenerateBatchFileContent()
+        {
+            if (string.IsNullOrEmpty(WinMergePath) ||
+                !File.Exists(WinMergePath))
+                return string.Empty;
+
+            return string.Format(BatchFileDefaultContent, WinMergePath);
+        }
+
         #endregion
         #endregion
 
