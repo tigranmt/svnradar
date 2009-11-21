@@ -41,6 +41,7 @@
     <system:String x:Key="Author">Author</system:String>
     <system:String x:Key="AuthorProfile">Author's profile</system:String>
     <system:String x:Key="ProjectSite">Project site</system:String>
+    <system:String x:Key="BatchFileGenerationProblem">There were some problems using the generation of batc file, application will automaticaly reset yuor custom diff tool information and pass to built-in diff viewer.</system:String>
     
     
     

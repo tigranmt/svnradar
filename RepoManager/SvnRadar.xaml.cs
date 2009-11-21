@@ -21,7 +21,7 @@ using System.Net;
 using System.IO;
 using System.Xml.XPath;
 using System.Xml;
-using System.IO.IsolatedStorage;
+
 
 namespace SvnRadar
 {

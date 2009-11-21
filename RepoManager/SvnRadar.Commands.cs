@@ -482,7 +482,13 @@ namespace SvnRadar
                     RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
 
 
-                    //TODO: Warning to the user about it...
+                    /*  Show warning message about it...*/
+                    string message = FindResource("BatchFileGenerationProblem") as string;
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        MessageBox.Show(message, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                   
                 }
             }
 
@@ -515,6 +521,7 @@ namespace SvnRadar
             }
             else
             {
+                /* Call batch file that will execute external Diff tool*/
                 svnRadarExecutor.ShowDiffWithExternalDiffProgram(selRepo.RepositoryCompletePath, repositoryInfo.Revision, repositoryInfo.Item, selRepo.FolderRepoInformation);
             }
 
