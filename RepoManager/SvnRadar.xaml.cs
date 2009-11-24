@@ -233,6 +233,14 @@ namespace SvnRadar
 
 
             /* Control if new version of an application exists on the server */
+
+            if (!IsNetworkAvailable())
+            {
+                string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
+                ErrorManager.ShowCommonError(errMsg, true);
+                return;
+            }
+
             ControlApplicationNewVersion();
 
         }

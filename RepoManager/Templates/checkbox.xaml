@@ -37,8 +37,8 @@
           <BulletDecorator Background="Transparent">
             <BulletDecorator.Bullet>
               <Border x:Name="Border"  
-                Width="13" 
-                Height="13" 
+                Width="16" 
+                Height="16" 
                 CornerRadius="0" 
                 Background="{StaticResource NormalBrush}"
                 BorderThickness="1"

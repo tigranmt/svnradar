@@ -30,7 +30,7 @@
     <system:String x:Key="ReportBugWindowTitle">Report a bug or leave a Comment</system:String>
 
     <system:String x:Key="GoToSourceToolTip">Go to source file</system:String>
-    <system:String x:Key="SetOnAutorunTitle">Run program on Start up</system:String>
+    <system:String x:Key="SetOnAutorunTitle">Run program on Windows Start up</system:String>
     <system:String x:Key="CloseTitle">Close</system:String>
     <system:String x:Key="GoToTitle">Go to</system:String>
     <system:String x:Key="VersionControlWindowTitle">Version control</system:String>
