@@ -1,0 +1,145 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <system:String x:Key="SaveButtonTitle">Salva</system:String>
+    <system:String x:Key="DiscardButtonTitle">Annullare modifiche</system:String>
+    <system:String x:Key="ConfigurationTabTitle">Configurazione svn</system:String>   
+    <system:String x:Key="SVNPathTextBlockTitle">Percorso exe di Subversion</system:String>
+    <system:String x:Key="WinMergePath">Percorso exe di WinMege</system:String>    
+    
+    <system:String x:Key="SVNControlTimeRate">Controlla repository ogni</system:String>
+    <system:String x:Key="SVNControlTimeRateMinutes">minute</system:String>  
+    <system:String x:Key="SVNRepositioryPath">Percorsi delle repository di svn</system:String>
+    <system:String x:Key="WorkingCopyTitle">Coppia locale</system:String>
+    <system:String x:Key="RepositoryTitle">Syncornizza</system:String>   
+    <system:String x:Key="UpdateAllTitle">Aggiorna</system:String>
+    <system:String x:Key="BreakExecutionTitle">Anulla essecuzione</system:String>    
+    <system:String x:Key="UdateWindowTitle">Aggiornamento </system:String>
+    <system:String x:Key="UdateToolTip">Aggiorna</system:String>
+    <system:String x:Key="ShowChangesToolTip">Visualizza le modifiche</system:String>
+    <system:String x:Key="MainWindowTitle">Svn Radar</system:String>
+
+
+    <system:String x:Key="UserCommentTitle">Commento(Clica per cambiare)</system:String>
+    <system:String x:Key="BugTitle">Buco(Clica per cambiare)</system:String>
+    <system:String x:Key="ReportBugWindowTitle">Reporta un baco o lascia un commento</system:String>
+
+    <system:String x:Key="GoToSourceToolTip">Vai a file sorgente</system:String>
+    <system:String x:Key="SetOnAutorunTitle">Esegui la programma al avvio di Windows</system:String>
+    <system:String x:Key="CloseTitle">Chiudi</system:String>
+    <system:String x:Key="GoToTitle">Vai a</system:String>
+    <system:String x:Key="VersionControlWindowTitle">Controllo di versione</system:String>
+    <system:String x:Key="NewVersionApplicationString">Stata relevata nuova {0} versione del applicativo</system:String>
+    <system:String x:Key="AboutWindowTitle">Aiuto SvnRadar</system:String>
+    
+    <system:String x:Key="Version">Versione</system:String>
+    <system:String x:Key="Author">Autore</system:String>
+    <system:String x:Key="AuthorProfile">Profilo  autore</system:String>
+    <system:String x:Key="ProjectSite">Sito</system:String>
+    
+    <system:String x:Key="BatchFileGenerationProblem">Ci sono statiproblemi con gerazione del file batch, l'aplicativ automaticamente resettera' informazioini del dif toll esternoe passera' ad un diff tool buit-in.</system:String>
+    <system:String x:Key="DiffToolPathProblem">Non e' possible raggiungere applicativo per diff a percorso definito dentro configurazione. Applicativo automaticamente passera ad un diff build-in.</system:String>
+    
+    
+    
+
+    
+
+
+
+
+    <system:String x:Key="MI_FILE">File</system:String>    
+    <system:String x:Key="MI_EXPORTCONFIGURATION">Esporta configurazione</system:String>
+    <system:String x:Key="MI_IMPORTCONFIGURATION">Importa configurazione</system:String>
+    <system:String x:Key="MI_EXIT">Esci</system:String>
+    
+    
+    <system:String x:Key="MI_REPOSITORY">Repository</system:String>
+    <system:String x:Key="MI_SYNCWITHREPOSITORY">Syncronizza con la repository</system:String>   
+    <system:String x:Key="MI_UPDATEFROMREPOSITORY">Aggiorna dalla repositor</system:String>
+    
+    
+    <system:String x:Key="MI_VIEW">Visualizza</system:String>
+    <system:String x:Key="MI_REVISIONVIEW">Visione a revisione</system:String>
+    <system:String x:Key="MI_FLATVIEW">Visione flat</system:String>
+
+    <system:String x:Key="MI_HELP">Aiuto</system:String>
+    <system:String x:Key="MI_ABOUT">Info</system:String>
+    <system:String x:Key="MI_BUGORSENDAMESSAGESIGNAL">Segnala un baco o manda un commento</system:String>
+    
+
+    <system:String x:Key="MI_SHOWCHANGESSEQUENCE">Visualizza le modifiche</system:String>
+    <system:String x:Key="MI_SHOWMAINWINDOW">Visualizza la finestra</system:String>
+
+   
+    <system:String x:Key="MI_SHOWREVISIONINFO">Visualizza le diffeenze</system:String>
+    <system:String x:Key="MI_UPDATEONYTHISFILE">Aggiroan solo questo file</system:String>
+
+
+
+
+
+
+    <system:String x:Key="FilterOnHeaderToolTip">Clica sulla colonna per filtrare contenuto</system:String>
+    <system:String x:Key="ItemsCountText">Iteme trovate: </system:String>
+    <system:String x:Key="SearchTextBoxDefaultText">Stampa qui per filarae contenuto</system:String>
+
+
+
+    <system:String x:Key="UI_MENUTEM_SETALIASTOTABITEM">Assegna un alias al tab</system:String>
+    <system:String x:Key="UI_MENUTEM_REMOVETABITEM">Remuova la repostory dalla collezione</system:String>
+
+
+    <system:String x:Key="MSG_WARNING_DELETE_REPOPATH">Sei sicuro di voler cancellare la repository dalla collezione?</system:String>
+    <system:String x:Key="MSG_SELECTED_PATH_NOLONGER_EXISTS">La repository sembra di non essere presente nel percorso : {0}. Se vuole cancelarla dalla f=configurazione automaticamente, prema Si. Oppure puo premere Anulla  e rimuovere manualmente dalla tab di configurazione in un secondo momento.</system:String>
+
+    <system:String x:Key="MSG_MAIN_CLOSE">Sei sicuro di voler uscire dal applicativo ?</system:String>
+    <system:String x:Key="MSG_NETWORKSTATUS_PROBLEM">Non ce' nessuna conessione disponibile. Verifica, per favore, il stato della conessione di rete.</system:String>
+    <system:String x:Key="MSG_MULTIPLEUPDATECOMMANDS">Ce' gia un commado Update in processo sulla repository.</system:String>
+    <system:String x:Key="MSG_REPOUPDATEBREAK">Aggionamento della repository non e' ancora terminato. Chudendo la finestra in questo mento puo bloccre accesso lla copia locale a cmmnde successive su questa repository, quindi ara bisognodi esseguire ClenUp. Sei sicuro di voler terminare aggiornamento della coppia locale ? </system:String>
+
+    <system:String x:Key="MSG_REPORTERNAMEMANDATORY">Non si puo avere nome del reporter vuoto</system:String>
+    <system:String x:Key="MSG_MESSAGEMANDATORY">Non si puo avere messsagio vuoto</system:String>
+
+    <system:String x:Key="MSG_DESIRIALIZATIONEXCEPTION">Non riesco dsieriaizzare il file di confiigurazione. </system:String>
+
+    
+
+
+
+    <system:String x:Key="STATE_NAME">Stato</system:String>
+    <system:String x:Key="REVISION_NAME">Revisione</system:String>
+    <system:String x:Key="ACCOUNT_NAME">Utente</system:String>
+    <system:String x:Key="ITEM_NAME">Itema</system:String>
+    <system:String x:Key="DATE_NAME">Data</system:String>
+    <system:String x:Key="REPOSITORY_NAME">Repository</system:String>
+    
+    
+    <system:String x:Key="BTN_OK_TITLE">Ok</system:String>
+
+
+
+    <system:String x:Key="NORMAL_STR">Normal</system:String>
+    <system:String x:Key="MODIFIED_STR">Sorgente stato modificato</system:String>
+    <system:String x:Key="DELETED_STR">Rimosso</system:String>
+    <system:String x:Key="ADD_STR">Nuova itema</system:String>
+    <system:String x:Key="REPLACED_STR">Sostituito</system:String>
+    <system:String x:Key="CONFLICT_STR">In conflitto</system:String>
+    <system:String x:Key="EXTERNALDEF_STR">Definizione esterna</system:String>
+    <system:String x:Key="IGNORED_STR">Ignorato</system:String>
+    <system:String x:Key="NOTVERSIONED_STR">Non versionato</system:String>
+    <system:String x:Key="MISSING_STR">Mancante</system:String>
+    <system:String x:Key="DIFFERENTKIND_STR">Versionato con un altro tipo di ogetto</system:String>
+    <system:String x:Key="NEEDTOBEUPDATED_STR">Bisogna aggiornare dalla repository</system:String>
+
+
+
+    <system:String x:Key="GETCHANGELOGSTATUSBARMSG">Recavo delle informazione come  richiesto. Attendere...</system:String>
+    <system:String x:Key="UPDATINGREPOSITORYSTATUSBARMSG">Aggiorno coppia locale come richiesto. Attendere...</system:String>
+
+    <system:String x:Key="NEXTCHANGE_TOOLTIP">Prossima modifica</system:String>
+    <system:String x:Key="PREVIOUSCHANGE_TOOLTIP">Precedente modifica</system:String>
+
+
+</ResourceDictionary>
