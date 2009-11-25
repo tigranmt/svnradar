@@ -5,7 +5,7 @@
     <Grid Height="182" Width="338">
         <Image HorizontalAlignment="Left" Margin="12,12,0,0" Name="image1" Stretch="Fill" Width="85" Source="/SvnRadar;component/Images/systrayicon.ico" Height="80" VerticalAlignment="Top" />
         <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="111,0,122,2" Name="button1" VerticalAlignment="Bottom" Content="{StaticResource CloseTitle}" Click="button1_Click"/>
-        <TextBlock Height="21" Margin="111,12,0,0" FontWeight="Bold" Name="tbVersion" VerticalAlignment="Top" HorizontalAlignment="Left" Width="47" Text="{StaticResource Version}"/>
+        <TextBlock Height="21" Margin="111,12,161,0" FontWeight="Bold" Name="tbVersion" VerticalAlignment="Top" Text="{StaticResource Version}"/>
         <TextBlock Margin="111,87,0,77" FontWeight="Bold" Name="tbAuthor" HorizontalAlignment="Left" Width="47" Text="{StaticResource Author}" />
         <TextBlock Margin="111,46,0,0" FontWeight="Bold" Name="tbProjectSite" HorizontalAlignment="Left" Width="66" Text="{StaticResource ProjectSite}" Height="21" VerticalAlignment="Top" />
         <TextBlock Margin="110,0,0,45" FontWeight="Bold" Name="tbAuthorSite" Text="{StaticResource AuthorProfile}" Height="17" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="93" />

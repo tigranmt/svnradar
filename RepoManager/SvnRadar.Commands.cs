@@ -492,8 +492,26 @@ namespace SvnRadar
                 }
             }
 
-            /*If there is no any batch file in the system, manage in built in way*/
-            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+
+            /*If the mege path doesn't defined or doesn't exist*/
+            if (!string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.WinMergePath) && !System.IO.File.Exists(RepoBrowserConfiguration.Instance.WinMergePath))
+            {
+                /*  Show warning message about it...*/
+                string message = FindResource("DiffToolPathProblem") as string;
+                if (!string.IsNullOrEmpty(message))
+                {
+                    
+                    MessageBox.Show(message, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+
+                /*Reset WinMerge path to emtpy*/
+                RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
+
+            }
+
+            /*If there is no any batch file in the system or any diff tol defined, manage in built in way*/
+            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists || !RepoBrowserConfiguration.Instance.IsWinMergeDefined)
             {
                 /*Add revison object to the base, in order to populate it from the
                  commands output in the future. The strong key, in this case, is the Revision number*/

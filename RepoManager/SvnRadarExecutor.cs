@@ -205,13 +205,18 @@ namespace SvnRadar
             }
 
             System.Diagnostics.ProcessStartInfo psi =
-                          new System.Diagnostics.ProcessStartInfo(RepoBrowserConfiguration.Instance.SubversionPath);
+                          new System.Diagnostics.ProcessStartInfo("\"" + RepoBrowserConfiguration.Instance.SubversionPath + "\"");
 
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
             psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             psi.UseShellExecute = false;
-            psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " " + folderPath;
+
+            /*If the path is not Url based, means that we neeed o handle a cases when the path contains spaces*/
+            if(!UrlPassed)
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath + "\"";
+            else
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand +  " " + folderPath;
             psi.CreateNoWindow = true;
 
             RepositoryProcess process = RepoProcess;
@@ -272,7 +277,7 @@ namespace SvnRadar
 
             /*Try to kill the process and release all resources relayted to it.
              Handle any kind of exception, but do not log or notify it,
-             * by the way almost DEAD prcess will be killed by the System itself later. */
+             * by the way almost DEAD process will be killed by the System itself later. */
             try
             {
                 process.Kill();
@@ -798,7 +803,7 @@ namespace SvnRadar
 
             /*Execute command*/
             Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
-                " " + logInfoParams + " " + fileNaturalName + " --diff-cmd " + RepoBrowserConfiguration.Instance.BatchFileCompletePath, false);
+                " " + logInfoParams + " " + fileNaturalName + " --diff-cmd " + "\"" + RepoBrowserConfiguration.Instance.BatchFileCompletePath + "\"", false);
 
 
             return true;
