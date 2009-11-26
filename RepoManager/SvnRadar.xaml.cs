@@ -611,15 +611,17 @@ namespace SvnRadar
         /// </summary>
         private void AddNewSvnPath()
         {
-
-            FolderBrowserDialog obd = new FolderBrowserDialog();
-            System.Windows.Forms.DialogResult res = obd.ShowDialog();
+            
+            System.Windows.Forms.DialogResult res = FolderDialog.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
-                RepoBrowserConfiguration.Instance.AddRepoPath(obd.SelectedPath);
+                RepoBrowserConfiguration.Instance.AddRepoPath(FolderDialog.SelectedPath);
+               
             }
 
         }
+
+
 
 
         /// <summary>

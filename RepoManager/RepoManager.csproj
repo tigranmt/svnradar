@@ -251,6 +251,7 @@
     <Compile Include="Common\Controls\RepoTabItem.cs" />
     <Compile Include="DataVirtualization\IItemsProvider.cs" />
     <Compile Include="DataVirtualization\VirtualizingCollection.cs" />
+    <Compile Include="Util\FolderDialog.cs" />
     <Compile Include="VersionControlWindow.xaml.cs">
       <DependentUpon>VersionControlWindow.xaml</DependentUpon>
     </Compile>
