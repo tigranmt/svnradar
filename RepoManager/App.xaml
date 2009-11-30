@@ -92,7 +92,11 @@
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
-            
+            <Image x:Key="ExitIcon" Source="Images/exit.ico"/>
+            <Image x:Key="ImportIcon" Source="Images/import.ico"/>
+            <Image x:Key="ExportIcon" Source="Images/export.ico"/>
+            <Image x:Key="AboutIcon" Source="Images/about.ico"/>
+
 
             <!--- Images -->
 

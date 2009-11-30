@@ -32,11 +32,12 @@
     <Window.Resources>
 
         <!-- Context menu on sys tray -->
-        <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">
-            <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
-            <!--<MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Icon="{StaticResource UpdateIcon}" Background="Lavender"/>-->
+        <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">            
+            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Icon="{StaticResource UpdateIcon}"/>
             <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click" Icon="{StaticResource NotificationListIcon}"/>
-            <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"/>
+            <Separator/>
+            <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
+            <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
         </ContextMenu>
       
         <!-- Context menu on sys tray -->
@@ -53,9 +54,9 @@
         <!-- Main application menu -->
         <Menu x:Name="ApplicationMenu" Grid.Row="0">
             <MenuItem x:Name="FileMI" Header="{StaticResource MI_FILE}">
-                <MenuItem x:Name="ExportMI" Header="{StaticResource MI_EXPORTCONFIGURATION}" Click="ExportMI_Click" IsEnabled="True"/>
-                <MenuItem x:Name="ImportMI" Header="{StaticResource MI_IMPORTCONFIGURATION}" Click="ImportMI_Click" IsEnabled="True"/>
-                <MenuItem x:Name="ExitMI" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"/>
+                <MenuItem x:Name="ExportMI" Header="{StaticResource MI_EXPORTCONFIGURATION}" Click="ExportMI_Click" IsEnabled="True"  Icon="{StaticResource ExportIcon}"/>
+                <MenuItem x:Name="ImportMI" Header="{StaticResource MI_IMPORTCONFIGURATION}" Click="ImportMI_Click" IsEnabled="True" Icon="{StaticResource ImportIcon}"/>
+                <MenuItem x:Name="ExitMI" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
             </MenuItem>
             <MenuItem x:Name="RepositoryMI" Header="{StaticResource MI_REPOSITORY}">
                 <MenuItem x:Name="SyncMI" Header="{StaticResource MI_SYNCWITHREPOSITORY}" IsEnabled="True" Command="repomanager:AppCommands.GetRepoInfoCommand"/>
@@ -69,7 +70,7 @@
 
             <MenuItem x:Name="HelpMI" Header="{StaticResource MI_HELP}">
                 <!--<MenuItem x:Name="BugSignal" Header="{StaticResource MI_BUGORSENDAMESSAGESIGNAL}" IsEnabled="True" Click="BugSignal_Click"/>-->
-                <MenuItem x:Name="AboutMI" Header="{StaticResource MI_ABOUT}" IsEnabled="True" Click="AboutMI_Click"/>                
+                <MenuItem x:Name="AboutMI" Header="{StaticResource MI_ABOUT}" IsEnabled="True" Click="AboutMI_Click" Icon="{StaticResource AboutIcon}"/>                
             </MenuItem>
 
         </Menu>

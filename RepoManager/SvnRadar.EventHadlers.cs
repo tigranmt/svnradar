@@ -57,6 +57,8 @@ namespace SvnRadar
         private void UpdateAll_Click(object sender, RoutedEventArgs e)
         {
 
+            UpdateReporiotiesInSequence();
+            
         }
 
 

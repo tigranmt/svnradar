@@ -439,6 +439,16 @@
   <ItemGroup>
     <Resource Include="Images\check_for_updatesico.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\export.ico" />
+    <Resource Include="Images\import.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\about.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -26,7 +26,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// Notification list content of wich have to be segnalized to the user
         /// </summary>
-        static ObservableCollection<FolderRepoInfo> notificationList = new ObservableCollection<FolderRepoInfo>();
+        internal static ObservableCollection<FolderRepoInfo> notificationList = new ObservableCollection<FolderRepoInfo>();
 
       
         ///// <summary>

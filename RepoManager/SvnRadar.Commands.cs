@@ -11,6 +11,7 @@ using System.Windows.Data;
 using SvnRadar.DataBase;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace SvnRadar
 {
@@ -25,6 +26,12 @@ namespace SvnRadar
         /// Filter manager object declared in resources of the applciation
         /// </summary>
         static FilterManager filterManager = null;
+
+
+        /// <summary>
+        /// True if the program is processing a sequence of the repositories by update command
+        /// </summary>
+        bool bRepositorySequenceUpdating = false;
 
 
         /// <summary>
@@ -180,7 +187,7 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(selRepoString))
                 return;
 
-            FolderRepoInfo folderRepoInfo = svnRadarExecutor.GetFolderRepoInfo(selRepoString,false);
+            FolderRepoInfo folderRepoInfo = svnRadarExecutor.GetFolderRepoInfo(selRepoString, false);
 
             if (folderRepoInfo != null)
             {
@@ -237,7 +244,7 @@ namespace SvnRadar
                 return;
 
             RepoInfo selectedSingleInfo = RepoInfo.SelectedInfo;
-            
+
             if (selectedSingleInfo == null)
                 return;
 
@@ -245,7 +252,7 @@ namespace SvnRadar
                 return;
 
 
-        
+
             /*If there is already Update executing over specified repository do not call again, as the folder is alreday locked by Subversion.*/
             if (!string.IsNullOrEmpty(selRepo.RepositoryCompletePath))
             {
@@ -316,8 +323,8 @@ namespace SvnRadar
         private void UpdateRepositoryCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = false;
-            
-            RepoTabItem repoTabItem  = mainTab.SelectedItem as RepoTabItem;
+
+            RepoTabItem repoTabItem = mainTab.SelectedItem as RepoTabItem;
             if (repoTabItem == null)
                 return;
             ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryCompletePath);
@@ -327,17 +334,131 @@ namespace SvnRadar
 
 
 
+
+        /// <summary>
+        /// Updates all avalable repsotiory in sequence
+        /// </summary>
+        private void UpdateReporiotiesInSequence()
+        {
+
+            /*If I,m not finished updateing the sequence of the repositories, do not execute any kind of command*/
+            if (bRepositorySequenceUpdating)
+                return;
+
+            FolderRepoInfo[] friArray = null;
+            lock (TaskNotifierManager.notificationList)
+            {
+                friArray = TaskNotifierManager.notificationList.ToArray<FolderRepoInfo>();
+            }
+
+            /*Set global boolean value*/
+            bRepositorySequenceUpdating = true;
+
+            /*Begin new thread in order to not block UI interface.
+             In the specified thread begin iteration over the repositories that are going to be updated by
+             user request in sequence*/
+            BackgroundWorker _worker = new BackgroundWorker();
+            _worker.WorkerReportsProgress = true;
+            _worker.WorkerSupportsCancellation = true;
+            _worker.DoWork += delegate(object s, DoWorkEventArgs args)
+            {
+                foreach (FolderRepoInfo changedRepoInfo in friArray)
+                {
+                    UpdateTraceWindow utw = null;
+
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        utw = UpdateRepository(changedRepoInfo.FolderPath);
+                    }));
+
+
+                    if (utw == null)
+                        continue;
+
+                    /*If during the utw object creation the relative process is already distroyed or has exited, 
+                     * continnue to the next item, if there is any*/
+                    if (utw.Process == null || utw.Process.HasExited)
+                        continue;
+
+                    /*Signals an event */
+                    System.Threading.ManualResetEvent manuevent = new System.Threading.ManualResetEvent(true);
+                    
+                    /*Wait until process exits, in order to try to close automatically related  UpdateTrace window*/
+                    utw.Process.Exited += delegate(object sender, System.EventArgs e)
+                    {
+                        try
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                /*Try forse the closing of the update window*/
+                                utw.Close();
+                                GC.SuppressFinalize(utw);
+                                utw = null;
+
+                            }));
+
+                        }
+                        catch
+                        {
+                        }
+
+                        /*Resets an event as the work is completed*/
+                        manuevent.Set();
+                    };
+
+                  
+                    /*Waiting idefinitely untill the process completes it job*/
+                    manuevent.WaitOne();
+
+                  
+                        
+                   
+
+
+                }
+
+                /*Worker execution competed so execute som GC stuff*/
+                _worker.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                            {
+                                GC.SuppressFinalize(friArray);
+                                friArray = null;
+
+                                GC.Collect();
+                                GC.WaitForPendingFinalizers();
+
+                            }
+                            )
+                    );
+                };
+
+
+                /*Reset global boolean value*/
+                bRepositorySequenceUpdating = false;
+            };
+
+
+
+            _worker.RunWorkerAsync();
+
+
+
+
+        }
+
+
         /// <summary>
         /// Executes updates specified repository .
         /// </summary>
         /// <param name="repositoryPath">Repository complete working copy path. If Null or Empty string is passed, the 
         /// current selected repository will be updated, if there is any.</param>
-        private void UpdateRepository(string repositoryPath)
+        private UpdateTraceWindow UpdateRepository(string repositoryPath)
         {
 
 
             string repoName = System.IO.Path.GetFileNameWithoutExtension(repositoryPath);
-           
+
 
             RepoTabItem selRepo = mainTab.SelectedItem as RepoTabItem;
             string selRepoCompletePath = string.Empty;
@@ -347,7 +468,7 @@ namespace SvnRadar
             {
                 selRepoCompletePath = repositoryPath;
                 if (string.IsNullOrEmpty(selRepoCompletePath))
-                    return;
+                    return null;
 
             }
             else if (selRepo != null)
@@ -355,21 +476,21 @@ namespace SvnRadar
                 selRepoCompletePath = selRepo.RepositoryCompletePath;
             }
             else
-                return;
+                return null;
 
 
 
             if (string.IsNullOrEmpty(selRepoCompletePath))
-                return;
+                return null;
 
             if (!System.IO.Directory.Exists(selRepoCompletePath))
-                return;
+                return null;
 
 
             /*If there is already Update executing over specified repository do not call again, as the folder is alreday locked by Subversion.*/
             if (!string.IsNullOrEmpty(selRepoCompletePath))
             {
-                
+
                 RepositoryProcess availableRepoProcess = RadarExecutor.IsProcesStillAvailable(selRepoCompletePath);
                 if (availableRepoProcess != null)
                 {
@@ -378,7 +499,7 @@ namespace SvnRadar
                         string msg = FindResource("MSG_MULTIPLEUPDATECOMMANDS") as string;
                         if (!string.IsNullOrEmpty(msg))
                             MessageBox.Show(msg, App.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
+                        return null;
                     }
                 }
             }
@@ -391,20 +512,20 @@ namespace SvnRadar
             catch (Exception ex)
             {
                 ErrorManager.ShowExceptionError(ex, true);
-                return;
+                return null;
             }
 
 
             //Creating trace window
             UpdateTraceWindow utw = new UpdateTraceWindow();
             if (selRepo != null)
-                utw.Title += "   /" + selRepoCompletePath;
+                utw.Title += "    " + selRepoCompletePath;
             else if (!string.IsNullOrEmpty(selRepoCompletePath))
             {
-                utw.Title += "   /" + System.IO.Path.GetDirectoryName(selRepoCompletePath);
+                utw.Title += "    " + selRepoCompletePath;
             }
             else
-                return;
+                return null;
             utw.Topmost = true;
 
 
@@ -422,6 +543,7 @@ namespace SvnRadar
 
 
             utw.Show();
+            return utw;
 
         }
 
@@ -488,7 +610,7 @@ namespace SvnRadar
                     {
                         MessageBox.Show(message, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                   
+
                 }
             }
 
@@ -500,7 +622,7 @@ namespace SvnRadar
                 string message = FindResource("DiffToolPathProblem") as string;
                 if (!string.IsNullOrEmpty(message))
                 {
-                    
+
                     MessageBox.Show(message, Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -562,12 +684,15 @@ namespace SvnRadar
             if (string.IsNullOrEmpty(colName))
                 return;
 
-            if (FilterManager.RemoveFilter(selRepo.RepositoryCompletePath, colName))
-            {
-                selRepo.UpdateColumnBinding(colName);
+            /*remove filter from collection */
+            FilterManager.RemoveFilter(selRepo.RepositoryCompletePath, colName);
 
-                UpdateObjectDataProvider();
-            }
+            /*update binding on column */
+            selRepo.UpdateColumnBinding(colName);
+
+            /*update data provider*/
+            UpdateObjectDataProvider();
+
 
         }
 
@@ -696,7 +821,7 @@ namespace SvnRadar
 
 
 
-    
+
 
         /// <summary>
         /// Hanldes request on break the repository changes request
@@ -718,14 +843,14 @@ namespace SvnRadar
                 repoProcess.Kill();
                 repoProcess.Dispose();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorManager.ShowExceptionError(ex, true);
             }
         }
 
 
-        
+
 
 
 
