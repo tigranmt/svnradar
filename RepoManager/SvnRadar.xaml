@@ -33,9 +33,9 @@
 
         <!-- Context menu on sys tray -->
         <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">            
-            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Icon="{StaticResource UpdateIcon}"/>
-            <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click" Icon="{StaticResource NotificationListIcon}"/>
+            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Background="Gold" Foreground="Black" />
             <Separator/>
+            <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>            
             <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
             <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
         </ContextMenu>
@@ -120,7 +120,7 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                     	-</Button>
                     <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="51,83,91,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" />
-                    <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="26,51,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="167" />
+                    <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="69,55,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="116" />
                     <TextBox Height="23" IsReadOnly="True" Margin="230,50,91,0" Name="txtWinMergePath" Text="{Binding Path=WinMergePath,Mode=TwoWay}" VerticalAlignment="Top" />
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,54,0" Name="btnFindWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">...</Button>
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,17,0" Name="btnRemoveWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">-</Button>

@@ -394,7 +394,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\needupdated.ico" />
-    <Resource Include="Images\noupdate.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\info.png" />
@@ -410,12 +409,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logimage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\notificationlist.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\update.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\next.png" />

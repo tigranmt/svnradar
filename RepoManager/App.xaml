@@ -86,9 +86,8 @@
             <Image x:Key="ConflictedImage" Source="Images/conflicted.png"/>
             <Image x:Key="EmptyImage" Source="Images/empty.png"/>
             <Image x:Key="UpdateImage" Source="Images/updateimage.png"/>
-            <Image x:Key="LogImage" Source="Images/logimage.png"/>
-            <Image x:Key="NotificationListIcon" Source="Images/notificationlist.ico"/>
-            <Image x:Key="UpdateIcon" Source="Images/update.ico"/>
+            <Image x:Key="LogImage" Source="Images/logimage.png"/>           
+            
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>

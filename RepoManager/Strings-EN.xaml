@@ -6,7 +6,7 @@
     <system:String x:Key="DiscardButtonTitle">Discard changes</system:String>
     <system:String x:Key="ConfigurationTabTitle">Svn configuration</system:String>   
     <system:String x:Key="SVNPathTextBlockTitle">Subversion exe path</system:String>
-    <system:String x:Key="WinMergePath">WinMege path</system:String>
+    <system:String x:Key="WinMergePath">WinMerge path</system:String>
     
     <system:String x:Key="TortoisePathTextBlockTitle">Tortoise exe path</system:String>
     <system:String x:Key="SVNControlTimeRate">Control repository every</system:String>
