@@ -74,8 +74,8 @@ namespace SvnRadar
             {
                 if (lbSvnPaths.SelectedItem != null)
                 {
-                    string selectedPath = lbSvnPaths.SelectedItem as string;
-                    RemoveSvnPath(selectedPath);
+                    Repository repo = lbSvnPaths.SelectedItem as Repository;
+                    RemoveSvnPath(repo.RepositoryCompletePath);
                 }
             }
 
@@ -390,10 +390,14 @@ namespace SvnRadar
                         {
                             Dispatcher.Invoke(new Action(() =>
                             {
-                                /*Try forse the closing of the update window*/
-                                utw.Close();
-                                GC.SuppressFinalize(utw);
-                                utw = null;
+                                /*Try forse the closing of the update window, only if there is no any
+                                 conflict detected during update*/
+                                if (utw.ConflictDetected == false)
+                                {
+                                    utw.Close();
+                                    GC.SuppressFinalize(utw);
+                                    utw = null;
+                                }
 
                             }));
 

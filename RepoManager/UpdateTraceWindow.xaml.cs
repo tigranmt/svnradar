@@ -28,6 +28,8 @@ namespace SvnRadar
         /// </summary>
         ObservableCollection<UpdateTraceRow> updateTrace = new ObservableCollection<UpdateTraceRow>();
 
+        bool bConflictDetected = false;
+
         //Ctor
         public UpdateTraceWindow()
         {
@@ -36,6 +38,14 @@ namespace SvnRadar
 
             InitUI();
             
+        }
+
+        /// <summary>
+        /// If TRUE there are some conflict were detected during the update operation, FALSE otherwise
+        /// </summary>
+        public bool ConflictDetected 
+        {
+            get { return bConflictDetected; } 
         }
 
 
@@ -81,10 +91,18 @@ namespace SvnRadar
                 char stateChar = strState.ToCharArray()[0];
                 utr.RepositoryItemState = RepoInfo.StateFromChar(stateChar);
                 utr.Action = RepoInfo.StateDescriptionFromEnum(utr.RepositoryItemState);
+
+
             }
             else
             {
                 utr.Action = strState;
+            }
+
+            if (!bConflictDetected)
+            {
+                /*If there is any conflict detected */
+                bConflictDetected = (utr.RepositoryItemState == RepoInfo.RepoItemState.Conflict);
             }
 
             if(UpdateTraceListView.ItemsSource == null)

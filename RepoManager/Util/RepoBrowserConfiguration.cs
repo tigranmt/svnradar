@@ -34,7 +34,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// Repository paths collection
         /// </summary>
-        ObservableCollection<string> repoPaths = new ObservableCollection<string>();
+        ObservableCollection<Repository> repoPaths = new ObservableCollection<Repository>();
 
 
         static RepoBrowserConfiguration browser = null;
@@ -193,13 +193,13 @@ namespace SvnRadar.Util
         /// Client repository path
         /// </summary>
         [DataMember()]
-        public ObservableCollection<string> RepositoryPaths
+        public ObservableCollection<Repository> RepositoryPaths
         {
 
             get
             {
                 if (repoPaths == null)
-                    repoPaths = new ObservableCollection<string>();
+                    repoPaths = new ObservableCollection<Repository>();
                 return repoPaths;
 
             }
@@ -531,9 +531,13 @@ namespace SvnRadar.Util
         /// <param name="repoPath">The path to add to collection</param>
         public void AddRepoPath(string repoPath)
         {
-            if (!RepositoryPaths.Contains(repoPath))
-                RepositoryPaths.Add(repoPath);
+            if (!RepositoryPaths.Any((x) => x.RepositoryCompletePath.Equals(repoPath, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Repository repo = new Repository { RepositoryCompletePath = repoPath };
+                RepositoryPaths.Add(repo);
+            }
         }
+        
 
 
         /// <summary>
@@ -542,8 +546,15 @@ namespace SvnRadar.Util
         /// <param name="repoPath">The path to remove from the collection</param>
         public void RemoveRepoPath(string repoPath)
         {
-            if (RepositoryPaths.Contains(repoPath))
-                RepositoryPaths.Remove(repoPath);
+            IEnumerable<Repository> repoList = RepositoryPaths.Where((x)=>x.RepositoryCompletePath.Equals(repoPath,StringComparison.InvariantCultureIgnoreCase));
+            if (repoList != null)
+            {
+                foreach (Repository r in repoList)
+                {
+                    RepositoryPaths.Remove(r);
+                    break;
+                }
+            }
 
         }
 

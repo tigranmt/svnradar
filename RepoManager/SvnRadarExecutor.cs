@@ -719,14 +719,97 @@ namespace SvnRadar
 
             System.IO.Directory.SetCurrentDirectory(workingCopyCompletePath);
 
-           
-          
+
+            //postpone
+            string conflictResolutionParam = "postpone";
 
             //Execute command
             Execute(RepoBrowserConfiguration.Instance.SubversionPath,
-                " " + CommandStringsManager.UpdateCommand, isCallForSysTray);
+             " --accept " + conflictResolutionParam + " " + CommandStringsManager.UpdateCommand, isCallForSysTray);
+
+            
+
         }
 
+
+       /// <summary>
+       /// Checks the presence of any conflict in the specified repository
+       /// </summary>
+       /// <param name="workingCopyCompletePath">The repository working copy complete path</param>
+       /// <returns>The list of the items in conlfict state </returns>
+        List<string> VerifyRepositoryOnConflict(string workingCopyCompletePath)
+        {
+            if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
+                return null;
+
+
+            /*Svn special parameters for requesting the repository status*/
+            string repoStatusRequestParams = " -uq"; 
+
+
+          
+
+            System.Diagnostics.ProcessStartInfo psi =
+                          new System.Diagnostics.ProcessStartInfo(RepoBrowserConfiguration.Instance.SubversionPath);
+
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            psi.UseShellExecute = false;
+            psi.Arguments = " " + CommandStringsManager.CommonStatusCommand + " " + repoStatusRequestParams;
+            psi.CreateNoWindow = true;
+
+            RepositoryProcess process = RepoProcess;
+           
+
+            process = new RepositoryProcess();
+            process.StartInfo = psi;
+            process.EnableRaisingEvents = true;
+
+            List<string> conflictedItems = new List<string>();
+
+
+            process.ErrorDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+
+            };
+
+            process.OutputDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    if(e.Data.StartsWith("C "))
+                        conflictedItems.Add(e.Data);
+                }
+            };
+
+
+            process.Exited += delegate(object sender, System.EventArgs e)
+            {
+
+            };
+
+
+
+
+            process.Start();
+            process.BeginOutputReadLine();
+
+            process.WaitForExit();
+
+            try
+            {
+              
+
+                
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex, true);
+            }
+
+            return conflictedItems;
+        }
 
         public bool ShowDiffWithExternalDiffProgram(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo)
         {
@@ -940,6 +1023,7 @@ namespace SvnRadar
 
             process.ErrorDataReceived -= new System.Diagnostics.DataReceivedEventHandler(RepoProcess_ErrorDataReceived);
             process.ErrorDataReceived += new System.Diagnostics.DataReceivedEventHandler(RepoProcess_ErrorDataReceived);
+            
 
 
             process.OutputDataReceived -= new System.Diagnostics.DataReceivedEventHandler(RepoProcess_OutputDataReceived);
@@ -961,6 +1045,8 @@ namespace SvnRadar
 
             //Add the newly created process to the processes list
             processes.Add(process);
+
+            
 
             process.Start();
             process.BeginOutputReadLine();
@@ -993,6 +1079,8 @@ namespace SvnRadar
             RepositoryProcess process = StartRepoProcess(executablePath, parameters, isCallForSysTray);
             LastExecutedProcess = process;
 
+
+            
             _worker.DoWork += delegate(object s, DoWorkEventArgs args)
             {
 
@@ -1073,13 +1161,13 @@ namespace SvnRadar
                         return;
 
                     /*Start poulating single logentry xml data*/
-                    if (e.Data.StartsWith("<logentry"))
+                    if (e.Data.ToLowerInvariant().StartsWith("<logentry"))
                     {
                         repoProc.repoLogInformation.xmlData.Append(e.Data);
                         repoProc.repoLogInformation.StartPopulating = true;
                     }
                     /*Edn of log entry for sngle item*/
-                    else if (e.Data.StartsWith("</logentry"))
+                    else if (e.Data.ToLowerInvariant().StartsWith("</logentry"))
                     {
                         /*reset state variables */
 
@@ -1319,8 +1407,28 @@ namespace SvnRadar
                     {
                         if (CommandStringsManager.IsCommonUpdateCommand(proc.Command))
                         {
+                            /*Clear related repository repo info form the base */
                             RepoInfoBase.ClearRepoInfo(proc.RelatedRepositoryName);
+
+                            /*Notify to sys tray about end of update of the specified repository */
                             TaskNotifierManager.UpToDateRepository(proc.RelatedRepositoryName);
+
+                            /*Verify on presence of possible conflicts in the repository. If there are any, show them to the user*/
+                            List<string> itemsInConflict = VerifyRepositoryOnConflict(proc.RelatedRepositoryName);
+                            if (itemsInConflict != null && itemsInConflict.Count > 0)
+                            {
+                                UpdateTraceWindow utw = WindowsManager.FindWindow(proc.RelatedRepositoryName, proc.Command) as UpdateTraceWindow;
+                                if (utw != null)
+                                {
+                                    itemsInConflict.ForEach((x) => utw.AddString(x));
+                                }
+                                else
+                                {
+                                    /*If window doesn't exist or coudn't be found for any reasno, at least notify 
+                                     to the user that ther are some elements that have a conflict in the specified repository */
+
+                                }
+                            }
 
                         }
                     }));

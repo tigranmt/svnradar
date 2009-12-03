@@ -51,6 +51,8 @@ namespace SvnRadar.FormatConverters
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
             else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Merged)
+                ImageVsRepoItemState[(int)itemState] = FindResource("MergedImage") as System.Windows.Controls.Image;
             else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Deleted)
                 ImageVsRepoItemState[(int)itemState] = FindResource("DeleteImage") as System.Windows.Controls.Image;
             else

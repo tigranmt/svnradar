@@ -229,7 +229,7 @@ namespace SvnRadar
 
 
             /*Hide the main window after that it becomes rendered and databinding was setupped*/
-            this.Visibility = Visibility.Hidden;
+          //  this.Visibility = Visibility.Hidden;
 
 
             /* Control if new version of an application exists on the server */
@@ -378,23 +378,23 @@ namespace SvnRadar
             _worker.DoWork += delegate(object s, DoWorkEventArgs args)
             {
                 /*Fil an array of object , becaus until the loop checks for repository user can delete some of them*/
-                string[] paths = RepoBrowserConfiguration.Instance.RepositoryPaths.ToArray<string>();
+                Repository[] paths = RepoBrowserConfiguration.Instance.RepositoryPaths.ToArray<Repository>();
 
                 //List<string> upToDateRepositories = new List<string>();
                 bool needUpdate = false;
 
                 /*On every tick check all available repositories*/
-                foreach (string repositoryPath in paths)
+                foreach (Repository repository in paths)
                 {
 
                     /*May be the directory is on remvable device, or has been deleted time ago,
                      so we need to notify about that to the user and help to make a choice*/
-                    if (!System.IO.Directory.Exists(repositoryPath))
+                    if (!System.IO.Directory.Exists(repository.RepositoryCompletePath))
                     {
                         string messageString = FindResource("MSG_SELECTED_PATH_NOLONGER_EXISTS") as string;
                         if (!string.IsNullOrEmpty(messageString))
                         {
-                            messageString = string.Format(messageString, repositoryPath);
+                            messageString = string.Format(messageString, repository.RepositoryCompletePath);
                             if (ErrorManager.ShowCommonErrorYesNo(messageString, true) == MessageBoxResult.Yes)
                             {
                                 /*If yes , means that user request that we delete autoamtically the lost path from the 
@@ -404,11 +404,11 @@ namespace SvnRadar
                                     //if (!upToDateRepositories.Contains(repositoryPath))
                                     //    upToDateRepositories.Add(repositoryPath);
 
-                                    TaskNotifierManager.UpToDateRepository(repositoryPath);
+                                    TaskNotifierManager.UpToDateRepository(repository.RepositoryCompletePath);
 
                                     Dispatcher.Invoke(new Action(() =>
                                     {
-                                        RepoBrowserConfiguration.Instance.RepositoryPaths.Remove(repositoryPath);
+                                        RepoBrowserConfiguration.Instance.RemoveRepoPath(repository.RepositoryCompletePath);                                        
                                     }));
                                 }
                             }
@@ -418,7 +418,7 @@ namespace SvnRadar
                     }
 
                     /*Verify if the repository is up to date*/
-                    FolderRepoInfo repoInfo = RadarExecutor.IsRepositoryUpTodate(repositoryPath);
+                    FolderRepoInfo repoInfo = RadarExecutor.IsRepositoryUpTodate(repository.RepositoryCompletePath);
 
                     if (repoInfo != null)
                     {
@@ -434,7 +434,7 @@ namespace SvnRadar
                     //    upToDateRepositories.Add(repositoryPath);
                     else
                     {
-                        TaskNotifierManager.UpToDateRepository(repositoryPath);
+                        TaskNotifierManager.UpToDateRepository(repository.RepositoryCompletePath);
                     }
 
 
@@ -513,9 +513,9 @@ namespace SvnRadar
             if (RepoBrowserConfiguration.Instance.RepositoryPaths != null &&
                 RepoBrowserConfiguration.Instance.RepositoryPaths.Count > 0)
             {
-                foreach (string repoPath in RepoBrowserConfiguration.Instance.RepositoryPaths)
+                foreach (Repository repo in RepoBrowserConfiguration.Instance.RepositoryPaths)
                 {
-                    AddTabFromPath(repoPath);
+                    AddTabFromPath(repo.RepositoryCompletePath);
                 }
             }
 

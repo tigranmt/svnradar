@@ -125,6 +125,7 @@
 
     <system:String x:Key="NORMAL_STR">Normal</system:String>
     <system:String x:Key="MODIFIED_STR">Source changed</system:String>
+    <system:String x:Key="MERGED_STR">Source merged</system:String>
     <system:String x:Key="DELETED_STR">Removed</system:String>
     <system:String x:Key="ADD_STR">New item</system:String>
     <system:String x:Key="REPLACED_STR">Replaced</system:String>

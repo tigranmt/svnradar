@@ -8,6 +8,7 @@
     xmlns:tb="http://www.hardcodet.net/taskbar"
     ResizeMode="CanResizeWithGrip" 
     Closing="Window_Closing"
+    Visibility="Hidden"
     StateChanged="Window_StateChanged"
     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="650" MinHeight="500" Icon="Images\main.png">
     
@@ -33,7 +34,14 @@
 
         <!-- Context menu on sys tray -->
         <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">            
-            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Background="Gold" Foreground="Black" />
+            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Foreground="Black">
+                <MenuItem.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF000000" Offset="0"/>
+                        <GradientStop Color="#FF27AE20" Offset="0.48"/>
+                    </LinearGradientBrush>
+                </MenuItem.Background>
+            </MenuItem>
             <Separator/>
             <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>            
             <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
@@ -41,6 +49,23 @@
         </ContextMenu>
       
         <!-- Context menu on sys tray -->
+        
+
+        <DataTemplate x:Key="ListBoxItemDt">
+            <Border Background="White">
+                <StackPanel Orientation="Horizontal"  Background="White" Width="{Binding RelativeSource=
+                                                        {RelativeSource FindAncestor, 
+                                                        AncestorType={x:Type ListBox}}, 
+                                                        Path=ActualWidth}">
+                    <TextBlock x:Name="RepoPath" Text="{Binding RepositoryCompletePath}" TextAlignment="Center"/>
+                    <!--<TextBlock Text="  "/>
+                    <Button x:Name="OpenRepoFolderButton">...</Button>
+                    <TextBlock Text="  "/>
+                    <Button x:Name="SetCredentialsButton" HorizontalAlignment="Right" VerticalContentAlignment="Center">...</Button>-->
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
     </Window.Resources>
 
     <Grid >
@@ -108,7 +133,7 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,19,18,0" Name="btnFindSVNPath" VerticalAlignment="Top" Width="31" Content="..." />
                     <Slider Style="{StaticResource SliderStyle}" Margin="19,0,17,43" Name="frequencySlider" TickPlacement="BottomRight" SelectionStart="1" SelectionEnd="60" SmallChange="1" Minimum="1" Maximum="60" Height="22.04" VerticalAlignment="Bottom" IsTabStop="True" ValueChanged="frequencySlider_ValueChanged" Value="{Binding ControlRate}" />
                     <TextBlock Margin="19,0,0,66" Text="{StaticResource SVNControlTimeRate}" HorizontalAlignment="Left" Width="134" Height="22.04" VerticalAlignment="Bottom" />
-                    <TextBlock Margin="187,0,0,67" Text="{StaticResource SVNControlTimeRateMinutes}" Height="22.04" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="36" />
+                    <TextBlock Margin="187,0,0,67" Text="{StaticResource SVNControlTimeRateMinutes}" Height="22.04" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="56" />
                     <TextBlock Margin="157,0,0,73"  HorizontalAlignment="Left" Width="22" Background="Gold" Height="14" VerticalAlignment="Bottom" 
                                Text="{Binding Path=Value, ElementName=frequencySlider, Converter={StaticResource SliderFormatConverter}}" FontWeight="Bold" TextAlignment="Center" />
                     <Rectangle HorizontalAlignment="Left" Margin="155,0,0,71" Name="rectangle1" Stroke="Black" Width="26" Height="18.04" VerticalAlignment="Bottom" />
@@ -116,7 +141,7 @@
                     <Border Margin="6,134,6,93" Name="border1" Background="PowderBlue" />
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,144,17,0" Name="btnAddNewSvnPath" VerticalAlignment="Top" Width="31" BorderBrush="#FF707070" >
                     	+</Button>
-                    <ListBox Margin="20,141,54,99" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
+                    <ListBox Margin="20,141,54,99" ItemTemplate="{StaticResource ListBoxItemDt}" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                     	-</Button>
                     <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="51,83,91,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" />

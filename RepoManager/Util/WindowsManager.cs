@@ -57,6 +57,22 @@ namespace SvnRadar.Util
 
 
         /// <summary>
+        /// Finds window in the collectin of available ones by specified repository complete path and command executed on that repository
+        /// </summary>
+        /// <param name="repositoryCompletePath">Repository complete path</param>
+        /// <param name="commandName">Command name</param>
+        /// <returns></returns>
+        public static IRepoWindow FindWindow(string repositoryCompletePath, string commandName)
+        {
+            if (string.IsNullOrEmpty(repositoryCompletePath))
+                return null;
+
+
+            return windowsList.Find((x) => x.Process != null && x.Process.RelatedRepositoryName.Equals(repositoryCompletePath, StringComparison.InvariantCulture) &&
+                x.RelatedCommand.Equals(commandName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
         /// Removs the specifed RevisionInfoWindow object from the collection of available ones
         /// </summary>
         /// <param name="wnd">RevisionInfWindow</param>

@@ -211,19 +211,19 @@ namespace SvnRadar
             {
                 if (e.NewItems != null && e.NewItems.Count > 0)
                 {
-                    foreach (string repoPath in e.NewItems)
-                        AddTabFromPath(repoPath);
+                    foreach (Repository repo in e.NewItems)
+                        AddTabFromPath(repo.RepositoryCompletePath);
                 }
             }
             else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 if (e.OldItems != null && e.OldItems.Count > 0)
                 {
-                    foreach (string repoPath in e.OldItems)
+                    foreach (Repository repo in e.OldItems)
                     {
                         Dispatcher.Invoke(new Action(() =>
                         {
-                            RemoveTabByPath(repoPath);
+                            RemoveTabByPath(repo.RepositoryCompletePath);
                         }));
                     }
                 }

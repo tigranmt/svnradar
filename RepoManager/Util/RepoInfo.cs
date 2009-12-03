@@ -54,7 +54,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// Enumertaion of the possible states of the Svn item.
         /// </summary>
-        public enum RepoItemState : int { Normal = 0, Modified, Deleted, Add, Replaced, Conflict, ExternalDefinition, Ignored, NotVersioned, Missing, VersionedWithDifferentKindOfObject, NeedToBeUpdatedFromRepo };
+        public enum RepoItemState : int { Normal = 0, Modified, Deleted, Add, Replaced, Conflict, ExternalDefinition, Ignored, NotVersioned, Missing, VersionedWithDifferentKindOfObject, NeedToBeUpdatedFromRepo, Merged };
 
         /// <summary>
         /// Repo item name
@@ -244,6 +244,8 @@ namespace SvnRadar.Util
                 return AppResourceManager.FindResource("MISSING_STR") as string;
             else if (repostate == RepoItemState.Modified)
                 return AppResourceManager.FindResource("MODIFIED_STR") as string;
+             else if (repostate == RepoItemState.Merged)
+                return AppResourceManager.FindResource("MERGED_STR") as string;                
             else if (repostate == RepoItemState.NeedToBeUpdatedFromRepo)
                 return AppResourceManager.FindResource("NEEDTOBEUPDATED_STR") as string;
             else if (repostate == RepoItemState.Normal)
@@ -291,6 +293,12 @@ namespace SvnRadar.Util
                 /*Item has been replaced in your working copy. 
                  * This means the file was scheduled for deletion, and then a new file with the same name was scheduled for addition in its place.*/
                 return RepoInfo.RepoItemState.Replaced;
+            }
+            else if (stateChar == 'G')
+            {
+                /*Item has been replaced in your working copy. 
+                 * This means the file was scheduled for deletion, and then a new file with the same name was scheduled for addition in its place.*/
+                return RepoInfo.RepoItemState.Merged;
             }
             else if (stateChar == 'C')
             {

@@ -86,7 +86,8 @@
             <Image x:Key="ConflictedImage" Source="Images/conflicted.png"/>
             <Image x:Key="EmptyImage" Source="Images/empty.png"/>
             <Image x:Key="UpdateImage" Source="Images/updateimage.png"/>
-            <Image x:Key="LogImage" Source="Images/logimage.png"/>           
+            <Image x:Key="LogImage" Source="Images/logimage.png"/>    
+            <Image x:Key="MergedImage" Source="Images/merged.png"/>
             
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
@@ -100,20 +101,20 @@
             <!--- Images -->
 
 
-            <!--- Animations for listview header image -->
-            <Storyboard x:Key="activateElementStoryBoard">
+            <!-- Animations for listview header image -->
+            <!--<Storyboard x:Key="activateElementStoryBoard">
                 <DoubleAnimation
                Storyboard.TargetName="myGlowBitmapEffect"
                Storyboard.TargetProperty="GlowSize"
                From="0" To="13" Duration="0:0:0.3" />
-            </Storyboard>
+            </Storyboard>-->
             <!-- This storyboard will make the image revert to its original size -->
-            <Storyboard x:Key="normalizeElementStoryBoard">
+            <!--<Storyboard x:Key="normalizeElementStoryBoard">
                 <DoubleAnimation
                Storyboard.TargetName="myGlowBitmapEffect"
                Storyboard.TargetProperty="GlowSize"
                From="13" To="0" Duration="0:0:0.3" />
-            </Storyboard>
+            </Storyboard>-->
             <!--- Animations for listview header image -->
 
 

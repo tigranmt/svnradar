@@ -18,6 +18,8 @@ namespace SvnRadar.FormatConverters
                 return FindResource("AddImage") as System.Windows.Controls.Image;
             else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
                 return FindResource("ModifiedImage") as System.Windows.Controls.Image;
+            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Merged)
+                return FindResource("MergedImage") as System.Windows.Controls.Image;
             else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Deleted)
                 return  FindResource("DeleteImage") as System.Windows.Controls.Image;
             else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Conflict)
