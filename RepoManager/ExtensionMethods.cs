@@ -34,7 +34,7 @@ namespace SvnRadar
             IQueryable<RepoInfo> filteredCollection = sourceCollection.AsQueryable();
             Type repoInfoType = typeof(RepoInfo);
             if (filters != null)
-            {
+            {                
                 foreach (FilterCriteria filter in filters)
                 {
                     filteredCollection = filteredCollection.Where(p => repoInfoType.InvokeMember(filter.ColumnName, BindingFlags.GetProperty, null, p, null).ToString().StartsWith(filter.Filter));

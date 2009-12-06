@@ -229,7 +229,7 @@ namespace SvnRadar
 
 
             /*Hide the main window after that it becomes rendered and databinding was setupped*/
-          //  this.Visibility = Visibility.Hidden;
+            this.Visibility = Visibility.Hidden;
 
 
             /* Control if new version of an application exists on the server */
@@ -707,6 +707,9 @@ namespace SvnRadar
                 }
             }
         }
+
+    
+
 
 
 

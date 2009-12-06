@@ -207,6 +207,7 @@ namespace SvnRadar
                 catch (Exception ex)
                 {
                     //TODO: Log an exception, do not raise anythig here. It's not critical point.
+                    ErrorManager.LogException(ex);
                 }
 
             }

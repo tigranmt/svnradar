@@ -203,6 +203,7 @@ namespace SvnRadar
 
                 /*Update parameter of the connected ObjectDataProvider*/
                 selRepo.UpdateListViewBinding();
+               
 
                 /* Execute command **/
                 RadarExecutor.GetRepositoryLog(selRepoString, folderRepoInfo, false);
@@ -327,9 +328,8 @@ namespace SvnRadar
             RepoTabItem repoTabItem = mainTab.SelectedItem as RepoTabItem;
             if (repoTabItem == null)
                 return;
-            ObservableCollection<RepoInfo> col = RepoInfoBase.GetRepoInfoList(repoTabItem.RepositoryCompletePath);
-            if (col != null && col.Count > 0)
-                e.CanExecute = true;
+            int count = RepoInfoBase.GetRepoInfoCount(repoTabItem.RepositoryCompletePath);
+            e.CanExecute = (count > 0);
         }
 
 
@@ -677,29 +677,28 @@ namespace SvnRadar
             if (selRepo == null)
                 return;
 
-            TextBox tb = e.Parameter as TextBox;
-            if (tb == null)
-                return;
+            System.Windows.Controls.GridViewColumnHeader gvch = e.Parameter as System.Windows.Controls.GridViewColumnHeader;
 
-            if (tb.Tag == null)
-                return;
 
-            string colName = tb.Tag.ToString();
+            string colName = gvch.Column.Header.ToString();
             if (string.IsNullOrEmpty(colName))
                 return;
 
-            /*remove filter from collection */
+            /*remove filter from collection  */
             FilterManager.RemoveFilter(selRepo.RepositoryCompletePath, colName);
 
-            /*update binding on column */
-            selRepo.UpdateColumnBinding(colName);
+
+            gvch.Column.UpdateColumnHeaderBindings();
 
             /*update data provider*/
             UpdateObjectDataProvider();
 
+            
+
 
         }
 
+        List<GridViewColumnHeader> columnsWithFilters = new List<GridViewColumnHeader>();
 
         private void OnShowFilterOnColumnCommand(object sender, ExecutedRoutedEventArgs e)
         {
@@ -728,6 +727,7 @@ namespace SvnRadar
             if (FilterManager.AddFilterToColumn(selRepo.RepositoryCompletePath, gvCh.Column.Header.ToString(), string.Empty))
             {
                 gvCh.Column.UpdateColumnHeaderBindings();
+                columnsWithFilters.Add(gvCh);
             }
 
         }

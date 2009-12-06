@@ -181,10 +181,12 @@ namespace SvnRadar.Common.Controls
                 MenuItem assignAliasMenuItem = new MenuItem();
                 assignAliasMenuItem.Header = FindResource(UIConstants.MENUTEM_SETALIASTOTABITEM) as string;
                 assignAliasMenuItem.Command = AppCommands.SetAliasOnTabCommand;
+                assignAliasMenuItem.Icon = FindResource("AliasIcon");
 
                 MenuItem removeTabItemMenuItem = new MenuItem();
                 removeTabItemMenuItem.Header = FindResource(UIConstants.MENUTEM_REMOVETABITEM) as string;
                 removeTabItemMenuItem.Command = AppCommands.RemoveTabCommand;
+                removeTabItemMenuItem.Icon = FindResource("DeleteIcon");
 
                 contextMenu.Items.Add(assignAliasMenuItem);
                 contextMenu.Items.Add(removeTabItemMenuItem);
@@ -197,32 +199,7 @@ namespace SvnRadar.Common.Controls
         #endregion
 
         #region update functions
-        /// <summary>
-        /// Updates the binding of the given column
-        /// </summary>
-        /// <param name="columnName">Column name to update the binding of</param>
-        /// <returns> Returns True if the column was found and binding update was executed over it, False othrwise </returns>
-        public bool UpdateColumnBinding(string columnName)
-        {
-            if (string.IsNullOrEmpty(columnName))
-                return false;
-
-
-            if (MyListView == null || MyListView.View == null)
-                return false;
-
-
-            GridViewColumn col = (MyListView.View as GridView).Columns.First((x) => x.Header != null && x.Header.ToString().Equals(columnName));
-            if (col != null)
-            {
-                col.UpdateColumnHeaderBindings();
-                return true;
-            }
-
-
-            return false;
-
-        }
+ 
 
 
         /// <summary>
@@ -242,14 +219,17 @@ namespace SvnRadar.Common.Controls
                 dataProviderForListView.MethodParameters.Add(this.RepositoryCompletePath.Trim());
             }
 
-            //Update the columns bindings
-            if (MyListView != null && MyListView.View != null)
-            {
-                foreach (GridViewColumn col in (MyListView.View as GridView).Columns)
-                {
-                    col.UpdateColumnHeaderBindings();          
-                }
-            }
+
+            
+
+            ////Update the columns bindings
+            //if (MyListView != null && MyListView.View != null)
+            //{
+            //    foreach (GridViewColumn col in (MyListView.View as GridView).Columns)
+            //    {
+            //        col.UpdateColumnHeaderBindings();          
+            //    }
+            //}
 
         }
 
@@ -289,17 +269,7 @@ namespace SvnRadar.Common.Controls
         }
         #endregion
 
-        #region attach list view method
-        /// <summary>
-        /// Assigns the speciied ListView object to the current TAB
-        /// </summary>
-        /// <param name="listView">ListView object to attach to the TAB</param>
-        public static void AttachListViewToTab(ListView listView)
-        {
-            myView = listView;
-        }
-        #endregion
-
+      
         #endregion
 
     }

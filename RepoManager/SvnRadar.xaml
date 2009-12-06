@@ -7,11 +7,10 @@
     xmlns:repomanager="clr-namespace:SvnRadar"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     ResizeMode="CanResizeWithGrip" 
-    Closing="Window_Closing"
-    Visibility="Hidden"
+    Closing="Window_Closing"  
     StateChanged="Window_StateChanged"
     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="650" MinHeight="500" Icon="Images\main.png">
-    
+
     <Window.CommandBindings>
         <CommandBinding Command="repomanager:AppCommands.SetAliasOnTabCommand" Executed="OnSetAliasCommandExecuted" />
         <CommandBinding Command="repomanager:AppCommands.RemoveTabCommand" Executed="OnRemoveTabCommandExecuted" />
@@ -20,7 +19,7 @@
         <CommandBinding Command="repomanager:AppCommands.SetFilterOnColumnCommand" Executed="OnSetFilterOnColumnCommand"  />
         <CommandBinding Command="repomanager:AppCommands.ShowFilterOnColumnCommand" Executed="OnShowFilterOnColumnCommand"  />
         <CommandBinding Command="repomanager:AppCommands.RemoveFilterFromColumnCommand" Executed="OnRemoveFilterFromColumnCommand"  />
-        <CommandBinding Command="repomanager:AppCommands.ShowRevisionInfoCommand" Executed="OnShowRevisionInfoCommand"  />    
+        <CommandBinding Command="repomanager:AppCommands.ShowRevisionInfoCommand" Executed="OnShowRevisionInfoCommand"  />
         <CommandBinding Command="repomanager:AppCommands.UpdateRepositoryCommand" Executed="OnUpdateRepositoryCommand" CanExecute="UpdateRepositoryCommand_CanExecute"  />
         <CommandBinding Command="repomanager:AppCommands.UpdateSingleFileCommand" Executed="OnUpdateSingleFileCommand" CanExecute="UpdateRepositoryCommand_CanExecute"  />
 
@@ -29,11 +28,11 @@
         <CommandBinding Command="repomanager:AppCommands.BreakLogLoadingCommand" Executed="OnBreakLogLoadingCommand"  />
 
     </Window.CommandBindings>
-    
+
     <Window.Resources>
 
         <!-- Context menu on sys tray -->
-        <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">            
+        <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">
             <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Foreground="Black">
                 <MenuItem.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -43,39 +42,56 @@
                 </MenuItem.Background>
             </MenuItem>
             <Separator/>
-            <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>            
+            <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
             <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
             <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
         </ContextMenu>
-      
+
         <!-- Context menu on sys tray -->
-        
+
 
         <DataTemplate x:Key="ListBoxItemDt">
-            <Border Background="White">
-                <StackPanel Orientation="Horizontal"  Background="White" Width="{Binding RelativeSource=
+           
+            <Border CornerRadius="2"  Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type ListBox}}, 
-                                                        Path=ActualWidth}">
-                    <TextBlock x:Name="RepoPath" Text="{Binding RepositoryCompletePath}" TextAlignment="Center"/>
-                    <!--<TextBlock Text="  "/>
-                    <Button x:Name="OpenRepoFolderButton">...</Button>
-                    <TextBlock Text="  "/>
-                    <Button x:Name="SetCredentialsButton" HorizontalAlignment="Right" VerticalContentAlignment="Center">...</Button>-->
-                </StackPanel>
+                                                        Path=ActualWidth}"  HorizontalAlignment="Stretch">
+                     <DockPanel  HorizontalAlignment="Stretch" Width="{Binding RelativeSource=
+                                                        {RelativeSource FindAncestor, 
+                                                        AncestorType={x:Type ListBox}}, 
+                                                        Path=ActualWidth}" >
+                      
+                            <TextBlock Foreground="Black" DockPanel.Dock="Left" x:Name="RepoPath" Text="{Binding RepositoryCompletePath}" TextAlignment="Center" HorizontalAlignment="Left"  />
+                            <!--<TextBlock DockPanel.Dock="Left" Text="  "  HorizontalAlignment="Left"/>-->
+
+                            <!--<Button DockPanel.Dock="Right" x:Name="OpenRepoFolderButton" Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">...</Button>-->
+                            <!--<TextBlock  DockPanel.Dock="Right" Text="  "  HorizontalAlignment="Right"/>-->
+                            <!--<Button DockPanel.Dock="Right" x:Name="SetCredentialsButton" Style="{StaticResource SimpleButtonStyle}"  VerticalContentAlignment="Center" HorizontalAlignment="Right"  VerticalAlignment="Center">...</Button>-->
+                        
+                    </DockPanel>
+             
             </Border>
+
         </DataTemplate>
+        
+        <Style x:Key="ListBoxItemSt" TargetType="{x:Type ListBoxItem}" >
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
     </Window.Resources>
 
     <Grid >
 
-       
+
         <Grid.RowDefinitions>
             <RowDefinition Height="22" ></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>   
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <!-- Main application menu -->
         <Menu x:Name="ApplicationMenu" Grid.Row="0">
             <MenuItem x:Name="FileMI" Header="{StaticResource MI_FILE}">
@@ -85,23 +101,23 @@
             </MenuItem>
             <MenuItem x:Name="RepositoryMI" Header="{StaticResource MI_REPOSITORY}">
                 <MenuItem x:Name="SyncMI" Header="{StaticResource MI_SYNCWITHREPOSITORY}" IsEnabled="True" Command="repomanager:AppCommands.GetRepoInfoCommand"/>
-                <MenuItem x:Name="UpdateMI" Header="{StaticResource MI_UPDATEFROMREPOSITORY}" IsEnabled="True" Command="repomanager:AppCommands.UpdateRepositoryCommand"/>             
+                <MenuItem x:Name="UpdateMI" Header="{StaticResource MI_UPDATEFROMREPOSITORY}" IsEnabled="True" Command="repomanager:AppCommands.UpdateRepositoryCommand"/>
             </MenuItem>
 
             <MenuItem x:Name="ViewMI" Header="{StaticResource MI_VIEW}">
                 <MenuItem x:Name="RevisionViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsGroupLayoutConverter}}" Header="{StaticResource MI_REVISIONVIEW}" IsEnabled="True" Command="repomanager:AppCommands.GroupByRevisionNumberCommand"/>
-                <MenuItem x:Name="FlatViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsFlatLayoutConverter}}" Header="{StaticResource MI_FLATVIEW}" IsEnabled="True" Command="repomanager:AppCommands.FlatViewCommand"/>                
+                <MenuItem x:Name="FlatViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsFlatLayoutConverter}}" Header="{StaticResource MI_FLATVIEW}" IsEnabled="True" Command="repomanager:AppCommands.FlatViewCommand"/>
             </MenuItem>
 
             <MenuItem x:Name="HelpMI" Header="{StaticResource MI_HELP}">
                 <!--<MenuItem x:Name="BugSignal" Header="{StaticResource MI_BUGORSENDAMESSAGESIGNAL}" IsEnabled="True" Click="BugSignal_Click"/>-->
-                <MenuItem x:Name="AboutMI" Header="{StaticResource MI_ABOUT}" IsEnabled="True" Click="AboutMI_Click" Icon="{StaticResource AboutIcon}"/>                
+                <MenuItem x:Name="AboutMI" Header="{StaticResource MI_ABOUT}" IsEnabled="True" Click="AboutMI_Click" Icon="{StaticResource AboutIcon}"/>
             </MenuItem>
 
         </Menu>
         <!-- Applicaiton main menu -->
-        
-      
+
+
 
 
         <tb:TaskbarIcon
@@ -112,13 +128,14 @@
                 TrayMouseDoubleClick="MainNotifyIcon_TrayMouseDoubleClick"
                 TrayLeftMouseUp="MainNotifyIcon_TrayLeftMouseUp"
                 ContextMenu="{StaticResource SysTrayMenu}"/>
-        
-        <TabControl Style="{StaticResource TabControlStyle}" Name="mainTab" IsTabStop="True"   Grid.Row="1"   Focusable="True" SelectionChanged="SelectedTabItemChanged"  IsSynchronizedWithCurrentItem="True">
 
-               <!--<TabItem Header="Boooo" ContentTemplate="{StaticResource TabItemDataTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></TabItem>-->
-                <TabItem  Header="{StaticResource ConfigurationTabTitle}" Name="ConfigTab" ButtonBase.Click="ConfigurationTabButtonClicked">
+        <TabControl Style="{StaticResource TabControlStyle}" Name="mainTab" IsTabStop="True"   Grid.Row="1"   Focusable="True" 
+                    SelectionChanged="SelectedTabItemChanged"  IsSynchronizedWithCurrentItem="True">
+
+            <!--<TabItem Header="Boooo" ContentTemplate="{StaticResource TabItemDataTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></TabItem>-->
+            <TabItem  Header="{StaticResource ConfigurationTabTitle}" Name="ConfigTab" ButtonBase.Click="ConfigurationTabButtonClicked">
                 <Grid>
-                    <TextBlock x:Uid="SubversionPathTextBlock" Text="{StaticResource SVNPathTextBlockTitle}" Margin="20,19,0,0" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" TextAlignment="Center" FontSize="14" /> 
+                    <TextBlock x:Uid="SubversionPathTextBlock" Text="{StaticResource SVNPathTextBlockTitle}" Margin="20,19,0,0" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" TextAlignment="Center" FontSize="14" />
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="19,0,0,14" HorizontalAlignment="Left" Width="105" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource SaveButtonTitle}" Name="btnSave"/>
 
@@ -127,8 +144,8 @@
 
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="0,0,17,14" HorizontalAlignment="Right" Width="115" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource DiscardButtonTitle}" Name="btnDiscardChanges" Opacity="0.865"/>
-                    
-                   
+
+
                     <TextBox  Height="23" Margin="230,19,91,0" Name="txtSubversionPath" VerticalAlignment="Top" IsReadOnly="True" Text="{Binding Path=SubversionPath}" />
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,19,18,0" Name="btnFindSVNPath" VerticalAlignment="Top" Width="31" Content="..." />
                     <Slider Style="{StaticResource SliderStyle}" Margin="19,0,17,43" Name="frequencySlider" TickPlacement="BottomRight" SelectionStart="1" SelectionEnd="60" SmallChange="1" Minimum="1" Maximum="60" Height="22.04" VerticalAlignment="Bottom" IsTabStop="True" ValueChanged="frequencySlider_ValueChanged" Value="{Binding ControlRate}" />
@@ -138,18 +155,18 @@
                                Text="{Binding Path=Value, ElementName=frequencySlider, Converter={StaticResource SliderFormatConverter}}" FontWeight="Bold" TextAlignment="Center" />
                     <Rectangle HorizontalAlignment="Left" Margin="155,0,0,71" Name="rectangle1" Stroke="Black" Width="26" Height="18.04" VerticalAlignment="Bottom" />
                     <TextBlock Height="22" HorizontalAlignment="Left" Margin="6,110,0,0" Text="{StaticResource SVNRepositioryPath}" TextAlignment="Left" VerticalAlignment="Top" Width="302" FontSize="14" FontWeight="Normal" />
-                    <Border Margin="6,134,6,93" Name="border1" Background="PowderBlue" />
+                    <!--<Border Margin="6,134,6,93" Name="border1" Background="PowderBlue" />-->
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,144,17,0" Name="btnAddNewSvnPath" VerticalAlignment="Top" Width="31" BorderBrush="#FF707070" >
-                    	+</Button>
-                    <ListBox Margin="20,141,54,99" ItemTemplate="{StaticResource ListBoxItemDt}" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
+                        +</Button>
+                    <ListBox Margin="19,141,54,99" ItemTemplate="{StaticResource ListBoxItemDt}" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
-                    	-</Button>
+                        -</Button>
                     <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="51,83,91,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" />
                     <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="69,55,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="116" />
                     <TextBox Height="23" IsReadOnly="True" Margin="230,50,91,0" Name="txtWinMergePath" Text="{Binding Path=WinMergePath,Mode=TwoWay}" VerticalAlignment="Top" />
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,54,0" Name="btnFindWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">...</Button>
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,17,0" Name="btnRemoveWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">-</Button>
-                </Grid> 
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

@@ -356,7 +356,7 @@ namespace SvnRadar.DataBase
         /// </summary>
         /// <param name="repositoryName">Repository name</param>
         /// <returns>The observable collection of the RepoInfo objects</returns>
-        public static ObservableCollection<RepoInfo> GetRepoInfoList(string repositoryName)
+        public static IEnumerable<RepoInfo> GetRepoInfoList(string repositoryName)
         {
 
             const string NULL_PARAMETER = "Empty";
@@ -387,17 +387,21 @@ namespace SvnRadar.DataBase
                         /*Reset to default cursor*/
                         Application.Current.MainWindow.Cursor = originalCursor;
 
-                        return new ObservableCollection<RepoInfo>(filtered);
+                        return filtered;
                     }
                 }
                 catch (NullReferenceException nulRefEx)
                 {
 
+                    ErrorManager.LogException(nulRefEx);
 
                     /*Reset to default cursor*/
                     Application.Current.MainWindow.Cursor = originalCursor;
 
                     return new ObservableCollection<RepoInfo>(list);
+
+                   
+                   
                 }
 
                 /*Reset to default cursor*/

@@ -21,18 +21,16 @@ namespace SvnRadar
                 AppCommands.ShowFilterOnColumnCommand.Execute(e.OriginalSource);
         }
 
-        private void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TextBox_Changed(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (sender is System.Windows.Controls.TextBox)
+
+            if (e.Key == System.Windows.Input.Key.Escape)
+                return;
+            else
             {
-                
-                if(e.Key == System.Windows.Input.Key.Escape)
-                    AppCommands.RemoveFilterFromColumnCommand.Execute(sender);
-                else 
-                {
-                    AppCommands.SetFilterOnColumnCommand.Execute(sender);
-                }
+               
             }
+        
         }
 
         /// <summary>
@@ -41,16 +39,11 @@ namespace SvnRadar
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void repoView_Loaded(object sender, RoutedEventArgs e)
-        {
+        {            
             SvnRadar.Common.Controls.RepoTabItem.MyListView = e.OriginalSource as System.Windows.Controls.ListView;
         }
 
 
-        private void repoView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-          
-               
-        }
 
         /// <summary>
         /// ListViewItem Context menu ShowRevisionInfo item click handler
@@ -58,33 +51,13 @@ namespace SvnRadar
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ShowRevisionInfo_Click(object sender, RoutedEventArgs e)
-        {
-            /*For some reasons in case when, for example, the user from the configuration Tab
-           * choose new repository to monitor, so the new Tab added on view. In this case the ListView 
-           items collection selected item is always Null. (???)*/
-
-
-            if (SvnRadar.Common.Controls.RepoTabItem.MyListView.SelectedItem == null)
-            {
-                //RepoManager.Common.Controls.RepoTabItem.AttachListViewToTab(sender as System.Windows.Controls.ListView);
-            }
-
-            if (SvnRadar.Common.Controls.RepoTabItem.MyListView == null)
-            {
-                ErrorManager.ShowCommonError("Fata error occured in application. Please restart application in order to fix the problem.", true);
-                ErrorManager.LogMessage("MyListView is Null. Method: ShowRevisionInfo_Click", true);
-
-                return;
-            }
+        {          
 
             //Show revison info to user
             AppCommands.ShowRevisionInfoCommand.Execute(sender);
         }
 
-        private void repoView_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
-        {
-
-        }
+      
 
         /// <summary>
         /// ListView item double click event handler
@@ -103,6 +76,21 @@ namespace SvnRadar
             //Show revison info to user
             AppCommands.UpdateSingleFileCommand.Execute(sender);
         }
+
+        private void RemoveFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Button btn = sender as System.Windows.Controls.Button;
+            System.Windows.Controls.ContentPresenter cp = (btn.Parent as System.Windows.Controls.StackPanel).TemplatedParent as System.Windows.Controls.ContentPresenter;
+            System.Windows.Controls.GridViewColumnHeader gvch = cp.TemplatedParent as System.Windows.Controls.GridViewColumnHeader;
+            AppCommands.RemoveFilterFromColumnCommand.Execute(gvch);
+        }
+
+        private void tbox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            AppCommands.SetFilterOnColumnCommand.Execute(sender);
+        }
+
+      
 
      
 

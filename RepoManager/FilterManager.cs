@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
+using System.Windows.Controls;
 
 namespace SvnRadar
 {
@@ -27,6 +28,8 @@ namespace SvnRadar
         /// </summary>
         public string Filter { get; set; }
 
+
+       
 
         /// <summary>
         /// Verifies object's validity
@@ -202,28 +205,7 @@ namespace SvnRadar
 
 
         #region Add methods
-        /// <summary>
-        /// Adds requested filet to the collection if the same doesn't exist
-        /// </summary>
-        /// <param name="criteria">FilterCriteria object that should be add to the collection</param>
-        /// <returns>True if add success, False otherwise</returns>
-        public bool AddFilter(FilterCriteria criteria)
-        {
-            if (!FilterCriteria.IsValid(criteria))
-            {
-                throw new ArgumentException("Not all properties of the object criteria are valid for insertion in collection");
-            }
-
-
-            FilterCriteria fc = Find(criteria);
-            if (!FilterCriteria.IsValid(fc))
-                return false;
-
-
-            return AddFilterToColumn(criteria.RepositoryName, criteria.ColumnName, criteria.Filter);
-
-        }
-
+     
         /// <summary>
         /// Adds requested filter to the column
         /// </summary>
@@ -231,9 +213,10 @@ namespace SvnRadar
         /// <param name="columnName">Repository's column name on which filter should be applied</param>
         /// <param name="filter">the filter string</param>
         /// <returns>True if add was success, False otherwise.</returns>
-        public bool AddFilterToColumn(string repoName, string columnName, string filter)
+        public bool AddFilterToColumn(string repoName, string  columnName, string filter)
         {
             FilterCriteria fc = new FilterCriteria { RepositoryName = repoName, ColumnName = columnName, Filter = filter };
+          
             if (!FilterCriteria.IsValid(fc))
                 return false;
            
@@ -275,11 +258,19 @@ namespace SvnRadar
                 return false;
 
             filterCriteriaList.Remove(fc);
-
+            
+            fc = null;
             return true;         
 
         }
 
+        /// <summary>
+        /// Removes all content
+        /// </summary>
+        public void RemoveAll()
+        {
+            filterCriteriaList.Clear();
+        }
        
         #endregion 
 

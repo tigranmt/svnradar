@@ -833,8 +833,9 @@ namespace SvnRadar
             {
 #if DEBUG
                 throw ex;
-#endif
+#else
                 return false;
+#endif
             }
 
 
@@ -856,8 +857,9 @@ namespace SvnRadar
                 {
 #if DEBUG
                     throw ex;
-#endif
+#else
                     return false;
+#endif
                 }
             }
 
@@ -920,8 +922,9 @@ namespace SvnRadar
             {
 #if DEBUG
                 throw ex;
-#endif
+#else
                 return false;
+#endif
             }
 
 
@@ -943,8 +946,9 @@ namespace SvnRadar
                 {
 #if DEBUG
                     throw ex;
-#endif
+#else
                     return false;
+#endif
                 }
             }
 

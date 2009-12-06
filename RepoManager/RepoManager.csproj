@@ -368,7 +368,6 @@
     <Resource Include="Images\filter-data-by-criteria.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\deleted.png" />
     <Resource Include="Images\modified.png" />
     <Resource Include="Images\new.png" />
   </ItemGroup>
@@ -392,12 +391,6 @@
       <Project>{7AC63864-7638-41C4-969C-D3197EF2BED9}</Project>
       <Name>NotifyIconWpf</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\needupdated.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\info.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\systrayicon.ico" />
@@ -445,6 +438,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\merged.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\alias.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\deleted.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

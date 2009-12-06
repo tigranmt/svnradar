@@ -378,6 +378,7 @@ namespace SvnRadar.Util
                     catch (Exception ex)
                     {
                         RestoreCurrentFile();
+                        ErrorManager.LogException(ex);
                     }
 
                     CleanUp();

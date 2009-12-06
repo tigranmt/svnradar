@@ -135,15 +135,22 @@ namespace SvnRadar
             if (tabControl == null)
                 return;
 
+            e.Handled = true;
+
             RepoTabItem selectedTab = tabControl.SelectedItem as RepoTabItem;
             if (selectedTab == null)
                 return;
 
-            e.Handled = true;
+           
 
-            selectedTab.UpdateListViewBinding();
+            FilterManager.RemoveAll();
+
+            columnsWithFilters.ForEach((x) => x.Column.UpdateColumnHeaderBindings());
+            columnsWithFilters.Clear();
+            
 
             selectedRepoTabItem = selectedTab;
+            selectedRepoTabItem.UpdateListViewBinding();
 
 
             /*Updating executing property in order to refersh UI elements on the user view*/

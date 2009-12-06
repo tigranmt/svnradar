@@ -81,7 +81,7 @@
             <!--- Images -->
             <Image x:Key="FilerByCriteriaImage" Source="Images/filter-data-by-criteria.png"/>
             <Image x:Key="AddImage" Source="Images/new.png"/>
-            <Image x:Key="DeleteImage" Source="Images/deleted.png"/>
+            <Image x:Key="DeleteIcon" Source="Images/deleted.ico"/>
             <Image x:Key="ModifiedImage" Source="Images/modified.png"/>
             <Image x:Key="ConflictedImage" Source="Images/conflicted.png"/>
             <Image x:Key="EmptyImage" Source="Images/empty.png"/>
@@ -96,6 +96,7 @@
             <Image x:Key="ImportIcon" Source="Images/import.ico"/>
             <Image x:Key="ExportIcon" Source="Images/export.ico"/>
             <Image x:Key="AboutIcon" Source="Images/about.ico"/>
+            <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
 
 
             <!--- Images -->
@@ -155,12 +156,16 @@
             <DataTemplate x:Key="ListViewHeaderFilteredTemplate">
                 <StackPanel  x:Name="FilteredStackPanel" Orientation="Horizontal" Background="BlanchedAlmond"  HorizontalAlignment="Stretch" >
 
+                    <Button x:Name="RemoveFilterButton" Width="20" Click="RemoveFilterButton_Click" Tag="{Binding}">
+                        <Image Source="Images/deleted.icon"/>
+                    </Button>
                     <TextBox   x:Name="tbox" Tag="{Binding}"  
-                               VerticalAlignment="Center"  KeyUp="TextBox_KeyUp"  Width="{Binding RelativeSource=
+                               VerticalAlignment="Center" TextChanged="tbox_TextChanged"  Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type GridViewColumnHeader}}, 
                                                         Path=ActualWidth}"                                                                                   
-                                                        Background="Gainsboro" TextAlignment="Center" FontFamily="Courier New"   FontSize="12"/>
+                                                        TextAlignment="Left" FontFamily="Arial"   FontSize="12"/>
+                    
 
                 </StackPanel>
             </DataTemplate>
@@ -247,15 +252,12 @@
                                         VerticalContentAlignment="Stretch" 
                                         ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                        ScrollViewer.CanContentScroll="True"
-                                        ScrollViewer.ScrollChanged="repoView_ScrollChanged"
-                                        GridViewColumnHeader.Click="repoView_Click"
-                                        SelectionMode="Single"
-                                        
+                                        ScrollViewer.CanContentScroll="True"                                        
+                                        GridViewColumnHeader.Click="repoView_Click"                                      
+                                        SelectionMode="Single"                                    
                                         ContextMenu="{StaticResource ListViewItemContextMenu}"
                                         Loaded="repoView_Loaded"    
-                                        ItemsSource="{Binding Source={StaticResource source}}"
-                                        SelectionChanged="repoView_SelectionChanged"
+                                        ItemsSource="{Binding Source={StaticResource source}}"                                        
                                         ItemContainerStyle="{StaticResource ListViewItemsStyle}">
                         <ListView.GroupStyle>
                             <GroupStyle>
@@ -314,9 +316,9 @@
 
                     </ListView>
 
-                    <!-- Buttons  Template="{StaticResource GlassButton}"-->
+                    <!-- Buttons  Template="{StaticResource SimpleButtonStyle}"-->
                     
-                    <Button   Style="{StaticResource SimpleButtonStyle}" x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
+                    <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
                     <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
                     <Button Style="{StaticResource BlockButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
                                   Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
@@ -325,8 +327,7 @@
                     <!-- Buttons  -->
                 </Grid>
 
-
-
+             
             </DataTemplate>
 
 
