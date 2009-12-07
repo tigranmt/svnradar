@@ -157,7 +157,7 @@
                 <StackPanel  x:Name="FilteredStackPanel" Orientation="Horizontal" Background="BlanchedAlmond"  HorizontalAlignment="Stretch" >
 
                     <Button x:Name="RemoveFilterButton" Width="20" Click="RemoveFilterButton_Click" Tag="{Binding}">
-                        <Image Source="Images/deleted.icon"/>
+                        <Image Source="Images/deleted.ico"/>
                     </Button>
                     <TextBox   x:Name="tbox" Tag="{Binding}"  
                                VerticalAlignment="Center" TextChanged="tbox_TextChanged"  Width="{Binding RelativeSource=
