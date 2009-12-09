@@ -33,14 +33,8 @@
 
         <!-- Context menu on sys tray -->
         <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu">
-            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" Click="UpdateAll_Click" Foreground="Black">
-                <MenuItem.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF000000" Offset="0"/>
-                        <GradientStop Color="#FF27AE20" Offset="0.48"/>
-                    </LinearGradientBrush>
-                </MenuItem.Background>
-            </MenuItem>
+            <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" TextBlock.FontWeight="Bold" Click="UpdateAll_Click" Foreground="Black"/>
+          
             <Separator/>
             <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
             <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>

@@ -839,6 +839,10 @@ namespace SvnRadar
             if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
                 return false;
 
+
+            if (folderRepoInfo == null)
+                return false;
+
             try
             {
                 if (System.IO.Directory.Exists(repoPath))

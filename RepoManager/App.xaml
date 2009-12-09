@@ -43,14 +43,6 @@
       
 
 
-
-            <LinearGradientBrush x:Key="GridBackBrush"  EndPoint="0.908,0.594" StartPoint="-0.091,0.532">
-                <GradientStop Color="#FFF3F3F3" Offset="0"/>
-                <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                <GradientStop Color="#FF1C242D" Offset="1"/>
-            </LinearGradientBrush>
-
             <!--- Converters -->
 
             <repoManager:ListViewHeaderDataTemplateSelector x:Key="ListViewHeaderDataTemplateSelector"/>
@@ -79,7 +71,7 @@
             <!--- Filter manager global object -->
 
             <!--- Images -->
-            <Image x:Key="FilerByCriteriaImage" Source="Images/filter-data-by-criteria.png"/>
+            <Image x:Key="FilerByCriteriaImage" Source="Images/filter-data-by-criteria.png"  />
             <Image x:Key="AddImage" Source="Images/new.png"/>
             <Image x:Key="DeleteIcon" Source="Images/deleted.ico"/>
             <Image x:Key="ModifiedImage" Source="Images/modified.png"/>
