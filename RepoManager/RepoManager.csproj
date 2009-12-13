@@ -238,8 +238,6 @@
     <Compile Include="Common\Controls\RepositoryRoutedEventArgs.cs" />
     <Compile Include="Common\Controls\RepoAliasTextBox.cs" />
     <Compile Include="Common\Controls\RepoTabItem.cs" />
-    <Compile Include="DataVirtualization\IItemsProvider.cs" />
-    <Compile Include="DataVirtualization\VirtualizingCollection.cs" />
     <Compile Include="Util\FolderDialog.cs" />
     <Compile Include="Util\Repository.cs" />
     <Compile Include="VersionControlWindow.xaml.cs">

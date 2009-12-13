@@ -96,6 +96,14 @@ namespace SvnRadar
         public static readonly ICommand BreakLogLoadingCommand = new RoutedCommand("BreakLogLoadingCommand", typeof(AppCommands));
 
 
+
+        /// <summary>
+        /// Command that notifies to shell to open the  location of the specified working copy
+        /// </summary>
+        public static readonly ICommand OpenWorkingCopyLocationCommand = new RoutedCommand("OpenWorkingCopyLocationCommand", typeof(AppCommands));
+
+
+        
         
         
     }

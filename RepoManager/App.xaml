@@ -264,13 +264,15 @@
                                                     <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{Binding Path=Items[0].UserComment}">
                                                         <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
                                                             <Expander.Header>
-                                                            <DockPanel HorizontalAlignment="Stretch">
-                                                                <TextBlock FontWeight="Bold" Text="       " />
-                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Revision}"  TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=RevisionColumn}" />
-                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Account}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=AccountColumn}" />
-                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items[0].Date}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
+                                                            <DockPanel HorizontalAlignment="Stretch" >
+                                                                <TextBlock  Text="       " />
+                                                                <TextBlock  Text="{Binding Path=Items[0].Revision}"  TextAlignment="Left" Width="{Binding Path=ActualWidth, ElementName=RevisionColumn}"  >
+                                                                  
+                                                                </TextBlock>
+                                                                <TextBlock  Text="{Binding Path=Items[0].Account}" TextAlignment="Right" Width="{Binding Path=ActualWidth, ElementName=AccountColumn}"/>
+                                                                <TextBlock  Text="{Binding Path=Items[0].Date}" TextAlignment="Right" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
 
-                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Items.Count}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
+                                                                <TextBlock  FontWeight="Bold" Text="{Binding Path=Items.Count}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
 
                                                             </DockPanel>
                                                         </Expander.Header>    

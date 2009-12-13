@@ -92,6 +92,8 @@
 
     <system:String x:Key="UI_MENUTEM_SETALIASTOTABITEM">Assign alias to tab</system:String>
     <system:String x:Key="UI_MENUTEM_REMOVETABITEM">Remove repository from collection</system:String>
+    <system:String x:Key="UI_MENUTEM_OPENLOCATION">Open working copy location</system:String>
+    
 
 
     <system:String x:Key="MSG_WARNING_DELETE_REPOPATH">Are you sure want to remove selected repository from the list?</system:String>

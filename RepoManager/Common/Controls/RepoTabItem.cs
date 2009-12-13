@@ -196,6 +196,14 @@ namespace SvnRadar.Common.Controls
             {
                 contextMenu = new ContextMenu();
 
+
+
+                MenuItem openLocation = new MenuItem();
+                openLocation.Header = FindResource(UIConstants.MENUTEM_OPENLOCATION) as string;
+                openLocation.Command = AppCommands.OpenWorkingCopyLocationCommand;              
+
+                Separator separator = new Separator();
+
                 MenuItem assignAliasMenuItem = new MenuItem();
                 assignAliasMenuItem.Header = FindResource(UIConstants.MENUTEM_SETALIASTOTABITEM) as string;
                 assignAliasMenuItem.Command = AppCommands.SetAliasOnTabCommand;
@@ -206,6 +214,9 @@ namespace SvnRadar.Common.Controls
                 removeTabItemMenuItem.Command = AppCommands.RemoveTabCommand;
                 removeTabItemMenuItem.Icon = FindResource("DeleteIcon");
 
+
+                contextMenu.Items.Add(openLocation);
+                contextMenu.Items.Add(separator);
                 contextMenu.Items.Add(assignAliasMenuItem);
                 contextMenu.Items.Add(removeTabItemMenuItem);
 

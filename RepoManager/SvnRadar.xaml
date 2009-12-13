@@ -26,6 +26,10 @@
         <CommandBinding Command="repomanager:AppCommands.GroupByRevisionNumberCommand" Executed="OnGroupByRevisionNumberCommand"  />
         <CommandBinding Command="repomanager:AppCommands.FlatViewCommand" Executed="OnFlatViewCommand"  />
         <CommandBinding Command="repomanager:AppCommands.BreakLogLoadingCommand" Executed="OnBreakLogLoadingCommand"  />
+        <CommandBinding Command="repomanager:AppCommands.OpenWorkingCopyLocationCommand" Executed="OnOpenWorkingCopyLocationCommand"  />
+
+
+        
 
     </Window.CommandBindings>
 

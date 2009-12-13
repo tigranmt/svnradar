@@ -101,6 +101,44 @@ namespace SvnRadar
         }
 
 
+        /// <summary>
+        /// Handles the execution of Open working copy location command 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnOpenWorkingCopyLocationCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            TabControl SelTabControl = e.Source as TabControl;
+            RepoTabItem repoTabItem = null;
+
+            /*The message can be recieved from both controls, so control both conditions*/
+            if (SelTabControl != null)
+                repoTabItem = SelTabControl.SelectedItem as RepoTabItem;
+            else
+                repoTabItem = e.Source as RepoTabItem;
+
+
+            if (repoTabItem == null)
+                return;
+
+            if (string.IsNullOrEmpty(repoTabItem.RepositoryCompletePath))
+                return;
+
+            if (!System.IO.Directory.Exists(repoTabItem.RepositoryCompletePath))
+                return;
+
+
+            try
+            {
+                System.Diagnostics.Process.Start(repoTabItem.RepositoryCompletePath);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager.ShowExceptionError(ex,true);
+            }
+
+
+        }
 
         /// <summary>
         /// Handles the execution of Set alias command

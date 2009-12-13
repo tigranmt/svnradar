@@ -43,6 +43,7 @@ namespace SvnRadar.Util
 
 
          public static readonly string MENUTEM_SETALIASTOTABITEM = "UI_MENUTEM_SETALIASTOTABITEM";
+         public static readonly string MENUTEM_OPENLOCATION = "UI_MENUTEM_OPENLOCATION";
          public static readonly string MENUTEM_REMOVETABITEM = "UI_MENUTEM_REMOVETABITEM";
 
     }
