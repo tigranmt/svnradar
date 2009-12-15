@@ -244,8 +244,8 @@ namespace SvnRadar.Common.Controls
 
             if (dataProviderForListView != null)
             {
-                dataProviderForListView.MethodParameters.Clear();
-                dataProviderForListView.MethodParameters.Add(this.RepositoryCompletePath.Trim());
+                dataProviderForListView.MethodParameters[0] = this.RepositoryCompletePath.Trim();
+                //dataProviderForListView.MethodParameters.Add(this.RepositoryCompletePath.Trim());
             }
 
 

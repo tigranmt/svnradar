@@ -293,18 +293,6 @@ namespace SvnRadar
             process.WaitForExit();
 
 
-            /*Try to kill the process and release all resources relayted to it.
-             Handle any kind of exception, but do not log or notify it,
-             * by the way almost DEAD process will be killed by the System itself later. */
-            try
-            {
-                process.Kill();
-                process.Dispose();
-            }
-            catch
-            {
-            }
-
             if (diInfoStrings.Count < 2)
             {
                 if (process.ExitCode != 0)
@@ -1209,23 +1197,23 @@ namespace SvnRadar
                         {
                             if (repoProc != null)
                             {
-                                /* Catch any kind of exception and proceed */
-                                try
-                                {
-                                    repoProc.Kill();
-                                    repoProc.Close();
-                                    repoProc.Dispose();
-                                 //   repoProc.Kill();
+                                ///* Catch any kind of exception and proceed */
+                                //try
+                                //{
+                                //    repoProc.Kill();
+                                //    repoProc.Close();
+                                //    repoProc.Dispose();
+                                // //   repoProc.Kill();
                                   
-                                }
-                                catch
-                                {
-                                }
-                                finally
-                                {
+                                //}
+                                //catch
+                                //{
+                                //}
+                                //finally
+                                //{
                                     repoProc.Dispose();
                                     repoProc.repoLogInformation = null;
-                                }
+                               // }
                             }
 
                             return;
@@ -1423,11 +1411,11 @@ namespace SvnRadar
 
             try
             {
-                string errorMessage = proc.StandardError.ReadToEnd();
-                if (!string.IsNullOrEmpty(errorMessage))
-                    ErrorManager.ShowCommonError(errorMessage, true);
-                else
-                {
+                //string errorMessage = proc.StandardError.ReadToEnd();
+                //if (!string.IsNullOrEmpty(errorMessage))
+                //    ErrorManager.ShowCommonError(errorMessage, true);
+                //else
+                //{
                     /* Clearing the information from the base about the repository that we have just updated */
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
@@ -1458,7 +1446,7 @@ namespace SvnRadar
 
                         }
                     }));
-                }
+                //}
             }
             catch
             {

@@ -35,6 +35,13 @@ namespace SvnRadar.Util
         /// </summary>
         public string RepositoryCompletePath { get; set; }
         public RepositoryCredentials RepoCredentials = null;
-        
+
+        public override string ToString()
+        {
+            if(string.IsNullOrEmpty(RepositoryCompletePath))
+                return base.ToString();
+
+            return RepositoryCompletePath;
+        }
     }
 }

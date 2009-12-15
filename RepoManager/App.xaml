@@ -16,13 +16,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Strings-EN.xaml" />
                 <ResourceDictionary Source="Templates/ButtonTemplates.xaml" />
-                <ResourceDictionary Source="ExpanderStyle.xaml"/>
-                <!--<ResourceDictionary Source="Templates/progressbar.xaml"/>-->
+                <ResourceDictionary Source="ExpanderStyle.xaml"/>               
                 <ResourceDictionary Source="Templates/tabcontrol.xaml"/>
                 <ResourceDictionary Source="Templates/slider.xaml"/>
-                <ResourceDictionary Source="Templates/button.xaml"/>
-                <!--<ResourceDictionary Source="Templates/menu.xaml"/>-->
+                <ResourceDictionary Source="Templates/button.xaml"/>                
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
+                <ResourceDictionary Source="Templates/listbox.xaml"/>
 
 
 
@@ -50,7 +49,7 @@
             <!--- Object data provider for repo info -->
             <ObjectDataProvider ObjectType="{x:Type database:RepoInfoBase}" MethodName="GetRepoInfoList" x:Key="DataProviderForListView">
                 <ObjectDataProvider.MethodParameters>
-                    <System:String>Empty</System:String>
+                    <x:Type TypeName="System:String"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
             <!--- Object data provider for repo info -->

@@ -669,16 +669,18 @@ namespace SvnRadar
         /// </summary>
         private void ShowMe()
         {
-            this.WindowState = WindowState.Normal;
-            this.Visibility = Visibility.Visible;
+            
+            this.Visibility = Visibility.Visible;           
+            this.Activate();
+            
+            
         }
 
         /// <summary>
         /// Attempts to hide the main window
         /// </summary>
         private void HideMe()
-        {
-            this.WindowState = WindowState.Maximized;
+        {          
             this.Visibility = Visibility.Hidden;
         }
 

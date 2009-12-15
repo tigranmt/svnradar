@@ -8,7 +8,7 @@
 
   <!-- SimpleStyles: ListBox -->
   <!--<Snippet3>-->
-  <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
+  <Style x:Key="ListBoxStyle" TargetType="ListBox">
     <Setter Property="SnapsToDevicePixels" Value="true"/>
     <Setter Property="OverridesDefaultStyle" Value="true"/>
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>

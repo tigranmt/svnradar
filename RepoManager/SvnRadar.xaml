@@ -53,13 +53,13 @@
             <Border CornerRadius="2"  Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type ListBox}}, 
-                                                        Path=ActualWidth}"  HorizontalAlignment="Stretch">
+                                                        Path=ActualWidth}"  HorizontalAlignment="Stretch" Background="Transparent">
                      <DockPanel  HorizontalAlignment="Stretch" Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type ListBox}}, 
-                                                        Path=ActualWidth}" >
+                                                        Path=ActualWidth}" Background="Transparent">
                       
-                            <TextBlock Foreground="Black" DockPanel.Dock="Left" x:Name="RepoPath" Text="{Binding RepositoryCompletePath}" TextAlignment="Center" HorizontalAlignment="Left"  />
+                            <TextBlock Foreground="Black" DockPanel.Dock="Left" x:Name="RepoPath" Text="{Binding RepositoryCompletePath}" TextAlignment="Center" HorizontalAlignment="Left" Background="Transparent" />
                             <!--<TextBlock DockPanel.Dock="Left" Text="  "  HorizontalAlignment="Left"/>-->
 
                             <!--<Button DockPanel.Dock="Right" x:Name="OpenRepoFolderButton" Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center">...</Button>-->
@@ -71,14 +71,7 @@
             </Border>
 
         </DataTemplate>
-        
-        <Style x:Key="ListBoxItemSt" TargetType="{x:Type ListBoxItem}" >
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="true">
-                    <Setter Property="Foreground" Value="Black"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+      
 
     </Window.Resources>
 
@@ -156,7 +149,8 @@
                     <!--<Border Margin="6,134,6,93" Name="border1" Background="PowderBlue" />-->
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,144,17,0" Name="btnAddNewSvnPath" VerticalAlignment="Top" Width="31" BorderBrush="#FF707070" >
                         +</Button>
-                    <ListBox Margin="19,141,54,99" ItemTemplate="{StaticResource ListBoxItemDt}" Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
+                    <!--ItemTemplate="{StaticResource ListBoxItemDt}"-->
+                    <ListBox Margin="19,141,54,99" Style="{StaticResource ListBoxStyle}"  Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                         -</Button>
                     <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="51,83,91,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" />

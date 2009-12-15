@@ -374,7 +374,7 @@ namespace SvnRadar.DataBase
         /// </summary>
         /// <param name="repositoryName">Repository name</param>
         /// <returns>The observable collection of the RepoInfo objects</returns>
-        public static IEnumerable<RepoInfo> GetRepoInfoList(string repositoryName)
+        public static IEnumerable<RepoInfo> GetRepoInfoList(String repositoryName)
         {
 
             const string NULL_PARAMETER = "Empty";

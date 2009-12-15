@@ -252,7 +252,7 @@
         <Path
       Fill="#FFFFFFFF"
       Stretch="Fill"
-      Margin="88,65.4,57,0"
+      Margin="88,82,140,0"
       VerticalAlignment="Top"
       Height="1"
       Data="M26,107 L220.04123,107" SnapsToDevicePixels="True">
