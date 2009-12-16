@@ -425,6 +425,7 @@ namespace SvnRadar
                     Dispatcher.Invoke(new Action(() =>
                     {
                         utw = UpdateRepository(changedRepoInfo.FolderPath);
+                        utw.SignalStarUpdate();
                     }));
 
 
@@ -436,8 +437,6 @@ namespace SvnRadar
                     if (utw.Process == null || utw.Process.HasExited)
                         continue;
 
-                    /*Signals an event */
-                    System.Threading.ManualResetEvent manuevent = new System.Threading.ManualResetEvent(true);
                     
                     /*Wait until process exits, in order to try to close automatically related  UpdateTrace window*/
                     utw.Process.Exited += delegate(object sender, System.EventArgs e)
@@ -462,19 +461,15 @@ namespace SvnRadar
                         {
                         }
 
-                        /*Resets an event as the work is completed*/
-                        manuevent.Set();
+                       
                     };
 
-                  
-                    /*Waiting idefinitely untill the process completes it job*/
-                    manuevent.WaitOne();
 
-                  
-                        
+
+
+                    /*Waiting indefinitely untill the process completes it job*/
+                    utw.WaitUpdateEnd();                      
                    
-
-
                 }
 
                 /*Worker execution competed so execute som GC stuff*/

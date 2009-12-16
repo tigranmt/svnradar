@@ -47,6 +47,7 @@ namespace SvnRadar
         ObservableCollection<UpdateTraceRow> updateTrace = new ObservableCollection<UpdateTraceRow>();
 
         bool bConflictDetected = false;
+      
 
         //Ctor
         public UpdateTraceWindow()
@@ -57,6 +58,28 @@ namespace SvnRadar
             InitUI();
             
         }
+
+        System.Threading.ManualResetEvent manuevent = null;
+        public void SignalStarUpdate()
+        {
+            /*Resets the event*/
+            manuevent = new System.Threading.ManualResetEvent(false);
+        }
+
+
+        private void SignalEndUpdate()
+        {
+            if (manuevent != null)
+                manuevent.Set();
+        }
+
+
+        public void WaitUpdateEnd()
+        {
+            if (manuevent != null)
+                manuevent.WaitOne();
+        }
+
 
         /// <summary>
         /// If TRUE there are some conflict were detected during the update operation, FALSE otherwise
@@ -158,6 +181,8 @@ namespace SvnRadar
         /// </summary>
         public string RelatedCommand { get; set; }
 
+
+
         /// <summary>
         /// Notifies window about relatve process exit
         /// </summary>
@@ -173,12 +198,17 @@ namespace SvnRadar
 
         void SetDefaultUI()
         {
+            SignalEndUpdate();
+
             Dispatcher.Invoke((Action)(() =>
             {
                 UpdateTraceListView.Cursor = Cursors.Arrow;
                 TextOnStatusBar.Text = "";
                 progressBar.Visibility = Visibility.Hidden;
                 btnOk.Visibility = Visibility.Visible;
+
+
+
             }));
         }
 
