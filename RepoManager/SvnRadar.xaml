@@ -9,7 +9,7 @@
     ResizeMode="CanResizeWithGrip" 
     Closing="Window_Closing"  
     StateChanged="Window_StateChanged"
-    Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="650" MinHeight="500" Icon="Images\main.png">
+     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="650" MinHeight="500" Icon="Images\main.png">
 
     <Window.CommandBindings>
         <CommandBinding Command="repomanager:AppCommands.SetAliasOnTabCommand" Executed="OnSetAliasCommandExecuted" />

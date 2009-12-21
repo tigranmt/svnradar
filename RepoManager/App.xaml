@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Templates/button.xaml"/>                
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
                 <ResourceDictionary Source="Templates/listbox.xaml"/>
+                <ResourceDictionary Source="Templates/window.xaml"/>
 
 
 
@@ -92,22 +93,6 @@
 
             <!--- Images -->
 
-
-            <!-- Animations for listview header image -->
-            <!--<Storyboard x:Key="activateElementStoryBoard">
-                <DoubleAnimation
-               Storyboard.TargetName="myGlowBitmapEffect"
-               Storyboard.TargetProperty="GlowSize"
-               From="0" To="13" Duration="0:0:0.3" />
-            </Storyboard>-->
-            <!-- This storyboard will make the image revert to its original size -->
-            <!--<Storyboard x:Key="normalizeElementStoryBoard">
-                <DoubleAnimation
-               Storyboard.TargetName="myGlowBitmapEffect"
-               Storyboard.TargetProperty="GlowSize"
-               From="13" To="0" Duration="0:0:0.3" />
-            </Storyboard>-->
-            <!--- Animations for listview header image -->
 
 
             <!-- Context menu on sys tray -->
@@ -298,7 +283,7 @@
                                 <util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}" />
                                 <util:CustomColumn x:Name="AccountColumn" Header="{StaticResource ACCOUNT_NAME}" DisplayMemberBinding="{Binding Path=Account}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
                                 <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
-                                <util:CustomColumn x:Name="ItemColumn" Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
+                                <util:CustomColumn x:Name="ItemColumn" Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450"  HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
                               
 
                             </GridView>
