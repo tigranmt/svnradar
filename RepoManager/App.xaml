@@ -89,6 +89,7 @@
             <Image x:Key="ExportIcon" Source="Images/export.ico"/>
             <Image x:Key="AboutIcon" Source="Images/about.ico"/>
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
+            <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
 
 
             <!--- Images -->

@@ -18,9 +18,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace SvnRadar.Util
 {
@@ -29,6 +30,82 @@ namespace SvnRadar.Util
     /// </summary>
     internal static class ErrorManager
     {
+
+
+        static object syncObject = new object();
+
+        #region Error codes
+        public static readonly int ERROR_CANNOT_GET_FOLDERINFO = 1;
+        public static readonly int ERROR_CANNOT_FIND_SUBVERSIONPATH = 2;
+        public static readonly int ERROR_NETWORK_STATUS_PROBLEM = 3;
+        public static readonly int ERROR_PROCESS_ERRSTDOUT = 4;
+        #endregion
+
+        /// <summary>
+        /// Runtime errors holder dictionary
+        /// </summary>
+        static ObservableCollection<SilentNotification> runtimeErrorList = new ObservableCollection<SilentNotification>();
+
+        #region Silent Notification Methods
+
+        /// <summary>
+        /// Pushes into the runtime error base the error with the specified code
+        /// </summary>
+        /// <param name="errorCode">Error code </param>
+        /// <param name="errorDescription">Error description</param>
+        public static void PushRuntimeSilentNotification(int errorCode, string errorDescription)
+        {
+            lock (syncObject)
+            {
+                if (runtimeErrorList.Count > 100)
+                    runtimeErrorList.RemoveAt(runtimeErrorList.Count - 1);
+                runtimeErrorList.Add(new SilentNotification { ErrorCode = errorCode, ErrorDescription = errorDescription });
+            }
+
+
+
+            LogMessage(errorCode.ToString() + " : " + errorDescription, true);
+        }
+
+        /// <summary>
+        /// Removes specified error from the runtime errors notification base
+        /// </summary>
+        /// <param name="errorCode">Error code</param>
+        public static void RemoveRuntimeSilentNotification(int errorCode)
+        {
+
+
+            if (runtimeErrorList.Count == 0)
+                return;
+
+            /*Removes all available items in the collection with the specified error code*/
+            SilentNotification bulkItem = new SilentNotification { ErrorCode = errorCode, ErrorDescription = string.Empty };
+
+
+            int indexOf = 0;
+            do
+            {
+                lock (syncObject)
+                {
+                    indexOf = runtimeErrorList.IndexOf(bulkItem);
+                    if (indexOf >= 0)
+                        runtimeErrorList.RemoveAt(indexOf);
+                }
+            } while (indexOf >= 0 && runtimeErrorList.Count > 0);
+
+
+
+        }
+
+
+        public static ObservableCollection<SilentNotification> SilentNotificationList
+        {
+            get { return runtimeErrorList; }
+        }
+
+
+
+        #endregion
 
         #region show error methods
         /// <summary>

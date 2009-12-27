@@ -36,6 +36,8 @@
     <system:String x:Key="VersionControlWindowTitle">Version control</system:String>
     <system:String x:Key="NewVersionApplicationString">New {0} version of the applcation was detected</system:String>
     <system:String x:Key="AboutWindowTitle">About SvnRadar</system:String>
+    <system:String x:Key="ErrorDescriptionWindowTitle">Errors list</system:String>
+    
     
     <system:String x:Key="Version">Version</system:String>
     <system:String x:Key="Author">Author</system:String>
@@ -73,7 +75,9 @@
     
 
     <system:String x:Key="MI_SHOWCHANGESSEQUENCE">Show changes</system:String>
+    <system:String x:Key="MI_SHOWERRORNOTIFICATIONS">Show error notifications</system:String>
     <system:String x:Key="MI_SHOWMAINWINDOW">Show window</system:String>
+    
 
    
     <system:String x:Key="MI_SHOWREVISIONINFO">Show diff</system:String>
@@ -119,6 +123,7 @@
     <system:String x:Key="ITEM_NAME">Item</system:String>
     <system:String x:Key="DATE_NAME">Date</system:String>
     <system:String x:Key="REPOSITORY_NAME">Repository</system:String>
+    <system:String x:Key="ERROR_NAME">Error description</system:String>
     
     
     <system:String x:Key="BTN_OK_TITLE">Ok</system:String>

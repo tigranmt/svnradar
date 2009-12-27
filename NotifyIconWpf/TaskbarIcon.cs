@@ -912,6 +912,16 @@ namespace Hardcodet.Wpf.TaskbarNotification
 
 
         /// <summary>
+        /// Sets the error icon on the sys tray menu
+        /// </summary>
+        public void SetErrorIcon()
+        {
+            if(ErrorIconSource!=null)
+                this.Icon = ErrorIconSource.ToIcon();
+        }
+
+
+        /// <summary>
         /// Closes the taskbar icon if required.
         /// </summary>
         private void RemoveTaskbarIcon()

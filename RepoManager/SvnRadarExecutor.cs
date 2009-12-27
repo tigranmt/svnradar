@@ -100,11 +100,18 @@ namespace SvnRadar
         /// </summary>
         internal static UpdateTraceWindow currentUpdateTraceWindow = null;
 
-        
+
         /// <summary>
         /// Property holds last executed process
         /// </summary>
         public static RepositoryProcess LastExecutedProcess { get; set; }
+
+
+
+        /// <summary>
+        /// If TRUE , silent error was found before, FALSE otherwise
+        /// </summary>
+        static bool silentErrorFound = false;
 
 
 
@@ -171,7 +178,7 @@ namespace SvnRadar
         }
         #endregion
 
-       
+
 
         #region Svn executors
 
@@ -204,17 +211,22 @@ namespace SvnRadar
 
 
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
-            if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath) || 
+            if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath) ||
                 !System.IO.File.Exists(RepoBrowserConfiguration.Instance.SubversionPath))
             {
                 if (!notifiedAboutSubversionPathLack)
                 {
-                    ErrorManager.ShowCommonError("The subversion exe path is missed. Can not execute command", true);
+                    PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                        "The subversion exe path is missed. Can not execute command");
                     notifiedAboutSubversionPathLack = true;
+                }
+                else
+                {
+                    RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
                 }
 
                 notifyCounter++;
-                if (notifyCounter > (50/RepoBrowserConfiguration.Instance.ControlRate) )
+                if (notifyCounter > (50 / RepoBrowserConfiguration.Instance.ControlRate))
                 {
                     notifyCounter = 0;
                     notifiedAboutSubversionPathLack = false;
@@ -231,10 +243,10 @@ namespace SvnRadar
             psi.UseShellExecute = false;
 
             /*If the path is not Url based, means that we neeed o handle a cases when the path contains spaces*/
-            if(!UrlPassed)
+            if (!UrlPassed)
                 psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath + "\"";
             else
-                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand +  " " + folderPath;
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " " + folderPath;
             psi.CreateNoWindow = true;
 
             RepositoryProcess process = RepoProcess;
@@ -277,7 +289,16 @@ namespace SvnRadar
                     {
                         string erroMessage = exitedProcess.StandardError.ReadToEnd();
                         if (!string.IsNullOrEmpty(erroMessage))
-                            ErrorManager.ShowCommonError(erroMessage, true);
+                        {
+                            PushRuntimeSilentNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT,
+                                erroMessage);
+
+                        }
+                        else
+                        {
+                            RemoveSilentNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT);
+                        }
+
                     }
                     catch
                     {
@@ -289,7 +310,7 @@ namespace SvnRadar
             process.Start();
             process.BeginOutputReadLine();
 
-           
+
             process.WaitForExit();
 
 
@@ -302,7 +323,7 @@ namespace SvnRadar
                 return null;
             }
 
-            FolderRepoInfo frInfo = new FolderRepoInfo(); 
+            FolderRepoInfo frInfo = new FolderRepoInfo();
 
             frInfo.FolderPath = folderPath;
 
@@ -552,7 +573,7 @@ namespace SvnRadar
 
             try
             {
-                if(System.IO.Directory.Exists(repoPath))
+                if (System.IO.Directory.Exists(repoPath))
                     CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
@@ -603,7 +624,7 @@ namespace SvnRadar
 
             try
             {
-                if(System.IO.Directory.Exists(repoPath))
+                if (System.IO.Directory.Exists(repoPath))
                     CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
@@ -706,7 +727,7 @@ namespace SvnRadar
 
             try
             {
-                if(System.IO.Directory.Exists(workingCopyCompletePath))
+                if (System.IO.Directory.Exists(workingCopyCompletePath))
                     CurrentRepositoryInQueryName = workingCopyCompletePath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
@@ -733,16 +754,16 @@ namespace SvnRadar
             Execute(RepoBrowserConfiguration.Instance.SubversionPath,
              " --accept " + conflictResolutionParam + " " + CommandStringsManager.UpdateCommand, isCallForSysTray);
 
-            
+
 
         }
 
 
-       /// <summary>
-       /// Checks the presence of any conflict in the specified repository
-       /// </summary>
-       /// <param name="workingCopyCompletePath">The repository working copy complete path</param>
-       /// <returns>The list of the items in conlfict state </returns>
+        /// <summary>
+        /// Checks the presence of any conflict in the specified repository
+        /// </summary>
+        /// <param name="workingCopyCompletePath">The repository working copy complete path</param>
+        /// <returns>The list of the items in conlfict state </returns>
         List<string> VerifyRepositoryOnConflict(string workingCopyCompletePath)
         {
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
@@ -750,10 +771,10 @@ namespace SvnRadar
 
 
             /*Svn special parameters for requesting the repository status*/
-            string repoStatusRequestParams = " -uq"; 
+            string repoStatusRequestParams = " -uq";
 
 
-          
+
 
             System.Diagnostics.ProcessStartInfo psi =
                           new System.Diagnostics.ProcessStartInfo(RepoBrowserConfiguration.Instance.SubversionPath);
@@ -766,7 +787,7 @@ namespace SvnRadar
             psi.CreateNoWindow = true;
 
             RepositoryProcess process = RepoProcess;
-           
+
 
             process = new RepositoryProcess();
             process.StartInfo = psi;
@@ -784,7 +805,7 @@ namespace SvnRadar
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    if(e.Data.StartsWith("C "))
+                    if (e.Data.StartsWith("C "))
                         conflictedItems.Add(e.Data);
                 }
             };
@@ -805,9 +826,9 @@ namespace SvnRadar
 
             try
             {
-              
 
-                
+
+
             }
             catch (Exception ex)
             {
@@ -922,7 +943,7 @@ namespace SvnRadar
 
             try
             {
-                if(System.IO.Directory.Exists(repoPath))
+                if (System.IO.Directory.Exists(repoPath))
                     CurrentRepositoryInQueryName = repoPath;
 
                 if (string.IsNullOrEmpty(CurrentRepositoryInQueryName))
@@ -1007,6 +1028,44 @@ namespace SvnRadar
 
         #region Main Executes
 
+
+
+        /// <summary>
+        /// Removes specified silent notification from the list
+        /// </summary>
+        /// <param name="notificationCode">Silent notification unique code</param>
+        public void RemoveSilentNotification(int notificationCode)
+        {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ErrorManager.RemoveRuntimeSilentNotification(notificationCode);
+                if (ErrorManager.SilentNotificationList.Count == 0 && silentErrorFound)
+                {
+                    TaskNotifierManager.ShowFirstChangeIfThereIs();
+                    silentErrorFound = false;
+
+                }
+            }));
+        }
+
+
+
+        /// <summary>
+        /// Pushes specified silent notification to the error stack
+        /// </summary>
+        /// <param name="notificationCode">Notification code</param>
+        /// <param name="message">Notification method</param>
+        public void PushRuntimeSilentNotification(int notificationCode, string message)
+        {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+              {
+                  ErrorManager.PushRuntimeSilentNotification(notificationCode, message);
+                  TaskNotifierManager.SetErrorIcon();
+
+                  silentErrorFound = true;
+              }));
+        }
+
         /// <summary>
         /// Starts Repository checker process
         /// </summary>
@@ -1037,7 +1096,7 @@ namespace SvnRadar
 
             process.ErrorDataReceived -= new System.Diagnostics.DataReceivedEventHandler(RepoProcess_ErrorDataReceived);
             process.ErrorDataReceived += new System.Diagnostics.DataReceivedEventHandler(RepoProcess_ErrorDataReceived);
-            
+
 
 
             process.OutputDataReceived -= new System.Diagnostics.DataReceivedEventHandler(RepoProcess_OutputDataReceived);
@@ -1060,7 +1119,7 @@ namespace SvnRadar
             //Add the newly created process to the processes list
             processes.Add(process);
 
-            
+
 
             process.Start();
             process.BeginOutputReadLine();
@@ -1081,8 +1140,13 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                ErrorManager.ShowCommonError("The subversion exe path is missed. Can not execute command", true);
+                PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                    "The subversion exe path is missed. Can not execute command");
                 return;
+            }
+            else
+            {
+                RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
             }
 
             /*Run the process output listener in background*/
@@ -1094,7 +1158,7 @@ namespace SvnRadar
             LastExecutedProcess = process;
 
 
-            
+
             _worker.DoWork += delegate(object s, DoWorkEventArgs args)
             {
 
@@ -1151,10 +1215,10 @@ namespace SvnRadar
                     },
                         new object[] { repoProc.RelatedRepositoryName, ProcessRepoStatusCommandOutputLine(e.Data) });
 
-                    
+
                 }
                 /*Process REVISION INFO command*/
-                else if (CommandStringsManager.IsRevisionInfoCommand(repoProc.Command ))
+                else if (CommandStringsManager.IsRevisionInfoCommand(repoProc.Command))
                 {
                     Application.Current.Dispatcher.Invoke((AddRevisionInfoDelegate)delegate(string rName, int revisonNumber, string itemName, string dateStr, string madeChanges)
                     {
@@ -1204,16 +1268,16 @@ namespace SvnRadar
                                 //    repoProc.Close();
                                 //    repoProc.Dispose();
                                 // //   repoProc.Kill();
-                                  
+
                                 //}
                                 //catch
                                 //{
                                 //}
                                 //finally
                                 //{
-                                    repoProc.Dispose();
-                                    repoProc.repoLogInformation = null;
-                               // }
+                                repoProc.Dispose();
+                                repoProc.repoLogInformation = null;
+                                // }
                             }
 
                             return;
@@ -1378,7 +1442,7 @@ namespace SvnRadar
 
 
             RepositoryProcess proc = sender as RepositoryProcess;
-            
+
 
             if (proc != null)
                 proc.Kill();
@@ -1388,7 +1452,7 @@ namespace SvnRadar
             WindowsManager.NotifyRepositoryProcessExit(proc.RelatedRepositoryName, proc.Command);
 
 
-            
+
 
             ExecutingCommand = false;
 
@@ -1416,36 +1480,36 @@ namespace SvnRadar
                 //    ErrorManager.ShowCommonError(errorMessage, true);
                 //else
                 //{
-                    /* Clearing the information from the base about the repository that we have just updated */
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                /* Clearing the information from the base about the repository that we have just updated */
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    if (CommandStringsManager.IsCommonUpdateCommand(proc.Command))
                     {
-                        if (CommandStringsManager.IsCommonUpdateCommand(proc.Command))
+                        /*Clear related repository repo info form the base */
+                        RepoInfoBase.ClearRepoInfo(proc.RelatedRepositoryName);
+
+                        /*Notify to sys tray about end of update of the specified repository */
+                        TaskNotifierManager.UpToDateRepository(proc.RelatedRepositoryName);
+
+                        /*Verify on presence of possible conflicts in the repository. If there are any, show them to the user*/
+                        List<string> itemsInConflict = VerifyRepositoryOnConflict(proc.RelatedRepositoryName);
+                        if (itemsInConflict != null && itemsInConflict.Count > 0)
                         {
-                            /*Clear related repository repo info form the base */
-                            RepoInfoBase.ClearRepoInfo(proc.RelatedRepositoryName);
-
-                            /*Notify to sys tray about end of update of the specified repository */
-                            TaskNotifierManager.UpToDateRepository(proc.RelatedRepositoryName);
-
-                            /*Verify on presence of possible conflicts in the repository. If there are any, show them to the user*/
-                            List<string> itemsInConflict = VerifyRepositoryOnConflict(proc.RelatedRepositoryName);
-                            if (itemsInConflict != null && itemsInConflict.Count > 0)
+                            UpdateTraceWindow utw = WindowsManager.FindWindow(proc.RelatedRepositoryName, proc.Command) as UpdateTraceWindow;
+                            if (utw != null)
                             {
-                                UpdateTraceWindow utw = WindowsManager.FindWindow(proc.RelatedRepositoryName, proc.Command) as UpdateTraceWindow;
-                                if (utw != null)
-                                {
-                                    itemsInConflict.ForEach((x) => utw.AddString(x));
-                                }
-                                else
-                                {
-                                    /*If window doesn't exist or coudn't be found for any reasno, at least notify 
-                                     to the user that ther are some elements that have a conflict in the specified repository */
-
-                                }
+                                itemsInConflict.ForEach((x) => utw.AddString(x));
                             }
+                            else
+                            {
+                                /*If window doesn't exist or coudn't be found for any reasno, at least notify 
+                                 to the user that ther are some elements that have a conflict in the specified repository */
 
+                            }
                         }
-                    }));
+
+                    }
+                }));
                 //}
             }
             catch
@@ -1455,7 +1519,7 @@ namespace SvnRadar
             WindowsManager.NotifyRepositoryProcessExit(proc.RelatedRepositoryName, proc.Command);
 
 
-          
+
             ExecutingCommand = false;
 
 

@@ -40,6 +40,7 @@
             <MenuItem x:Name="UpdateAll" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" TextBlock.FontWeight="Bold" Click="UpdateAll_Click" Foreground="Black"/>
           
             <Separator/>
+            <MenuItem x:Name="ShowErrorNotifications" Header="{StaticResource MI_SHOWERRORNOTIFICATIONS}" Click="ShowErrorNotification_Click" Icon="{StaticResource ErrorIcon}"/>
             <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
             <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
             <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
@@ -55,6 +56,7 @@
                                                         AncestorType={x:Type ListBox}}, 
                                                         Path=ActualWidth}"  HorizontalAlignment="Stretch" Background="Transparent">
                      <DockPanel  HorizontalAlignment="Stretch" Width="{Binding RelativeSource=
+                         
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type ListBox}}, 
                                                         Path=ActualWidth}" Background="Transparent">
@@ -115,6 +117,7 @@
                 x:Name="MainNotifyIcon"
                 IconSource="/Images/systrayicon.ico"
                 ChangedIconSource="/Images/check_for_updatesico.ico"
+                ErrorIconSource ="/Images/errornotification.ico"
                 ToolTipText="{StaticResource MainWindowTitle}" 
                 TrayMouseDoubleClick="MainNotifyIcon_TrayMouseDoubleClick"
                 TrayLeftMouseUp="MainNotifyIcon_TrayLeftMouseUp"

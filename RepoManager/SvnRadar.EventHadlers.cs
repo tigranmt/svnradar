@@ -62,6 +62,18 @@ namespace SvnRadar
             TaskNotifierManager.ShowFirstChangeIfThereIs();
         }
 
+
+        /// <summary>
+        /// Show error notifications, if there are
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShowErrorNotification_Click(object sender, RoutedEventArgs e)
+        {
+            ErrorsWindow.ShowWindow();
+        }
+
+
         /// <summary>
         /// Show main wondow menu item click handler
         /// </summary>

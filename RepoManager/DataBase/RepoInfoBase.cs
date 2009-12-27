@@ -124,6 +124,15 @@ namespace SvnRadar.DataBase
             }
         }
 
+
+        public static bool HasChanges
+        {
+            get
+            {
+                return (DataBase.Count > 0);
+            }
+        }
+
         #endregion
 
         #region member functions

@@ -257,8 +257,12 @@ namespace SvnRadar
             if (!IsNetworkAvailable())
             {
                 string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
-                ErrorManager.ShowCommonError(errMsg, true);
+                RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                 return;
+            }
+            else
+            {
+                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
             }
 
             ControlApplicationNewVersion();
@@ -310,7 +314,7 @@ namespace SvnRadar
                     nodeIterator = navigator.Evaluate("/Application/DownloadFrom/@Value") as XPathNodeIterator;
                     nodeIterator.MoveNext();
 
-                    string downloadfrom = nodeIterator.Current.ToString(); ;
+                    string downloadfrom = nodeIterator.Current.ToString(); 
                     new VersionControlWindow(serverSideVersion, downloadfrom).Show();
                 }
 
@@ -386,8 +390,13 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                ErrorManager.ShowCommonError("The subversion exe path is missed. Can not execute command", true);
+                RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                    "The subversion exe path is missed. Can not execute command");
                 return;
+            }
+            else
+            {
+                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
             }
 
             /* Begin new therad here in order to not block the UI */
@@ -508,11 +517,13 @@ namespace SvnRadar
                 if (!IsNetworkAvailable())
                 {
                     string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
-                    ErrorManager.ShowCommonError(errMsg, true);
+                    RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                     return;
                 }
+              
             }
-
+            if (bNetworksAvailable)
+                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
             bNetworksAvailable = true;
             ControlRepositorySequence();
 

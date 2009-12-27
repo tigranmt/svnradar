@@ -117,8 +117,18 @@ namespace SvnRadar.Util
                 return;
 
             ShowNotification(notificationList[0]);
+            SignalChangesOnSysTray(true);
+            
         }
 
+
+        /// <summary>
+        /// Set error icon on sys tray
+        /// </summary>
+        public static void SetErrorIcon()
+        {
+            taskBarIcon.SetErrorIcon();
+        }
 
         /// <summary>
         /// Notifies to the ballon the repository that is up to date.
@@ -193,7 +203,8 @@ namespace SvnRadar.Util
                 /*Updates counter textbox*/
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    taskBarIcon.FlipIcon(true);
+                    if(ErrorManager.SilentNotificationList.Count ==0)
+                        taskBarIcon.FlipIcon(true);
                    
                 }));
 
@@ -206,7 +217,8 @@ namespace SvnRadar.Util
                 /*Updates counter textbox*/
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    taskBarIcon.FlipIcon(false);
+                    if (ErrorManager.SilentNotificationList.Count == 0)
+                        taskBarIcon.FlipIcon(false);
                     notificationList.Clear();
                 }));
                
