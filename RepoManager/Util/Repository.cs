@@ -34,6 +34,7 @@ namespace SvnRadar.Util
         /// The repository wotking copy complete path
         /// </summary>
         public string RepositoryCompletePath { get; set; }
+        public string UserAssignedAlias { get; set; }
         public RepositoryCredentials RepoCredentials = null;
 
         public override string ToString()

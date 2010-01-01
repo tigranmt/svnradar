@@ -49,3 +49,8 @@
 Fixed by disabling double click in between of the column' space
 
 10. Put the program in autorun 
+
+11. Add from the ContextMenu possibility to open file location
+
+12.  Data virtualization for revision changes window, for the cases where large set of data was affected by the revision
+we investigate.

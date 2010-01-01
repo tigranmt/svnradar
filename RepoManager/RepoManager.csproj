@@ -62,6 +62,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -249,6 +250,7 @@
     <Compile Include="ErrorsWindow.xaml.cs">
       <DependentUpon>ErrorsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FormatConverters\VisibilityReverseFormatConverter.cs" />
     <Compile Include="Util\FolderDialog.cs" />
     <Compile Include="Util\Repository.cs" />
     <Compile Include="Util\SilentError.cs" />
@@ -446,6 +448,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\errornotification.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folder.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

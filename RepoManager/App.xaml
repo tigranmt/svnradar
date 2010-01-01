@@ -37,6 +37,9 @@
             <converter:IsFlatLayoutConverter x:Key="IsFlatLayoutConverter" />
             <converter:IsGroupLayoutConverter x:Key="IsGroupLayoutConverter" />
             <converter:BreakExecutionVisibilityConverter x:Key="BreakExecutionVisibilityConverter" />
+            <converter:VisibilityReverseConverter x:Key="VisibilityReverseConverter" />
+
+            
 
 
 
@@ -84,12 +87,14 @@
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
+            <Image x:Key="FolderImage" Source="Images/folder.png"/>
             <Image x:Key="ExitIcon" Source="Images/exit.ico"/>
             <Image x:Key="ImportIcon" Source="Images/import.ico"/>
             <Image x:Key="ExportIcon" Source="Images/export.ico"/>
             <Image x:Key="AboutIcon" Source="Images/about.ico"/>
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
             <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
+            <Image x:Key="FolderIcon" Source="Images/Folder.ico"/>
 
 
             <!--- Images -->
@@ -200,6 +205,7 @@
 
                 <EventSetter Event="MouseDoubleClick" Handler="ListViewItemDoubleClick"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelectedInfo, Mode=TwoWay}"/>
+                <Setter Property="ToolTip" Value="{Binding Path=UserComment}"/>
 
 
 
@@ -211,10 +217,10 @@
 
 
                 <Grid HorizontalAlignment="Stretch" 
-                          VerticalAlignment="Stretch" Name="templateGrid">
+                          VerticalAlignment="Stretch" Name="templateGrid"  >
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="8.0*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
                         <!--<RowDefinition Height="6" ></RowDefinition>
                             <RowDefinition Height="6.0*" ></RowDefinition>-->
                         <!--<RowDefinition Height="*" ></RowDefinition>-->
@@ -301,9 +307,20 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
                     <Button Style="{StaticResource BlockButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
                                   Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
-                    <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
-                 
+
+                    <!--<Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbOpenWorkingCopy"   Grid.Row="2"  Width="26" Height="26" FontSize="12" HorizontalAlignment="Right"  
+                            VerticalAlignment="Center"  Margin="600,0,10,0" 
+                            Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, 
+                            Mode=OneWay,  Converter={StaticResource VisibilityReverseConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                            Command="repoManager:AppCommands.OpenWorkingCopyLocationCommand"  Content="{StaticResource FolderImage}" />-->
+
                     <!-- Buttons  -->
+
+
+                    <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    
+                                 VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" 
+                                 Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+
                 </Grid>
 
              

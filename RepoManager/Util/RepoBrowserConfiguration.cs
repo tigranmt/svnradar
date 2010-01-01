@@ -626,6 +626,48 @@ namespace SvnRadar.Util
         }
 
         #endregion
+
+        #region set alias method
+        /// <summary>
+        /// Assign specified alias to the specified repository in the internal colelciton of Repository objects
+        /// </summary>
+        /// <param name="repositoryPath">Repository complete path</param>
+        /// <param name="repositoryAlias">Repository new alias</param>
+        public void AssignAliasToTab(string repositoryPath, string repositoryAlias)
+        {
+            IEnumerable<Repository> repoList = RepositoryPaths.Where((x) => x.RepositoryCompletePath.Equals(repositoryPath, StringComparison.InvariantCultureIgnoreCase));
+            if (repoList != null)
+            {
+                foreach (Repository r in repoList)
+                {
+                    r.UserAssignedAlias = repositoryAlias;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the respository assigned alias if there is any
+        /// </summary>
+        /// <param name="repositoryPath">Repository complete path</param>
+        /// <returns></returns>
+        public string GetAliasForRepository(string repositoryPath)
+        {
+            string alias = string.Empty;
+            IEnumerable<Repository> repoList = RepositoryPaths.Where((x) => x.RepositoryCompletePath.Equals(repositoryPath, StringComparison.InvariantCultureIgnoreCase));
+            if (repoList != null)
+            {
+                foreach (Repository r in repoList)
+                {
+                    alias = r.UserAssignedAlias;
+                    break;
+                }
+            }
+
+
+            return alias;
+        }
+        #endregion
         #endregion
 
         #region INotifyPropertyChanged Members

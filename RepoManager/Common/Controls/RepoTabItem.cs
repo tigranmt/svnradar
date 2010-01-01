@@ -43,11 +43,7 @@ namespace SvnRadar.Common.Controls
         /// </summary>
         string repoName = string.Empty;
 
-        /// <summary>
-        /// Alias assigned to the repository. As default equals to it's original name 
-        /// </summary>
-        string alias = string.Empty;
-
+     
         /// <summary>
         /// Repository complete path
         /// </summary>
@@ -144,7 +140,7 @@ namespace SvnRadar.Common.Controls
                 return;
 
 
-            alias = repoName;
+           
             this.Name = "repoTab";
             repoCompletePath = repositoryName;
         }
@@ -155,7 +151,13 @@ namespace SvnRadar.Common.Controls
         {
             base.OnInitialized(e);
 
-            this.Header = repoName;
+            /* If there is any alias assigned to the repository, show it on the tab, otherwise the repository name 
+             will be shown. */
+            string userAssignedAlias = RepoBrowserConfiguration.Instance.GetAliasForRepository(this.RepositoryCompletePath);
+            if (string.IsNullOrEmpty(userAssignedAlias))
+                this.Header = repoName;
+            else
+                this.Header = userAssignedAlias;
 
             this.Focusable = true;
 
@@ -163,6 +165,7 @@ namespace SvnRadar.Common.Controls
             /*Assign control template*/
             this.ContentTemplate = FindResource("TabItemDataTemplate") as DataTemplate;
             this.Style = FindResource("TabItemStyle") as Style;
+            
 
         }
 
@@ -200,7 +203,8 @@ namespace SvnRadar.Common.Controls
 
                 MenuItem openLocation = new MenuItem();
                 openLocation.Header = FindResource(UIConstants.MENUTEM_OPENLOCATION) as string;
-                openLocation.Command = AppCommands.OpenWorkingCopyLocationCommand;              
+                openLocation.Command = AppCommands.OpenWorkingCopyLocationCommand;
+                openLocation.Icon = FindResource("FolderIcon");
 
                 Separator separator = new Separator();
 

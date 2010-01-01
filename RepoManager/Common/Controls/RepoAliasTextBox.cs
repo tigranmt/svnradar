@@ -54,7 +54,12 @@ namespace SvnRadar.Common.Controls
         private RepoAliasTextBox(RepoTabItem repoTabItem)
         {
             parentTabItem = repoTabItem;
+            this.Focus();
             this.Text = DEFAULT_TEXT;
+            
+            
+            this.SelectAll();
+          
         }
 
 
@@ -68,6 +73,8 @@ namespace SvnRadar.Common.Controls
             /*Save original content of TabItem header*/
             headerOriginalContent = repoTabItem.Header;
             repoTabItem.Header = new RepoAliasTextBox(repoTabItem);
+            System.Windows.Input.Keyboard.Focus(repoTabItem.Header as TextBox);
+            
         }
         #endregion
 
@@ -88,13 +95,19 @@ namespace SvnRadar.Common.Controls
                 parentTabItem.Header = headerOriginalContent;                
             }
              /*If user pressed Enter, set the RepoTabItem's Header 
-              * property value to the TextBox text. If it's Null reste the Heaedr content
+              * property value to the TextBox text. If it's Null reset the Header content
               * to it's original value
               */
             else if (e.Key == System.Windows.Input.Key.Enter)
             {
-                if(!string.IsNullOrEmpty( this.Text))
+                if (!string.IsNullOrEmpty(this.Text))
+                {
                     parentTabItem.Header = this.Text;
+
+                    /*Assign alias to tab and save configuration immidiately*/
+                    SvnRadar.Util.RepoBrowserConfiguration.Instance.AssignAliasToTab(parentTabItem.RepositoryCompletePath, this.Text);
+                    SvnRadar.Util.RepoBrowserConfiguration.Instance.Save();
+                }
                 else
                     parentTabItem.Header = headerOriginalContent;   
             }

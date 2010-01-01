@@ -157,6 +157,7 @@ namespace SvnRadar
                 ErrorManager.LogException(ex);
             }
             txtWinMergePath.Text = string.Empty;
+             
         }
 
         /// <summary>

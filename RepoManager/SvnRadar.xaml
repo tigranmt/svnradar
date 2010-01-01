@@ -6,11 +6,12 @@
     xmlns:customscontrols="clr-namespace:SvnRadar.Common.Controls"
     xmlns:repomanager="clr-namespace:SvnRadar"
     xmlns:tb="http://www.hardcodet.net/taskbar"
-    ResizeMode="CanResizeWithGrip" 
+    ResizeMode="CanResizeWithGrip"
     Closing="Window_Closing"  
     StateChanged="Window_StateChanged"
-     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="650" MinHeight="500" Icon="Images\main.png">
+     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="700" MinHeight="500" Icon="Images\main.png">
 
+   
     <Window.CommandBindings>
         <CommandBinding Command="repomanager:AppCommands.SetAliasOnTabCommand" Executed="OnSetAliasCommandExecuted" />
         <CommandBinding Command="repomanager:AppCommands.RemoveTabCommand" Executed="OnRemoveTabCommandExecuted" />
@@ -128,6 +129,7 @@
 
             <!--<TabItem Header="Boooo" ContentTemplate="{StaticResource TabItemDataTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ></TabItem>-->
             <TabItem  Header="{StaticResource ConfigurationTabTitle}" Name="ConfigTab" ButtonBase.Click="ConfigurationTabButtonClicked">
+               
                 <Grid>
                     <TextBlock x:Uid="SubversionPathTextBlock" Text="{StaticResource SVNPathTextBlockTitle}" Margin="20,19,0,0" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" TextAlignment="Center" FontSize="14" />
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="19,0,0,14" HorizontalAlignment="Left" Width="105" Height="23"
