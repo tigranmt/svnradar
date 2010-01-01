@@ -30,7 +30,9 @@ namespace SvnRadar.Util
         public static readonly string ProjectManifestHttpAddress = "https://svnradar.googlecode.com/hg/RepoManager/Manifest/ReleaseManifest.xml";
         public static readonly string ProjectHttpAddress = "http://code.google.com/p/svnradar/";
         public static readonly string Author = "Tigran Martirosyan";
+        public static readonly string AuthorEmail = "tigranmt@gmail.com";
         public static readonly string AuthorSite = "http://it.linkedin.com/pub/tigran-martirosyan/7/226/675";
+        
 
         #region Assembly Attribute Accessors
 

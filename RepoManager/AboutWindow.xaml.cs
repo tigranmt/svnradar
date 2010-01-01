@@ -52,6 +52,7 @@ namespace SvnRadar
 
             tbVersionString.Text = VersionInfo.AssemblyVersion;          
             tbAuthorString.Text = VersionInfo.Author;
+            tbEmailString.Text = VersionInfo.AuthorEmail;
                 
         }
 
@@ -80,6 +81,13 @@ namespace SvnRadar
         private void image3_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Executor.ExecuteExplorerProcess(VersionInfo.ProjectHttpAddress);               
+        }
+
+        private void tbEmailString_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            string navigateUri = "mailto:tigranmt@gmail.com";
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(navigateUri));
+            e.Handled = true;
         }
     }
 }

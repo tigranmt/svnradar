@@ -4,6 +4,7 @@
   <DownloadFrom Value="http://code.google.com/p/svnradar/downloads/list"/>  
   <Feautures Value=""/>
   <Authors>
-    <Author Value="Tigran Martirosyan"/>
+    <Author Value="Tigran Martirosyan" Email="tigranmt@gmail.com"/>
   </Authors>
+  
 </Application>
