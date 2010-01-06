@@ -85,7 +85,7 @@ namespace SvnRadar
 
         private void tbEmailString_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            string navigateUri = "mailto:tigranmt@gmail.com";
+            string navigateUri = "mailto:" + VersionInfo.AuthorEmail;
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(navigateUri));
             e.Handled = true;
         }

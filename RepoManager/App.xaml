@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
                 <ResourceDictionary Source="Templates/listbox.xaml"/>
                 <ResourceDictionary Source="Templates/window.xaml"/>
+                <ResourceDictionary Source="Templates/scrollbar.xaml"/>
 
 
 
@@ -233,7 +234,7 @@
                                         VirtualizingStackPanel.VirtualizationMode="Recycling"                              
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch" 
-                                        ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                        ScrollViewer.HorizontalScrollBarVisibility="Auto"                                         
                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                                         ScrollViewer.CanContentScroll="True"                                        
                                         GridViewColumnHeader.Click="repoView_Click"                                      

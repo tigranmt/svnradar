@@ -170,7 +170,7 @@
     </Grid>
   </ControlTemplate>
 
-  <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+  <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
     <Setter Property="SnapsToDevicePixels" Value="True"/>
     <Setter Property="OverridesDefaultStyle" Value="true"/>
     <Style.Triggers>
