@@ -36,6 +36,6 @@
             </ListView.View>
 
         </ListView>
-        <Button Height="23" Margin="0,0,13,6" Name="CloseButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Content="{StaticResource CloseTitle}" Click="CloseButton_Click"/>
+        <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="0,0,13,6" Name="CloseButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Content="{StaticResource CloseTitle}" Click="CloseButton_Click"/>
     </Grid>
 </Window>
