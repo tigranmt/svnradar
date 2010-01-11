@@ -8,6 +8,7 @@
     xmlns:repoCC="clr-namespace:SvnRadar.Common.Controls"            
     xmlns:database="clr-namespace:SvnRadar.DataBase"
     xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'
+    
     StartupUri="SvnRadar.xaml">
     <Application.Resources>
 
@@ -21,9 +22,8 @@
                 <ResourceDictionary Source="Templates/slider.xaml"/>
                 <ResourceDictionary Source="Templates/button.xaml"/>                
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
-                <ResourceDictionary Source="Templates/listbox.xaml"/>
-                <ResourceDictionary Source="Templates/window.xaml"/>
-                <ResourceDictionary Source="Templates/scrollbar.xaml"/>
+                <ResourceDictionary Source="Templates/listbox.xaml"/>                           
+                <ResourceDictionary Source="Templates/listview.xaml"/>
 
 
 
@@ -40,11 +40,11 @@
             <converter:BreakExecutionVisibilityConverter x:Key="BreakExecutionVisibilityConverter" />
             <converter:VisibilityReverseConverter x:Key="VisibilityReverseConverter" />
 
-            
 
 
+       
 
-      
+
 
 
             <!--- Converters -->
@@ -101,7 +101,6 @@
             <!--- Images -->
 
 
-
             <!-- Context menu on sys tray -->
             <ContextMenu  x:Key="ListViewItemContextMenu" >
                 <MenuItem  Header="{StaticResource MI_SHOWREVISIONINFO}" Click="ShowRevisionInfo_Click" Icon="{StaticResource ShowRevisionInfo}" />
@@ -116,8 +115,8 @@
                 <StackPanel x:Name="NormalStackPanel" Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type GridViewColumnHeader}}, 
-                                                        Path=ActualWidth}" Background="Black">
-                    <TextBlock  Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"  Foreground="WhiteSmoke" HorizontalAlignment="Center"/>
+                                                        Path=ActualWidth}" >
+                    <TextBlock  Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </DataTemplate>
             <!---ListView State header template definition -->
@@ -128,8 +127,8 @@
                 <StackPanel x:Name="NormalStackPanel" Width="{Binding RelativeSource=
                                                         {RelativeSource FindAncestor, 
                                                         AncestorType={x:Type GridViewColumnHeader}}, 
-                                                        Path=ActualWidth}" Background="LightSlateGray">
-                    <TextBlock   x:Name="tblock"  Text="{Binding}" VerticalAlignment="Center"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" />
+                                                        Path=ActualWidth}" >
+                    <TextBlock   x:Name="tblock"  Text="{Binding}" VerticalAlignment="Center"  HorizontalAlignment="Center" TextAlignment="Center" />
                 </StackPanel>
 
             </DataTemplate>
@@ -237,10 +236,11 @@
                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"                                         
                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                                         ScrollViewer.CanContentScroll="True"                                        
-                                        GridViewColumnHeader.Click="repoView_Click"                                      
-                                        SelectionMode="Single"                                    
+                                        GridViewColumnHeader.Click="repoView_Click"                                  
+                                        SelectionMode="Single"      
+                                        Style="{StaticResource ListViewCustomStyle}"
                                         ContextMenu="{StaticResource ListViewItemContextMenu}"
-                                        Loaded="repoView_Loaded"    
+                                        Loaded="repoView_Loaded"                                            
                                         ItemsSource="{Binding Source={StaticResource source}}"                                        
                                         ItemContainerStyle="{StaticResource ListViewItemsStyle}">
                         <ListView.GroupStyle>
@@ -285,7 +285,7 @@
 
 
                                 <util:FixWidthListViewColumn x:Name="StateColumn" FixedWidth="50"    Header="{StaticResource STATE_NAME}"                                                   
-                                                    HeaderTemplate="{StaticResource ListViewStateHeaderNormalTemplate}"
+                                                    HeaderTemplate="{StaticResource ListViewStateHeaderNormalTemplate}" 
                                                     CellTemplate="{StaticResource StateColumnCellTemplate}"/>
 
                                 <util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}" />
