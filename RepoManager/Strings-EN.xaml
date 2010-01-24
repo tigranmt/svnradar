@@ -32,6 +32,8 @@
     <system:String x:Key="GoToSourceToolTip">Go to source file</system:String>
     <system:String x:Key="SetOnAutorunTitle">Run program on Windows Start up</system:String>
     <system:String x:Key="CloseTitle">Close</system:String>
+    <system:String x:Key="ClearErrorsTitle">Clear errors</system:String>
+    
     <system:String x:Key="GoToTitle">Go to</system:String>
     <system:String x:Key="VersionControlWindowTitle">Version control</system:String>
     <system:String x:Key="NewVersionApplicationString">New {0} version of the applcation was detected</system:String>

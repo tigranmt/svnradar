@@ -78,5 +78,13 @@ namespace SvnRadar
             this.Close();
         }
 
+        private void ClearErrorsButton_Click(object sender, RoutedEventArgs e)
+        {
+            lock (ErrorManager.SilentNotificationList)
+            {
+                ErrorManager.SilentNotificationList.Clear();
+            }
+        }
+
     }
 }

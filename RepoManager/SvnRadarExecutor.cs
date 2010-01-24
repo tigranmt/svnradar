@@ -30,6 +30,7 @@ using System.Linq.Expressions;
 using SvnRadar.Common.Controls;
 using System.Xml.XPath;
 using System.Windows.Threading;
+using System.Security.Cryptography;
 
 namespace SvnRadar
 {
@@ -179,6 +180,20 @@ namespace SvnRadar
         #endregion
 
 
+        /// <summary>
+        /// Gets the int presentation of the specified string.Used to uniquely identify the path of the folder during the error notification,
+        /// without using additional in memory relational storage
+        /// </summary>
+        /// <param name="folderrepopath">Follder repository complete path</param>
+        /// <returns>integer that describes given path</returns>
+        int CodeFromString(string folderrepopath)
+        {
+            if (string.IsNullOrEmpty(folderrepopath))
+                return -1;
+
+
+            return folderrepopath.GetHashCode();
+        }
 
         #region Svn executors
 
@@ -311,17 +326,29 @@ namespace SvnRadar
             process.BeginOutputReadLine();
 
 
-            process.WaitForExit();
+            /*Wait maximum 1 minute*/
+            process.WaitForExit(60000);
 
-
+            int unniqueCode = CodeFromString(folderPath);
             if (diInfoStrings.Count < 2)
             {
                 if (process.ExitCode != 0)
                 {
-                    ErrorManager.ShowProcessError(process);
+                    try {
+
+
+                        PushRuntimeSilentNotification(unniqueCode, "Got problems retreiving  information for the folder " + 
+                         folderPath +  "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd());                    
+                    }
+                    catch(Exception ex) {
+                        ErrorManager.LogException(ex);
+                    }
                 }
                 return null;
             }
+
+
+            RemoveSilentNotification(unniqueCode);
 
             FolderRepoInfo frInfo = new FolderRepoInfo();
 

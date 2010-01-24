@@ -43,5 +43,6 @@
 
         </ListView>
         <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="0,0,13,6" x:Name="CloseButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Content="{StaticResource CloseTitle}" Click="CloseButton_Click"/>
+        <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="12,0,13,6" x:Name="ClearErrorsButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="136" Content="{StaticResource ClearErrorsTitle}" Click="ClearErrorsButton_Click"/>
     </Grid>
 </Window>
