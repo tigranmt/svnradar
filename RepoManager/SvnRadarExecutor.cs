@@ -259,9 +259,9 @@ namespace SvnRadar
 
             /*If the path is not Url based, means that we neeed o handle a cases when the path contains spaces*/
             if (!UrlPassed)
-                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath + "\"";
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
             else
-                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " " + folderPath;
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
             psi.CreateNoWindow = true;
 
             RepositoryProcess process = RepoProcess;
