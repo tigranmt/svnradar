@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SvnStatModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityContainer Name="SvnStatModelStoreContainer">
+          <EntitySet Name="FileDetails" EntityType="SvnStatModel.Store.FileDetails" store:Type="Tables" />
+          <EntitySet Name="Revision" EntityType="SvnStatModel.Store.Revision" store:Type="Tables" />
+          <EntitySet Name="RevisionDetails" EntityType="SvnStatModel.Store.RevisionDetails" store:Type="Tables" />
+        </EntityContainer>
+        <EntityType Name="FileDetails">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Revision">
+          <Key>
+            <PropertyRef Name="Revision" />
+          </Key>
+          <Property Name="Revision" Type="int" Nullable="false" />
+          <Property Name="Account" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6035: The relationship 'FK_FileDetails_0' has columns that are not part of the key of the table on the primary side of the relationship which is not supported, the relationship was excluded.
+      -->
+        <EntityType Name="RevisionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Revision" Type="int" Nullable="false" />
+          <Property Name="FileID" Type="int" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SvnStatModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+        <EntityContainer Name="SvnStatEntities">
+          <EntitySet Name="FileDetails" EntityType="SvnStatModel.FileDetails" />
+          <EntitySet Name="Revision" EntityType="SvnStatModel.Revision" />
+          <EntitySet Name="RevisionDetails" EntityType="SvnStatModel.RevisionDetails" />
+        </EntityContainer>
+        <EntityType Name="FileDetails">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int64" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="2147483647" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Revision">
+          <Key>
+            <PropertyRef Name="Revision1" />
+          </Key>
+          <Property Name="Revision1" Type="Int32" Nullable="false" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RevisionDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Revision" Type="Int32" Nullable="false" />
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+        <EntityContainerMapping StorageEntityContainer="SvnStatModelStoreContainer" CdmEntityContainer="SvnStatEntities">
+          <EntitySetMapping Name="FileDetails">
+            <EntityTypeMapping TypeName="IsTypeOf(SvnStatModel.FileDetails)">
+              <MappingFragment StoreEntitySet="FileDetails">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revision">
+            <EntityTypeMapping TypeName="IsTypeOf(SvnStatModel.Revision)">
+              <MappingFragment StoreEntitySet="Revision">
+                <ScalarProperty Name="Revision1" ColumnName="Revision" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RevisionDetails">
+            <EntityTypeMapping TypeName="IsTypeOf(SvnStatModel.RevisionDetails)">
+              <MappingFragment StoreEntitySet="RevisionDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Revision" ColumnName="Revision" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="SvnStatModel">
+        <EntityTypeShape EntityType="SvnStatModel.FileDetails" Width="1.5" PointX="0.75" PointY="0.75" Height="1.4033821614583331" IsExpanded="true" />
+        <EntityTypeShape EntityType="SvnStatModel.Revision" Width="1.5" PointX="2.75" PointY="0.75" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SvnStatModel.RevisionDetails" Width="1.5" PointX="0.75" PointY="3.75" Height="1.5956835937499996" IsExpanded="true" /></Diagram></edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
