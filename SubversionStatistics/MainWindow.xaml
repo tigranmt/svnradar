@@ -1,16 +1,16 @@
-﻿<Window x:Class="SubversionStatistics.MainWindow"
+﻿<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:stat="clr-namespace:SubversionStatistics" 
     xmlns:viewModel="clr-namespace:ViewModel" 
     xmlns:converter="clr-namespace:SubversionStatistics.Util.Converters"
     xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:my="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
-    xmlns:util="clr-namespace:SubversionStatistics.Util"
-   
+    xmlns:util="clr-namespace:SubversionStatistics.Util"   
+    x:Class="SubversionStatistics.MainWindow"   
     Height="440" Width="790"     
-    MinHeight="440"
-    MinWidth="790"
-    Icon="Images/app.png" >
+    MinHeight="500"
+    MinWidth="800"
+    Icon="Images/app.png" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" >
     
     <Window.Resources>
         <ResourceDictionary>
@@ -21,49 +21,50 @@
 
             <converter:TreeItemImageConverter x:Key="TreeItemImageConverter"/>
 
-            <!--- Object data provider for repo info -->
-            <ObjectDataProvider ObjectType="{x:Type stat:MainWindow}" MethodName="GetRepositoryTree" 
-                                x:Key="DataProviderForTreeView"/>               
-            <!--- Object data provider for repo info -->
+
+       
 
 
-            <!--- Object data provider for repo info -->
-            <ObjectDataProvider ObjectType="{x:Type stat:MainWindow}" MethodName="GetStatResult" 
-                                x:Key="DataProviderForStat"/>
-            <!--- Object data provider for repo info -->
+        <!--- Object data provider for repo info -->
+        <ObjectDataProvider 
+                                x:Key="DataProviderForTreeView" ObjectType="{x:Type stat:MainWindow}" MethodName="GetRepositoryTree" 
+                                />
+        <!--- Object data provider for repo info -->
 
-            
-            
-            <!--HierarchicalDataTemplate-->
+
+        <!--- Object data provider for repo info -->
+        <ObjectDataProvider 
+                                x:Key="DataProviderForStat" ObjectType="{x:Type stat:MainWindow}" MethodName="GetStatResult" 
+                                />
+        <!--- Object data provider for repo info -->
+
+
+        <!--HierarchicalDataTemplate-->
             <HierarchicalDataTemplate x:Key="TreeDataTemplate" ItemsSource="{Binding Path=Children}">
                 <Grid>
-                    <StackPanel Name="spImg" Orientation="Horizontal">
-                        <Image Name="img" Source="{Binding Converter={StaticResource TreeItemImageConverter}}"
+                    <StackPanel x:Name="spImg" Orientation="Horizontal">
+                        <Image x:Name="img" Source="{Binding Converter={StaticResource TreeItemImageConverter}}"
                                                Width="16" Height="16"  Stretch="Fill" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding Path=Name}" Margin="5,0" VerticalAlignment="Center" />
-                        <Button Name="btnReload" 
-                                                Visibility="{Binding Path=IsLoadingCanceled,Mode=TwoWay,
-                                                            Converter={x:Static converter:BoolVisibilityConverter.SingleInstance}}"
-                                                Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"
+                        <Button x:Name="btnReload" 
+                                                Visibility="{Binding Path=IsLoadingCanceled, Converter={x:Static converter:BoolVisibilityConverter.SingleInstance}, Mode=TwoWay}"
+                                                Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}, Mode=FindAncestor}}"
                                                 Click="btnReload_Click"
                                                 Height="14" VerticalAlignment="Center" >
-                            <TextBlock FontSize="9" Text="{StaticResource ReloadTitle}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock FontSize="9" Text="{StaticResource ReloadTitle}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Button>
-                        <StackPanel Name="spLoading" Orientation="Horizontal"
-                                                Visibility="{Binding  Path=IsLoading,
-                                                            Converter={x:Static converter:BoolVisibilityConverter.SingleInstance}}">
+                        <StackPanel x:Name="spLoading" Orientation="Horizontal"
+                                                Visibility="{Binding Path=IsLoading, Converter={x:Static converter:BoolVisibilityConverter.SingleInstance}}">
                             <Grid Height="13"  MinWidth="50" MaxWidth="75" Margin="5,0" >
-                                <ProgressBar Name="loadingProgressBar" Height="13"  MinWidth="50" MaxWidth="75" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                </ProgressBar>
-                                <TextBlock Name="txtLoading" Text="{StaticResource LoadingTitle}" FontSize="8.6" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <ProgressBar x:Name="loadingProgressBar" Height="13"  MinWidth="50" MaxWidth="75" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="txtLoading" Text="{StaticResource LoadingTitle}" FontSize="8.6" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
-                            <Button Name="btnCancelLoad" 
-                                                IsEnabled="{Binding Path=IsLoadingCanceled, Mode=TwoWay,
-                                                            Converter={x:Static converter:FlipBoolConverter.SingleInstance}}"                                     
-                                                Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"
+                            <Button x:Name="btnCancelLoad" 
+                                                IsEnabled="{Binding Path=IsLoadingCanceled, Converter={x:Static converter:FlipBoolConverter.SingleInstance}, Mode=TwoWay}"                                     
+                                                Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}, Mode=FindAncestor}}"
                                                
                                                 Height="14" Click="btnCancelLoad_Click" VerticalAlignment="Center" >
-                                <TextBlock FontSize="9" Text="{StaticResource CancelTitle}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock FontSize="9" Text="{StaticResource CancelTitle}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Button>
                         </StackPanel>
                     </StackPanel>
@@ -77,16 +78,16 @@
             <!-- ColorByPreferenceColumn Style -->
             <Style
                 x:Key="ColorByPreferenceColumn"
-                TargetType="chartingToolkit:ColumnDataPoint">
+                TargetType="{x:Type chartingToolkit:ColumnDataPoint}">
                 <Setter Property="Background" Value="DarkGray"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate
-                            TargetType="chartingToolkit:ColumnDataPoint">
+                            TargetType="{x:Type chartingToolkit:ColumnDataPoint}">
                             <Border
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
-                                <Grid Background="{Binding FavoriteColor}">
+                                <Grid Background="{Binding Path=FavoriteColor}">
                                     <Rectangle>
                                         <Rectangle.Fill>
                                             <LinearGradientBrush>
@@ -120,14 +121,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="Auto" MinWidth="5" />
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>			
+			
         </Grid.ColumnDefinitions>
 
 
         <!---->
 
-        <TreeView Name="RepoTreeView" Margin="0,0,0,1" Grid.Column="0" Grid.Row="0"                 
-                  ItemTemplate="{StaticResource TreeDataTemplate}"                  
+        <TreeView x:Name="RepoTreeView" Margin="0,0,0,1" Grid.Column="0" Grid.Row="0"                  
                   ItemsSource ="{Binding}"                  
                   TreeViewItem.Expanded="RepoTreeView_Expanded">
             
@@ -138,38 +139,60 @@
                     </Style>
                 </TreeView.Resources>
             
+        	<TreeView.ItemTemplate>
+        		<StaticResource ResourceKey="TreeDataTemplate"/>
+        	</TreeView.ItemTemplate>
+            
         </TreeView>
         <GridSplitter x:Name="GridSplitter" ResizeDirection="Columns" Grid.Row="0"
                                      Width="4"  Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource gridSplitterStyle}" Margin="1,1,1,1" />
         
-        <StackPanel Grid.Column="2" Orientation="Vertical" Background="AliceBlue" >
+        <Grid Grid.Column="2">
             
-            <StackPanel Grid.Column="2" Orientation="Horizontal" Background="Beige" Width="Auto">
-                <Button Height="23"  Margin="10,10,0,0" Name="btnLoadFromPath" VerticalAlignment="Top" Width="100" Click="button1_Click"  Content="{StaticResource LoadButtonTitle}"/>
-                <TextBox x:Name="txtRepositoryPath" Width="400" Margin="10,10,10,10" Height="23"/>
-            </StackPanel>
+            <Grid.RowDefinitions>
+            	<RowDefinition Height="Auto"/>
+                <RowDefinition MinHeight="3" Height="Auto" />
+            	<RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             
-            <TextBlock/>
-            <chartingToolkit:Chart
-                x:Name="ReportChart"
-                Title="{Binding ReportTitle}" >
-                <chartingToolkit:ColumnSeries
-                    DependentValueBinding="{Binding DependentValue}"
-                    IndependentValueBinding="{Binding IndependentValue}"
-                    DataPointStyle="{StaticResource ColorByPreferenceColumn}"
-                    BorderThickness="0"  
-                    
-                    Margin="10,10,10,10">
-                    <chartingToolkit:ColumnSeries.DependentRangeAxis>
-                        <chartingToolkit:LinearAxis
-                            Orientation="Y"
-                            Minimum="{Binding DependendValueMinimum}"
-                            Maximum="{Binding DependendValueMaximum}"
-                            Title="{Binding DependentValueName}"
-                            ShowGridLines="True"/>
-                    </chartingToolkit:ColumnSeries.DependentRangeAxis>
-                </chartingToolkit:ColumnSeries>
-            </chartingToolkit:Chart>
-      </StackPanel>
+            <StackPanel  Grid.Row="0" Orientation="Vertical" Background="AliceBlue" Margin="2,8,16,-0.32" RenderTransformOrigin="0.423,0.356">
+            
+                <StackPanel  Orientation="Horizontal" Background="Beige" Width="Auto">
+                    <Button Height="23"  Margin="10,10,0,0" x:Name="btnLoadFromPath" VerticalAlignment="Top" Width="100" Click="button1_Click"  Content="{StaticResource LoadButtonTitle}"/>
+                    <TextBox x:Name="txtRepositoryPath" Width="400" Margin="10,10,10,10" Height="23"/>
+                </StackPanel>
+            
+                <TextBlock/>
+                <chartingToolkit:Chart
+                    x:Name="ReportChart"
+                    Title="{Binding Path=ReportTitle}"  VerticalAlignment="Stretch" Height="261.04" >
+                    <chartingToolkit:ColumnSeries
+                        DependentValueBinding="{Binding Path=DependentValue}"
+                        IndependentValueBinding="{Binding Path=IndependentValue}"
+                        DataPointStyle="{StaticResource ColorByPreferenceColumn}" Height="189.04" Width="432" RenderTransformOrigin="0.493,0.464"
+                        >
+                        <chartingToolkit:ColumnSeries.DependentRangeAxis>
+                            <chartingToolkit:LinearAxis
+                                Orientation="Y"
+                                Minimum="{Binding Path=DependendValueMinimum}"
+                                Maximum="{Binding Path=DependendValueMaximum}"
+                                Title="{Binding Path=DependentValueName}"
+                                ShowGridLines="True"/>
+                        </chartingToolkit:ColumnSeries.DependentRangeAxis>
+                    </chartingToolkit:ColumnSeries>
+                </chartingToolkit:Chart>
+            
+         
+        </StackPanel>
+        <GridSplitter Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="1,1,1,1"  Height="2"  x:Name="splitter1" ResizeDirection="Rows" />
+        <ListView Grid.Row="2" IsSynchronizedWithCurrentItem="True"  VerticalAlignment="Stretch" >
+        <ListView.View>
+        		<GridView>
+        			<GridViewColumn Header="GridViewColumn"/>
+        		</GridView>
+        	</ListView.View>
+        </ListView>
+        
+        </Grid>
     </Grid>
 </Window>

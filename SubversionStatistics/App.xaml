@@ -9,9 +9,10 @@
             <ResourceDictionary.MergedDictionaries>                
                 <ResourceDictionary Source="Strings/Strings-EN.xaml"/>
              </ResourceDictionary.MergedDictionaries>
+
+
         </ResourceDictionary>
-
-
+      
 
     </Application.Resources>
 </Application>
