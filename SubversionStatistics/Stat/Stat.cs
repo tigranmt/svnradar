@@ -540,7 +540,7 @@ namespace SubversionStatistics.Stat
         /// </summary>
         /// <param name="folderPath">Folder complete working copy path on the machine</param>
         /// <returns>The url of the related repository</returns>      
-        public string GetFolderRepoUrl(string workingCopyPath)
+        public static string GetFolderRepoUrl(string workingCopyPath)
         {
             if (string.IsNullOrEmpty(workingCopyPath))
                 return null;

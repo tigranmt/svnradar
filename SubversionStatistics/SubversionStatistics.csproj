@@ -99,12 +99,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adorner\AdornerManager.cs" />
+    <Compile Include="Adorner\StatDataLoadingAdorner.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="DataModel\SvnStatModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SvnStatModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\InvalidWorkingCopyPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,6 +162,9 @@
   <ItemGroup>
     <Resource Include="Images\file.png" />
     <Resource Include="Images\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\wait.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\TreeViewItemDepProps\" />

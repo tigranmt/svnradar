@@ -129,8 +129,7 @@
         <!---->
 
         <TreeView x:Name="RepoTreeView" Margin="0,0,0,1" Grid.Column="0" Grid.Row="0"                  
-                  ItemsSource ="{Binding}"                  
-                  TreeViewItem.Expanded="RepoTreeView_Expanded">
+                  ItemsSource ="{Binding}">
             
                <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}">                                       
@@ -147,7 +146,7 @@
         <GridSplitter x:Name="GridSplitter" ResizeDirection="Columns" Grid.Row="0"
                                      Width="4"  Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource gridSplitterStyle}" Margin="1,1,1,1" />
         
-        <Grid Grid.Column="2">
+        <Grid Grid.Column="2" x:Name="StatGrid">
             
             <Grid.RowDefinitions>
             	<RowDefinition Height="Auto"/>
@@ -158,7 +157,7 @@
             <StackPanel  Grid.Row="0" Orientation="Vertical" Background="AliceBlue" Margin="2,8,16,-0.32" RenderTransformOrigin="0.423,0.356">
             
                 <StackPanel  Orientation="Horizontal" Background="Beige" Width="Auto">
-                    <Button Height="23"  Margin="10,10,0,0" x:Name="btnLoadFromPath" VerticalAlignment="Top" Width="100" Click="button1_Click"  Content="{StaticResource LoadButtonTitle}"/>
+                    <Button Height="23"  Margin="10,10,0,0" x:Name="btnLoadFromPath" VerticalAlignment="Top" Width="100" Click="buttonLoad_Click"  Content="{StaticResource LoadButtonTitle}"/>
                     <TextBox x:Name="txtRepositoryPath" Width="400" Margin="10,10,10,10" Height="23"/>
                 </StackPanel>
             
