@@ -39,6 +39,8 @@ namespace SvnRadar.Common.Controls
         /// </summary>
         RepoTabItem parentTabItem = null;
 
+        string additionalSpace = "  ";  
+
 
         /// <summary>
         /// The original content of RepoTabItem header
@@ -55,7 +57,10 @@ namespace SvnRadar.Common.Controls
         {
             parentTabItem = repoTabItem;
             this.Focus();
-            this.Text = DEFAULT_TEXT;
+            if (repoTabItem == null)
+                this.Text = DEFAULT_TEXT + additionalSpace;
+            else
+                this.Text = repoTabItem.RepositoryName + additionalSpace;
             
             
             this.SelectAll();
@@ -73,7 +78,7 @@ namespace SvnRadar.Common.Controls
             /*Save original content of TabItem header*/
             headerOriginalContent = repoTabItem.Header;
             repoTabItem.Header = new RepoAliasTextBox(repoTabItem);
-            System.Windows.Input.Keyboard.Focus(repoTabItem.Header as TextBox);
+           
             
         }
         #endregion

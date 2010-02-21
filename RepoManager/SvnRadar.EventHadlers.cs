@@ -150,6 +150,7 @@ namespace SvnRadar
 
             /* Get view log information on just selected tab */
             GetSelectedRepositoryInfo();
+           
         }
 
 

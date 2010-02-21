@@ -162,7 +162,7 @@ namespace SvnRadar
 
             RepoAliasTextBox.AttachToRepoTabItem(repoTabItem);
 
-
+            System.Windows.Input.Keyboard.Focus(repoTabItem.Header as RepoAliasTextBox);
         }
 
         /// <summary>
@@ -230,6 +230,8 @@ namespace SvnRadar
         }
 
 
+       
+
         /// <summary>
         /// Gets the repository change log from the currently selected repository
         /// </summary>
@@ -248,7 +250,7 @@ namespace SvnRadar
             if (folderRepoInfo != null)
             {
                 /*Clear previously loadd information*/
-                RepoInfoBase.ClearRepoInfo(selRepo.RepositoryCompletePath);
+                RepoInfoBase.ClearRepoInfo(selRepoString);
 
 
                 /*Assign to the executor current folder repo info, to pass it to the executor process in the future*/
