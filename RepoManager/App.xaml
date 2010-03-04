@@ -100,6 +100,22 @@
 
             <!--- Images -->
 
+            <StackPanel x:Key="ToolTipPanel">
+                <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                    <TextBlock FontFamily="Aharoni" FontSize="12" FontWeight="Bold" Foreground="Black" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Account}"
+                               Width="143"/>
+
+                </StackPanel>
+
+                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                    <TextBlock TextWrapping="Wrap" Foreground="Black" TextAlignment="Left" Background="{x:Null}" 
+                               HorizontalAlignment="Right" VerticalAlignment="Top" Width="181" Text="{Binding Path=UserComment}"/>
+
+                </StackPanel>
+
+            </StackPanel>
 
             <!-- Context menu on sys tray -->
             <ContextMenu  x:Key="ListViewItemContextMenu" >
@@ -205,7 +221,9 @@
 
                 <EventSetter Event="MouseDoubleClick" Handler="ListViewItemDoubleClick"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelectedInfo, Mode=TwoWay}"/>
-                <Setter Property="ToolTip" Value="{Binding Path=UserComment}"/>
+                <!--<Setter Property="ToolTip" Value="{Binding Path=UserComment}"/>-->
+                <Setter Property="ToolTip" Value="{StaticResource ToolTipPanel}"/>
+                
 
 
 
