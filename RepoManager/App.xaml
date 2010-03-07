@@ -7,8 +7,7 @@
     xmlns:repoManager="clr-namespace:SvnRadar"    
     xmlns:repoCC="clr-namespace:SvnRadar.Common.Controls"            
     xmlns:database="clr-namespace:SvnRadar.DataBase"
-    xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'
-    
+    xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'    
     StartupUri="SvnRadar.xaml">
     <Application.Resources>
 
@@ -96,10 +95,21 @@
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
             <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
             <Image x:Key="FolderIcon" Source="Images/Folder.ico"/>
-
-
             <!--- Images -->
 
+
+            <DataTemplate x:Key="StatContentTemplate">
+                <Border Background="#88000000" BorderBrush="Gray" BorderThickness="2" CornerRadius="6">
+                    <StackPanel Width="150" Height="150">
+                        <Button x:Name="GoToNext"  Command="thriple:ContentControl3D.RotateCommand" Content="Go to next" />
+                        <TextBlock x:Name="sideLabel"  Foreground="Black" Margin="4,2,0,0"
+                            Text="Gazananoz" Height="22"/>
+                        <TextBlock Background="Green" FontSize="13" Height="22" FontWeight="Bold" Foreground="WhiteSmoke"
+                            HorizontalAlignment="Center" Padding="4" Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+            <!--Tool Tip -->
             <StackPanel x:Key="ToolTipPanel">
                 <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
                     <TextBlock FontFamily="Aharoni" FontSize="12" FontWeight="Bold" Foreground="Black" 
@@ -116,6 +126,24 @@
                 </StackPanel>
 
             </StackPanel>
+            <!--Tool Tip -->
+
+            <!--Group view Tool Tip -->
+            <StackPanel x:Key="ToolTipPanelForGroupView">
+                <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                    <TextBlock FontFamily="Aharoni" FontSize="12" FontWeight="Bold" Foreground="Black" 
+                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Items[0].Account}"
+                               Width="143"/>
+                </StackPanel>
+
+                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                    <TextBlock TextWrapping="Wrap" Foreground="Black" TextAlignment="Left" Background="{x:Null}" 
+                               HorizontalAlignment="Right" VerticalAlignment="Top" Width="181" Text="{Binding Path=Items[0].UserComment}"/>
+                </StackPanel>
+
+            </StackPanel>
+            <!--Group view Tool Tip -->
 
             <!-- Context menu on sys tray -->
             <ContextMenu  x:Key="ListViewItemContextMenu" >
@@ -235,7 +263,7 @@
 
 
                 <Grid HorizontalAlignment="Stretch" 
-                          VerticalAlignment="Stretch" Name="templateGrid"  >
+                          VerticalAlignment="Stretch" Name="templateGrid" >
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"></RowDefinition>
@@ -258,9 +286,15 @@
                                         SelectionMode="Single"      
                                         Style="{StaticResource ListViewCustomStyle}"
                                         ContextMenu="{StaticResource ListViewItemContextMenu}"
-                                        Loaded="repoView_Loaded"                                            
+                                        Loaded="repoView_Loaded"                                                    
                                         ItemsSource="{Binding Source={StaticResource source}}"                                        
                                         ItemContainerStyle="{StaticResource ListViewItemsStyle}">
+                        
+                        
+                        <ListView.Background>
+                            
+                            <ImageBrush ImageSource="Images/radar.png" Opacity="0.3" AlignmentX="Center" AlignmentY="Center" Stretch="None"/>
+                        </ListView.Background>
                         <ListView.GroupStyle>
                             <GroupStyle>
 
@@ -271,7 +305,9 @@
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
                                               
-                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{Binding Path=Items[0].UserComment}">
+                                                   
+                                                    <!--ToolTip="{Binding Path=Items[0].UserComment}"-->
+                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelForGroupView}">
                                                         <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
                                                             <Expander.Header>
                                                             <DockPanel HorizontalAlignment="Stretch" >
@@ -320,7 +356,8 @@
 
                     </ListView>
 
-                    <!-- Buttons  Template="{StaticResource SimpleButtonStyle}"-->
+
+                        <!-- Buttons  Template="{StaticResource SimpleButtonStyle}"-->
                     
                     <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
                     <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
@@ -339,6 +376,8 @@
                     <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    
                                  VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" 
                                  Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+
+
 
                 </Grid>
 

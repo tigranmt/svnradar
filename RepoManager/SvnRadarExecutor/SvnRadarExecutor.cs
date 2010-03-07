@@ -1063,6 +1063,10 @@ namespace SvnRadar
         /// <param name="notificationCode">Silent notification unique code</param>
         public void RemoveSilentNotification(int notificationCode)
         {
+            //This is possible condition on main window closing
+            if (System.Windows.Application.Current == null)
+                return;
+
             System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
                 ErrorManager.RemoveRuntimeSilentNotification(notificationCode);
@@ -1084,6 +1088,10 @@ namespace SvnRadar
         /// <param name="message">Notification method</param>
         public void PushRuntimeSilentNotification(int notificationCode, string message)
         {
+            //This is possible condition on main window closing
+            if (System.Windows.Application.Current == null)
+                return;
+
             System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
               {
                   ErrorManager.PushRuntimeSilentNotification(notificationCode, message);

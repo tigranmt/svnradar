@@ -246,7 +246,7 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppCommands.cs" />
+    <Compile Include="AppCommands\AppCommands.cs" />
     <Compile Include="Common\Controls\RepositoryRoutedEventArgs.cs" />
     <Compile Include="Common\Controls\RepoAliasTextBox.cs" />
     <Compile Include="Common\Controls\RepoTabItem.cs" />
@@ -265,7 +265,7 @@
     <Compile Include="FormatConverters\IsFlatLayoutConverter.cs" />
     <Compile Include="FormatConverters\MotivationToBrushConverter.cs" />
     <Compile Include="FormatConverters\MotivationToTextConverter.cs" />
-    <Compile Include="SvnRadar.EventHadlers.cs" />
+    <Compile Include="SvnRadarPartialClasses\SvnRadar.EventHadlers.cs" />
     <Compile Include="Util\BugReportData.cs" />
     <Compile Include="Util\CommandStringsManager.cs" />
     <Compile Include="Util\CustomColumn.cs" />
@@ -273,18 +273,18 @@
     <Compile Include="Common\Intefaces\IRepoWindow.cs" />
     <Compile Include="Common\MulticultureDictionary\MulticultureDictionary.cs" />
     <Compile Include="DataBase\RepoInfoBase.cs" />
-    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
     <Compile Include="Common\Controls\FancyBalloon.xaml.cs">
       <DependentUpon>FancyBalloon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FilterManager.cs" />
+    <Compile Include="FilterManager\FilterManager.cs" />
     <Compile Include="FormatConverters\EnableFromItemsCountConverter.cs" />
     <Compile Include="FormatConverters\ListViewItemColorConverter.cs" />
     <Compile Include="FormatConverters\RepositoryItemStateConverter.cs" />
     <Compile Include="FormatConverters\SliderFormatConverter.cs" />
     <Compile Include="FormatConverters\UpdateActionStateConverter.cs" />
     <Compile Include="FormatConverters\VisibilityFormatConverter.cs" />
-    <Compile Include="GenericQuery.cs" />
+    <Compile Include="GenericQuery\GenericQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -298,10 +298,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SvnRadar.Commands.cs" />
-    <Compile Include="DataTemplateSelectors.cs" />
-    <Compile Include="SvnRadarExecutor.cs" />
-    <Compile Include="RepoProcess.cs">
+    <Compile Include="SvnRadarPartialClasses\SvnRadar.Commands.cs" />
+    <Compile Include="DataTemplateSelectors\DataTemplateSelectors.cs" />
+    <Compile Include="SvnRadarExecutor\SvnRadarExecutor.cs" />
+    <Compile Include="RepoProcess\RepoProcess.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RevisionInfoWindow.xaml.cs">
@@ -333,7 +333,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="RepoManager_TemporaryKey.pfx" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -385,10 +384,10 @@
     <Resource Include="Images\conflicted.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TODO.txt" />
+    <Resource Include="FixedAndTodo\TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FIXED.txt" />
+    <Resource Include="FixedAndTodo\FIXED.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NotifyIconWpf\NotifyIconWpf.csproj">
@@ -457,6 +456,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Folder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\radar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

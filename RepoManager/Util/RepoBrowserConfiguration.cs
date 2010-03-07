@@ -47,7 +47,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// List view initial layout.
         /// </summary>
-        ListViewLayoutEnum listViewLayout = ListViewLayoutEnum.FlatView;
+        ListViewLayoutEnum listViewLayout = ListViewLayoutEnum.RevisionView;
 
         /// <summary>
         /// Repository paths collection

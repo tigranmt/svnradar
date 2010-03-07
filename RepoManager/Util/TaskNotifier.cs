@@ -176,6 +176,11 @@ namespace SvnRadar.Util
                
             }
 
+
+            //Could be possible during the closing of the main window
+            if (Application.Current == null)
+                return;
+
             /*Updates counter textbox*/
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
