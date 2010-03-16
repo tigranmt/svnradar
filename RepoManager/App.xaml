@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
                 <ResourceDictionary Source="Templates/listbox.xaml"/>                           
                 <ResourceDictionary Source="Templates/listview.xaml"/>
+                
 
 
 
@@ -98,17 +99,7 @@
             <!--- Images -->
 
 
-            <DataTemplate x:Key="StatContentTemplate">
-                <Border Background="#88000000" BorderBrush="Gray" BorderThickness="2" CornerRadius="6">
-                    <StackPanel Width="150" Height="150">
-                        <Button x:Name="GoToNext"  Command="thriple:ContentControl3D.RotateCommand" Content="Go to next" />
-                        <TextBlock x:Name="sideLabel"  Foreground="Black" Margin="4,2,0,0"
-                            Text="Gazananoz" Height="22"/>
-                        <TextBlock Background="Green" FontSize="13" Height="22" FontWeight="Bold" Foreground="WhiteSmoke"
-                            HorizontalAlignment="Center" Padding="4" Text="{Binding}" TextAlignment="Center" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-            </DataTemplate>
+           
             <!--Tool Tip -->
             <StackPanel x:Key="ToolTipPanel">
                 <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
@@ -291,10 +282,7 @@
                                         ItemContainerStyle="{StaticResource ListViewItemsStyle}">
                         
                         
-                        <ListView.Background>
-                            
-                            <ImageBrush ImageSource="Images/radar.png" Opacity="0.3" AlignmentX="Center" AlignmentY="Center" Stretch="None"/>
-                        </ListView.Background>
+                        
                         <ListView.GroupStyle>
                             <GroupStyle>
 

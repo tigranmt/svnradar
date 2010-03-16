@@ -89,7 +89,7 @@
         <!-- Main application menu -->
         <Menu x:Name="ApplicationMenu" Grid.Row="0">
             <MenuItem x:Name="FileMI" Header="{StaticResource MI_FILE}">
-                <MenuItem x:Name="ExportMI" Header="{StaticResource MI_EXPORTCONFIGURATION}" Click="ExportMI_Click" IsEnabled="True"  Icon="{StaticResource ExportIcon}"/>
+                <MenuItem x:Name="ExportMI"  Header="{StaticResource MI_EXPORTCONFIGURATION}" Click="ExportMI_Click" IsEnabled="True"  Icon="{StaticResource ExportIcon}"/>
                 <MenuItem x:Name="ImportMI" Header="{StaticResource MI_IMPORTCONFIGURATION}" Click="ImportMI_Click" IsEnabled="True" Icon="{StaticResource ImportIcon}"/>
                 <MenuItem x:Name="ExitMI" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
             </MenuItem>
