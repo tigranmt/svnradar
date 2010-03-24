@@ -18,7 +18,7 @@
     <ManifestCertificateThumbprint>7F6F8B761A463E533AE069E8C19571BD03E49202</ManifestCertificateThumbprint>
     <ManifestKeyFile>RepoManager_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <PublishUrl>C:\Develop\RepoManagerGc\RepoManager\Deploy\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
