@@ -227,7 +227,7 @@ namespace SvnRadar
                 /*Remove my information from the shared base, to not waste the memory*/
                 if (this.Process != null && this.RevisionInformation != null)
                 {
-                    SvnRadar.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.RevisionNumber);
+                    RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.RevisionNumber);
                 }
 
 

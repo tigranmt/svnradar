@@ -26,7 +26,7 @@ using SvnRadar.Util;
 using System.Windows.Input;
 using SvnRadar.Common.Controls;
 using System.Windows.Data;
-using SvnRadar.DataBase;
+
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.ComponentModel;

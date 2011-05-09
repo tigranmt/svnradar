@@ -318,6 +318,10 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\RepoInfoBase.cs" />
+    <Compile Include="RepositoryProcess\RepositoryProcess.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SvnRadar.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>SvnRadar.xaml</DependentUpon>
@@ -353,7 +357,6 @@
     <Compile Include="Util\ErrorManager.cs" />
     <Compile Include="Common\Intefaces\IRepoWindow.cs" />
     <Compile Include="Common\MulticultureDictionary\MulticultureDictionary.cs" />
-    <Compile Include="DataBase\RepoInfoBase.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
     <Compile Include="Common\Controls\FancyBalloon.xaml.cs">
       <DependentUpon>FancyBalloon.xaml</DependentUpon>
@@ -382,9 +385,6 @@
     <Compile Include="SvnRadarPartialClasses\SvnRadar.Commands.cs" />
     <Compile Include="DataTemplateSelectors\DataTemplateSelectors.cs" />
     <Compile Include="SvnRadarExecutor\SvnRadarExecutor.cs" />
-    <Compile Include="RepoProcess\RepoProcess.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="RevisionInfoWindow.xaml.cs">
       <DependentUpon>RevisionInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -544,6 +544,7 @@
   <ItemGroup>
     <Resource Include="Images\radar.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

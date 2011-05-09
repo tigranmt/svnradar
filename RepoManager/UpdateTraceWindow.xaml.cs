@@ -30,7 +30,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SvnRadar.Util;
 using System.Collections.ObjectModel;
-using SvnRadar.DataBase;
+
 using SvnRadar.Common.Intefaces;
 
 namespace SvnRadar

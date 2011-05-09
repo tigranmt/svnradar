@@ -23,7 +23,6 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 using SvnRadar.Common.Controls;
-using SvnRadar.DataBase;
 using System.Windows.Controls;
 using SvnRadar.Util;
 

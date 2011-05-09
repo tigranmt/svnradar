@@ -6,7 +6,7 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:repoManager="clr-namespace:SvnRadar"    
     xmlns:repoCC="clr-namespace:SvnRadar.Common.Controls"            
-    xmlns:database="clr-namespace:SvnRadar.DataBase"
+    xmlns:database="clr-namespace:SvnRadar"
     xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'    
     StartupUri="SvnRadar.xaml">
     <Application.Resources>

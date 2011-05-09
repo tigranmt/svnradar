@@ -25,7 +25,6 @@ using System.ComponentModel;
 using System.Threading;
 using System;
 using System.Collections.Generic;
-using SvnRadar.DataBase;
 using System.Linq.Expressions;
 using SvnRadar.Common.Controls;
 using System.Xml.XPath;
@@ -1245,7 +1244,7 @@ namespace SvnRadar
 
                     Application.Current.Dispatcher.Invoke((AddRepoInfoDelegate)delegate(string rName, RepoInfo repoInfo)
                     {
-                        DataBase.RepoInfoBase.AddRepoInfo(rName, repoInfo);
+                        RepoInfoBase.AddRepoInfo(rName, repoInfo);
                     },
                         new object[] { repoProc.RelatedRepositoryName, ProcessRepoStatusCommandOutputLine(e.Data) });
 
@@ -1256,7 +1255,7 @@ namespace SvnRadar
                 {
                     Application.Current.Dispatcher.Invoke((AddRevisionInfoDelegate)delegate(string rName, int revisonNumber, string itemName, string dateStr, string madeChanges)
                     {
-                        DataBase.RepoInfoBase.AddRevisionInfoString(rName, revisonNumber, itemName, dateStr, madeChanges);
+                        RepoInfoBase.AddRevisionInfoString(rName, revisonNumber, itemName, dateStr, madeChanges);
                     },
                     new object[] { repoProc.RelatedRepositoryName, repoProc.RevisionNumber, repoProc.FileName, string.Empty, e.Data });
                 }
@@ -1327,7 +1326,7 @@ namespace SvnRadar
 
                         Application.Current.Dispatcher.BeginInvoke((AddRepoListInfoDelegate)delegate(string rName, List<RepoInfo> repoInfo)
                         {
-                            DataBase.RepoInfoBase.AddRepoInfoList(rName, repoInfo);
+                            RepoInfoBase.AddRepoInfoList(rName, repoInfo);
                         },
                         new object[] { repoProc.RelatedRepositoryName, repoList });
 

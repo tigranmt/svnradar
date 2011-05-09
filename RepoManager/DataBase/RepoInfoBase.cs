@@ -22,11 +22,13 @@ using System.Linq;
 using System.Text;
 using SvnRadar.Util;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Data;
-using System.ComponentModel;
 
-namespace SvnRadar.DataBase
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows;
+
+
+namespace SvnRadar
 {
 
 
