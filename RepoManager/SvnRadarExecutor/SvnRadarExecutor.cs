@@ -31,6 +31,7 @@ using SvnRadar.Common.Controls;
 using System.Xml.XPath;
 using System.Windows.Threading;
 using System.Security.Cryptography;
+using SvnRadar.Common.Intefaces;
 
 namespace SvnRadar
 {
@@ -112,7 +113,7 @@ namespace SvnRadar
         /// <summary>
         /// If TRUE , silent error was found before, FALSE otherwise
         /// </summary>
-        static bool silentErrorFound = false;
+        public static bool SilentErrorFound = false;
 
 
 
@@ -167,6 +168,14 @@ namespace SvnRadar
                 FirePropertyChanged(() => ExecutingCommand);
             }
         }
+        #endregion
+
+        #region delegates and events
+        public delegate void AddNotificationDelegate(int notificationCode, string sMessage);
+        public static event AddNotificationDelegate AddNotification;
+
+        public delegate void RemoveNotificationDelegate(int notificationCode);
+        public static event RemoveNotificationDelegate RemoveNotification;
         #endregion
 
         #region ctor
@@ -231,13 +240,15 @@ namespace SvnRadar
             {
                 if (!notifiedAboutSubversionPathLack)
                 {
-                    PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
-                        "The subversion exe path is missed. Can not execute command");
+                    if (AddNotification != null)
+                        AddNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                                "The subversion exe path is missed. Can not execute command");
                     notifiedAboutSubversionPathLack = true;
                 }
                 else
                 {
-                    RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
+                    if (RemoveNotification != null)
+                        RemoveNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
                 }
 
                 notifyCounter++;
@@ -305,13 +316,16 @@ namespace SvnRadar
                         string erroMessage = exitedProcess.StandardError.ReadToEnd();
                         if (!string.IsNullOrEmpty(erroMessage))
                         {
-                            PushRuntimeSilentNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT,
-                                erroMessage);
-
+                            if (AddNotification != null)
+                            {
+                                AddNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT,
+                                    erroMessage);
+                            }
                         }
                         else
                         {
-                            RemoveSilentNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT);
+                            if (RemoveNotification != null)
+                                RemoveNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT);
                         }
 
                     }
@@ -334,21 +348,24 @@ namespace SvnRadar
             {
                 if (process.ExitCode != 0)
                 {
-                    try {
+                    try
+                    {
 
-
-                        PushRuntimeSilentNotification(unniqueCode, "Got problems retreiving  information for the folder " + 
-                         folderPath +  "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd());                    
+                        if (AddNotification != null) { 
+                            AddNotification(unniqueCode, "Got problems retreiving  information for the folder " +
+                         folderPath + "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd());
+                        }
                     }
-                    catch(Exception ex) {
+                    catch (Exception ex)
+                    {
                         ErrorManager.LogException(ex);
                     }
                 }
                 return null;
             }
 
-
-            RemoveSilentNotification(unniqueCode);
+            if (RemoveNotification != null)
+                RemoveNotification(unniqueCode);
 
             FolderRepoInfo frInfo = new FolderRepoInfo();
 
@@ -443,6 +460,28 @@ namespace SvnRadar
             return frInfo;
         }
 
+
+        /// <summary>
+        /// Notifies to the listeners about another notification
+        /// </summary>
+        /// <param name="iNotificationCode"></param>
+        /// <param name="sNotificationMessage"></param>
+        public static void AddNotificationCall(int iNotificationCode, string sNotificationMessage)
+        {
+            if (AddNotification != null)
+                AddNotification(iNotificationCode, sNotificationMessage);
+        }
+
+
+        /// <summary>
+        /// Notifies to the listener to remove specified notificaiton
+        /// </summary>
+        /// <param name="iNotificationCode"></param>
+        public static void RemoveNotificationCall(int iNotificationCode)
+        {
+            if (RemoveNotification != null)
+                RemoveNotification(iNotificationCode);
+        }
 
         /// <summary>
         /// Get the log for the given repository. In difference of GetRepositoryLog it waits until command execution will terminate
@@ -628,9 +667,6 @@ namespace SvnRadar
             LastFileName = string.Empty;
 
             System.IO.Directory.SetCurrentDirectory(repoPath);
-
-
-
 
             //Eecute command
             Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonLogCommand +
@@ -1057,49 +1093,8 @@ namespace SvnRadar
 
 
 
-        /// <summary>
-        /// Removes specified silent notification from the list
-        /// </summary>
-        /// <param name="notificationCode">Silent notification unique code</param>
-        public void RemoveSilentNotification(int notificationCode)
-        {
-            //This is possible condition on main window closing
-            if (System.Windows.Application.Current == null)
-                return;
-
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ErrorManager.RemoveRuntimeSilentNotification(notificationCode);
-                if (ErrorManager.SilentNotificationList.Count == 0 && silentErrorFound)
-                {
-                    TaskNotifierManager.ShowFirstChangeIfThereIs();
-                    silentErrorFound = false;
-
-                }
-            }));
-        }
 
 
-
-        /// <summary>
-        /// Pushes specified silent notification to the error stack
-        /// </summary>
-        /// <param name="notificationCode">Notification code</param>
-        /// <param name="message">Notification method</param>
-        public void PushRuntimeSilentNotification(int notificationCode, string message)
-        {
-            //This is possible condition on main window closing
-            if (System.Windows.Application.Current == null)
-                return;
-
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-              {
-                  ErrorManager.PushRuntimeSilentNotification(notificationCode, message);
-                  TaskNotifierManager.SetErrorIcon();
-
-                  silentErrorFound = true;
-              }));
-        }
 
         /// <summary>
         /// Starts Repository checker process
@@ -1175,13 +1170,15 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
-                    "The subversion exe path is missed. Can not execute command");
+                if(AddNotification !=null)
+                    AddNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                        "The subversion exe path is missed. Can not execute command");
                 return;
             }
             else
             {
-                RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
+                if (RemoveNotification != null)
+                    RemoveNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
             }
 
             /*Run the process output listener in background*/
@@ -1682,7 +1679,7 @@ namespace SvnRadar
 
                     string action = nodeIterator.Current.GetAttribute("action", string.Empty);
                     if (!string.IsNullOrEmpty(action))
-                        current.RepositoryItemState = RepoInfo.StateFromChar(action[0]);
+                        current.ItemState = RepoInfo.StateFromChar(action[0]);
 
                     repoInfoList.Add(current);
 
@@ -1747,7 +1744,7 @@ namespace SvnRadar
             {
                 if (content.Length == NOLOCALCHANGES_COLUMNS_COUNT)
                 {
-                    InfoCol.RepositoryItemState = RepoInfo.StateFromChar(content[0][0]);
+                    InfoCol.ItemState = RepoInfo.StateFromChar(content[0][0]);
 
                     int revNum = -1;
                     Int32.TryParse(content[1], out revNum);
@@ -1765,7 +1762,7 @@ namespace SvnRadar
                 {
                     InfoCol.WcItemState = RepoInfo.StateFromChar(content[0][0]);
 
-                    InfoCol.RepositoryItemState = RepoInfo.StateFromChar(content[1][0]);
+                    InfoCol.ItemState = RepoInfo.StateFromChar(content[1][0]);
 
                     int revNum = -1;
                     Int32.TryParse(content[2], out revNum);
@@ -1807,5 +1804,6 @@ namespace SvnRadar
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
     }
 }

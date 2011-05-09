@@ -143,7 +143,7 @@ namespace SvnRadar
             if (!bConflictDetected)
             {
                 /*If there is any conflict detected */
-                bConflictDetected = (utr.RepositoryItemState == RepoInfo.RepoItemState.Conflict);
+                bConflictDetected = (utr.RepositoryItemState == RepoInfo.RepositoryItemState.Conflict);
             }
 
             if(UpdateTraceListView.ItemsSource == null)

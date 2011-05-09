@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Controls;
+using SvnObjects;
 
 
 namespace SvnRadar.Util
@@ -31,8 +32,7 @@ namespace SvnRadar.Util
     /// <summary>
     /// Class for holding revision related information 
     /// </summary>
-    public sealed class RevisionInfo: INotifyPropertyChanged
-    {
+    public  class RevisionInfo: Revision,  INotifyPropertyChanged  {
 
 
 
@@ -41,7 +41,6 @@ namespace SvnRadar.Util
         /// </summary>
         public static readonly System.Windows.DependencyProperty TextChangedProperty = DependencyProperty.Register("TextChanged", typeof(string), typeof(RevisionInfo));
 
-       
 
         #region ctor 
         public RevisionInfo() 
@@ -60,17 +59,6 @@ namespace SvnRadar.Util
 
 
 
-
-        /// <summary>
-        /// Date of revision
-        /// </summary>
-        public string Date { get; set; }
-
-
-        /// <summary>
-        /// Revision number
-        /// </summary>
-        public int Revision {get;set;} 
 
 
         /// <summary>
@@ -107,11 +95,7 @@ namespace SvnRadar.Util
 
         }
 
-        /// <summary>
-        /// File changed by this revision
-        /// </summary>
-        public string Item { get; set; }
-
+       
 
 
         /// <summary>
@@ -189,13 +173,6 @@ namespace SvnRadar.Util
             }
         }
 
-        /// <summary>
-        /// Retruns the User comment related to the current revison
-        /// </summary>
-        public string UserComment
-        {
-            get { return RepoInfo.GetRevisionUserComment(this.Revision); }
-        }
-
+      
     }
 }

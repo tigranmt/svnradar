@@ -63,7 +63,7 @@ namespace SvnRadar
 
                 if (value != null)
                 {
-                    this.Title = revisionInformation.Revision.ToString() + " : " + revisionInformation.Item;
+                    this.Title = revisionInformation.RevisionNumber.ToString() + " : " + revisionInformation.Item;
                     this.DataContext = value;
 
                 }
@@ -227,7 +227,7 @@ namespace SvnRadar
                 /*Remove my information from the shared base, to not waste the memory*/
                 if (this.Process != null && this.RevisionInformation != null)
                 {
-                    SvnRadar.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.Revision);
+                    SvnRadar.DataBase.RepoInfoBase.RemoveRevisonInfoStringFromBase(this.RelatedRepositoryName, this.RevisionInformation.RevisionNumber);
                 }
 
 
@@ -277,7 +277,7 @@ namespace SvnRadar
                             string fileCompletePath = repoPath + fileIOPath;
 
                             SvnRadarExecutor svnExecutor = (SvnRadarExecutor)((ObjectDataProvider)AppResourceManager.FindResource("svnRadarExecutor")).ObjectInstance;
-
+                            
                             if (System.IO.File.Exists(fileCompletePath))
                             {
                                 svnExecutor.ExecuteExplorerProcess(fileCompletePath);

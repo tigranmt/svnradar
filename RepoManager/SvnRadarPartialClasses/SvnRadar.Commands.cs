@@ -877,6 +877,27 @@ namespace SvnRadar
 
 
 
+        /// <summary>
+        /// Removes specified silent notification from the list
+        /// </summary>
+        /// <param name="notificationCode">Silent notification unique code</param>
+        public void RemoveSilentNotification(int notificationCode)
+        {
+            //This is possible condition on main window closing
+            if (System.Windows.Application.Current == null)
+                return;
+
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                ErrorManager.RemoveRuntimeSilentNotification(notificationCode);
+                if (ErrorManager.SilentNotificationList.Count == 0 && SvnRadarExecutor.SilentErrorFound)
+                {
+                    TaskNotifierManager.ShowFirstChangeIfThereIs();
+                    SvnRadarExecutor.SilentErrorFound = false;
+
+                }
+            }));
+        }
 
 
 

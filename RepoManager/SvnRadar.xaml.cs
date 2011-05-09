@@ -258,12 +258,12 @@ namespace SvnRadar
             if (!IsNetworkAvailable())
             {
                 string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
-                RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
+                SvnRadarExecutor.AddNotificationCall( ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                 return;
             }
             else
             {
-                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
+                RemoveSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
             }
 
             ControlApplicationNewVersion();
@@ -391,13 +391,13 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                 SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
                     "The subversion exe path is missed. Can not execute command");
                 return;
             }
             else
             {
-                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
+                RemoveSilentNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH);
             }
 
             /* Begin new therad here in order to not block the UI */
@@ -518,13 +518,14 @@ namespace SvnRadar
                 if (!IsNetworkAvailable())
                 {
                     string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
-                    RadarExecutor.PushRuntimeSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
+                    SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                     return;
                 }
               
             }
-            if (bNetworksAvailable)
-                RadarExecutor.RemoveSilentNotification(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
+            if (bNetworksAvailable) {
+                SvnRadarExecutor.RemoveNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
+            }
             bNetworksAvailable = true;
             ControlRepositorySequence();
 

@@ -29,18 +29,18 @@ namespace SvnRadar.FormatConverters
     {
 
 
-        object ImagefromRepoItemState(SvnRadar.Util.RepoInfo.RepoItemState itemState)
+        object ImagefromRepoItemState(SvnRadar.Util.RepoInfo.RepositoryItemState itemState)
         {
            
-            if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Add)
+            if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Add)
                 return FindResource("AddImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Modified)
                 return FindResource("ModifiedImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Merged)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Merged)
                 return FindResource("MergedImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Deleted)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Deleted)
                 return  FindResource("DeleteIcon") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Conflict)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Conflict)
                 return FindResource("ConflictedImage") as System.Windows.Controls.Image;
             else
                 return FindResource("EmptyImage") as System.Windows.Controls.Image;
@@ -71,7 +71,7 @@ namespace SvnRadar.FormatConverters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            SvnRadar.Util.RepoInfo.RepoItemState itemState = (SvnRadar.Util.RepoInfo.RepoItemState)Enum.Parse(typeof(SvnRadar.Util.RepoInfo.RepoItemState),
+            SvnRadar.Util.RepoInfo.RepositoryItemState itemState = (SvnRadar.Util.RepoInfo.RepositoryItemState)Enum.Parse(typeof(SvnRadar.Util.RepoInfo.RepositoryItemState),
               value.ToString());
             System.Windows.Controls.Image im = ImagefromRepoItemState(itemState) as System.Windows.Controls.Image;
 

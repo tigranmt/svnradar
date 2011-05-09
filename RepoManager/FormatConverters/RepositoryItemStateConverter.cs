@@ -45,33 +45,33 @@ namespace SvnRadar.FormatConverters
 
 
 
-        char CharFromRepoItemState(SvnRadar.Util.RepoInfo.RepoItemState itemState)
+        char CharFromRepoItemState(SvnRadar.Util.RepoInfo.RepositoryItemState itemState)
         {
-            if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Add)
+            if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Add)
                 return '+';
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.NeedToBeUpdatedFromRepo)
                 return 'M';
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Modified)
                 return '%';
             return
                 'o';
         }
 
 
-        object ImagefromRepoItemState(SvnRadar.Util.RepoInfo.RepoItemState itemState)
+        object ImagefromRepoItemState(SvnRadar.Util.RepoInfo.RepositoryItemState itemState)
         {
             if (ImageVsRepoItemState.ContainsKey((int)itemState))
                 return ImageVsRepoItemState[(int)itemState];
 
-            if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Add)
+            if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Add)
                 ImageVsRepoItemState[(int)itemState] =  FindResource("AddImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.NeedToBeUpdatedFromRepo)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.NeedToBeUpdatedFromRepo)
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Modified)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Modified)
                 ImageVsRepoItemState[(int)itemState] = FindResource("ModifiedImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Merged)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Merged)
                 ImageVsRepoItemState[(int)itemState] = FindResource("MergedImage") as System.Windows.Controls.Image;
-            else if (itemState == SvnRadar.Util.RepoInfo.RepoItemState.Deleted)
+            else if (itemState == SvnRadar.Util.RepoInfo.RepositoryItemState.Deleted)
                 ImageVsRepoItemState[(int)itemState] = FindResource("DeleteIcon") as System.Windows.Controls.Image;
             else
                 ImageVsRepoItemState[(int)itemState] = FindResource("EmptyImage") as System.Windows.Controls.Image;
@@ -90,7 +90,7 @@ namespace SvnRadar.FormatConverters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            SvnRadar.Util.RepoInfo.RepoItemState itemState = (SvnRadar.Util.RepoInfo.RepoItemState)Enum.Parse(typeof(SvnRadar.Util.RepoInfo.RepoItemState),
+            SvnRadar.Util.RepoInfo.RepositoryItemState itemState = (SvnRadar.Util.RepoInfo.RepositoryItemState)Enum.Parse(typeof(SvnRadar.Util.RepoInfo.RepositoryItemState),
                 value.ToString());
             System.Windows.Controls.Image im = ImagefromRepoItemState(itemState) as System.Windows.Controls.Image;
 

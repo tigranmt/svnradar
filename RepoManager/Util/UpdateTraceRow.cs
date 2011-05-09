@@ -41,6 +41,6 @@ namespace SvnRadar.Util
         /// <summary>
         /// Repository item state
         /// </summary>
-        public RepoInfo.RepoItemState RepositoryItemState { get; set; }
+        public RepoInfo.RepositoryItemState RepositoryItemState { get; set; }
     }
 }

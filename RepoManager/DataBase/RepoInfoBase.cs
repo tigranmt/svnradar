@@ -207,11 +207,11 @@ namespace SvnRadar.DataBase
             if (RevisionInfoBase.TryGetValue(repoName, out list))
             {
                 //We didn't find any revison information about this revision number so add it to base
-                RevisionInfo revi = list.FirstOrDefault((x) => x.Revision == revisonNumber);
+                RevisionInfo revi = list.FirstOrDefault((x) => x.RevisionNumber == revisonNumber);
                 if (revi == null)
                 {
                     revi = new RevisionInfo();
-                    revi.Revision = revisonNumber;
+                    revi.RevisionNumber = revisonNumber;
                     revi.Date = dateStr;
                     revi.Item = itemName;
                     list.Add(revi);
@@ -223,7 +223,7 @@ namespace SvnRadar.DataBase
             else
             {
                 list = new ObservableCollection<RevisionInfo>();
-                list.Add(new RevisionInfo { Revision = revisonNumber, Date = dateStr, Item = itemName, TextChanged = diffString });
+                list.Add(new RevisionInfo { RevisionNumber = revisonNumber, Date = dateStr, Item = itemName, TextChanged = diffString });
                 RevisionInfoBase.Add(repoName, list);
 
                 return list[list.Count - 1];
@@ -245,7 +245,7 @@ namespace SvnRadar.DataBase
             if (RevisionInfoBase.TryGetValue(repoName, out list))
             {
                 /*Removes all available revison informatin with the specified repository number equal to specified one*/
-                IEnumerable<RevisionInfo> revi = list.Where((x) => x.Revision == revisonNumber);
+                IEnumerable<RevisionInfo> revi = list.Where((x) => x.RevisionNumber == revisonNumber);
 
                 foreach (RevisionInfo r in revi.ToArray())
                 {
