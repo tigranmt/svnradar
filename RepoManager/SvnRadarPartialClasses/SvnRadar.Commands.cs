@@ -31,6 +31,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.ComponentModel;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar
 {

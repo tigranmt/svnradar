@@ -35,6 +35,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using SvnRadar;
 using SvnRadar.Util;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar.Common.Controls
 {

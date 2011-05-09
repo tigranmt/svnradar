@@ -40,6 +40,7 @@ using System.Xml.XPath;
 using System.Xml;
 using System.Resources;
 using SvnObjects;
+using SvnObjects.Objects;
 
 
 namespace SvnRadar

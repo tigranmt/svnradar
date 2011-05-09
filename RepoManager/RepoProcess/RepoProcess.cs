@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using SvnRadar.Util;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar
 {

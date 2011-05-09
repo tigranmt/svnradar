@@ -23,6 +23,7 @@ using System.Text;
 using System.Windows.Documents;
 using SvnRadar.Util;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar.Util
 {

@@ -30,6 +30,7 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using SvnRadar.DataBase;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar.Common.Controls
 {

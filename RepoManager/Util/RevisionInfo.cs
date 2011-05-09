@@ -25,6 +25,7 @@ using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Controls;
 using SvnObjects;
+using SvnObjects.Objects;
 
 
 namespace SvnRadar.Util

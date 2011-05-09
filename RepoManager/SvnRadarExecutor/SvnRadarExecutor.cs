@@ -33,6 +33,7 @@ using System.Windows.Threading;
 using System.Security.Cryptography;
 using SvnRadar.Common.Intefaces;
 using SvnObjects;
+using SvnObjects.Objects;
 
 namespace SvnRadar
 {
