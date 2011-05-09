@@ -32,6 +32,7 @@ using System.Xml.XPath;
 using System.Windows.Threading;
 using System.Security.Cryptography;
 using SvnRadar.Common.Intefaces;
+using SvnObjects;
 
 namespace SvnRadar
 {

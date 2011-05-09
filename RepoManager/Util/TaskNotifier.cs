@@ -26,6 +26,7 @@ using System.Threading;
 using System.Windows.Threading;
 using System.Windows;
 using System.Collections.ObjectModel;
+using SvnObjects;
 
 
 namespace SvnRadar.Util

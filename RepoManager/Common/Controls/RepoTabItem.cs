@@ -29,6 +29,7 @@ using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using SvnRadar.DataBase;
+using SvnObjects;
 
 namespace SvnRadar.Common.Controls
 {

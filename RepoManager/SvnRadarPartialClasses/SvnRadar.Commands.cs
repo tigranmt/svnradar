@@ -30,6 +30,7 @@ using SvnRadar.DataBase;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.ComponentModel;
+using SvnObjects;
 
 namespace SvnRadar
 {

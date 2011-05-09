@@ -393,8 +393,6 @@
     </Compile>
     <Compile Include="Util\BindableRichTextBox.cs" />
     <Compile Include="Util\FixWidthListViewColumn.cs" />
-    <Compile Include="Util\FolderRepoInfo.cs" />
-    <Compile Include="Util\FolderRepoInfoFactory.cs" />
     <Compile Include="Util\LogManager.cs" />
     <Compile Include="Util\RepoBrowserConfiguration.cs" />
     <Compile Include="Util\RepoInfo.cs" />

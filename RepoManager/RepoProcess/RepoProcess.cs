@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using SvnRadar.Util;
+using SvnObjects;
 
 namespace SvnRadar
 {
