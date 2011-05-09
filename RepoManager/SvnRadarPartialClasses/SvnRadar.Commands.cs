@@ -134,7 +134,7 @@ namespace SvnRadar
             }
             catch (Exception ex)
             {
-                ErrorManager.ShowExceptionError(ex,true);
+                ErrorManager.ShowExceptionError(ex, true);
             }
 
 
@@ -198,9 +198,25 @@ namespace SvnRadar
         {
             get
             {
-                return svnRadarExecutor ??
-                    (svnRadarExecutor = (SvnRadarExecutor)((ObjectDataProvider)FindResource("svnRadarExecutor")).ObjectInstance);
+                if(svnRadarExecutor == null) 
+                {
+                    svnRadarExecutor = (SvnRadarExecutor)((ObjectDataProvider)FindResource("svnRadarExecutor")).ObjectInstance;
+                    SvnRadarExecutor.AddNotification += new SvnRadarExecutor.AddNotificationDelegate(SvnRadarExecutor_AddNotification);
+                    SvnRadarExecutor.RemoveNotification += new SvnRadarExecutor.RemoveNotificationDelegate(SvnRadarExecutor_RemoveNotification);
+                }
+
+                return svnRadarExecutor;
             }
+        }
+
+        void SvnRadarExecutor_RemoveNotification(int notificationCode)
+        {
+            ErrorManager.RemoveRuntimeSilentNotification(notificationCode);
+        }
+
+        void SvnRadarExecutor_AddNotification(int notificationCode, string sMessage)
+        {
+            ErrorManager.PushRuntimeSilentNotification(notificationCode, sMessage);
         }
 
 
@@ -230,7 +246,7 @@ namespace SvnRadar
         }
 
 
-       
+
 
         /// <summary>
         /// Gets the repository change log from the currently selected repository
@@ -261,7 +277,7 @@ namespace SvnRadar
 
                 /*Update parameter of the connected ObjectDataProvider*/
                 selRepo.UpdateListViewBinding();
-               
+
 
                 /* Execute command **/
                 RadarExecutor.GetRepositoryLog(selRepoString, folderRepoInfo, false);
@@ -439,7 +455,7 @@ namespace SvnRadar
                     if (utw.Process == null || utw.Process.HasExited)
                         continue;
 
-                    
+
                     /*Wait until process exits, in order to try to close automatically related  UpdateTrace window*/
                     utw.Process.Exited += delegate(object sender, System.EventArgs e)
                     {
@@ -463,15 +479,15 @@ namespace SvnRadar
                         {
                         }
 
-                       
+
                     };
 
 
 
 
                     /*Waiting indefinitely untill the process completes it job*/
-                    utw.WaitUpdateEnd();                      
-                   
+                    utw.WaitUpdateEnd();
+
                 }
 
                 /*Worker execution competed so execute som GC stuff*/
@@ -746,7 +762,7 @@ namespace SvnRadar
             /*update data provider*/
             UpdateObjectDataProvider();
 
-            
+
 
 
         }
