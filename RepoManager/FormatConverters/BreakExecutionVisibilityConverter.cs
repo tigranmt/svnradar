@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
+using SvnObjects.Objects;
 
 
 namespace SvnRadar.FormatConverters
@@ -43,7 +44,7 @@ namespace SvnRadar.FormatConverters
                 RepositoryProcess repoProcess = SvnRadarExecutor.LastExecutedProcess;
                 if (repoProcess != null)
                 {
-                    if(SvnRadar.Util.CommandStringsManager.IsRepoLogCommand(repoProcess.Command))
+                    if(CommandStringsManager.IsRepoLogCommand(repoProcess.Command))
                         return System.Windows.Visibility.Visible;
                 }
 

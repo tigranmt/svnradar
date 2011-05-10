@@ -352,7 +352,6 @@
     <Compile Include="FormatConverters\MotivationToTextConverter.cs" />
     <Compile Include="SvnRadarPartialClasses\SvnRadar.EventHadlers.cs" />
     <Compile Include="Util\BugReportData.cs" />
-    <Compile Include="Util\CommandStringsManager.cs" />
     <Compile Include="Util\CustomColumn.cs" />
     <Compile Include="Util\ErrorManager.cs" />
     <Compile Include="Common\Intefaces\IRepoWindow.cs" />
