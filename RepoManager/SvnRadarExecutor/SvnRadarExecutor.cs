@@ -1650,7 +1650,7 @@ namespace SvnRadar
                 while (nodeIterator.MoveNext())
                 {
 
-                    RepoInfo current = null;
+                    RepositoryInfo current = null;
                     if (count == 0)
                     {
                         /*If first row assign the parent object reference*/
@@ -1659,7 +1659,7 @@ namespace SvnRadar
                     else
                     {
                         /*If this is not the first row, clonethe parent object and create a new one*/
-                        current = singleRow.Clone() as RepoInfo;
+                        current = singleRow.Clone() as RepositoryInfo;
                     }
                     count++;
 
@@ -1682,7 +1682,7 @@ namespace SvnRadar
                     if (!string.IsNullOrEmpty(action))
                         current.ItemState = RepoInfo.StateFromChar(action[0]);
 
-                    repoInfoList.Add(current);
+                    repoInfoList.Add(new RepoInfo(current));
 
 
                 }

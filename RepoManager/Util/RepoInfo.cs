@@ -36,6 +36,25 @@ namespace SvnRadar.Util
     public class RepoInfo : RepositoryInfo
     {
 
+
+        #region ctors 
+
+        public RepoInfo() { }
+
+        public RepoInfo(RepositoryInfo repositoryInfo)
+        {
+            this.Account = repositoryInfo.Account;
+            this.Date = repositoryInfo.Date;
+            this.Item = repositoryInfo.Item;
+            this.ItemState = repositoryInfo.ItemState;
+            this.Revision = repositoryInfo.Revision;
+            this.UserComment = repositoryInfo.UserComment;
+            this.WCRevision = repositoryInfo.WCRevision;            
+        }
+
+        #endregion
+
+
         /// <summary>
         /// Holds selected repository information
         /// </summary>

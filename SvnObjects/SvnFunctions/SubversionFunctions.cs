@@ -36,7 +36,7 @@ namespace SvnObjects.SvnFunctions
         /// </summary>
         /// <param name="folderPath">Folder complete working copy path on the machine</param>
         /// <returns>FolderRepoInfo object, Null otherwise</returns>      
-        public FolderRepoInfo GetFolderRepoInfo(string folderPath)
+        public FolderRepoInfo GetFolderRepoInfo(string folderPath, int milliseconds)
         {
             if (string.IsNullOrEmpty(folderPath))
                 return null;
@@ -107,7 +107,10 @@ namespace SvnObjects.SvnFunctions
             process.BeginOutputReadLine();
 
             /*Wait maximum 1 minute*/
-            process.WaitForExit(60000);
+            if (milliseconds > 0)
+                process.WaitForExit(milliseconds);
+            else
+                process.WaitForExit();
           
             if (diInfoStrings.Count < 2)
             {
