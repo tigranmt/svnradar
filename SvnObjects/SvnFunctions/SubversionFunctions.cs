@@ -423,7 +423,10 @@ namespace SvnObjects.SvnFunctions
                     xmlLogStrings.Append(e.Data.Substring(0, endIndex) + "</logentry>");
                     bool breakPorcessing = false;
                     result.AddRange(ProcessRepoLogCommandOutputLine(xmlLogStrings.ToString(), folderRepoInfo, false, out breakPorcessing));
-                    xmlLogStrings.Clear();                   
+                    xmlLogStrings.Clear();
+                    
+                    //TEST ONLY!
+                    return;
                 }
                 else if (xmlLogStrings.Length > 0)
                 {

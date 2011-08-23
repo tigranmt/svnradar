@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using SvnObjects.Objects;
+using ConsoleApplicationSubStat.Base.Query;
 
 namespace ConsoleApplicationSubStat
 {
@@ -16,6 +17,7 @@ namespace ConsoleApplicationSubStat
             if (args == null || args.Length < 2)
             {
                 WriteError("Not enough arguments for running stat. Use -h to gte help on possible arguments.");
+                Console.ReadLine();
                 return;
             }
 
@@ -23,12 +25,14 @@ namespace ConsoleApplicationSubStat
             if (!System.IO.File.Exists(args[0]))
             {
                 WriteError("Not valid subversion executable path : " + args[0]);
+                Console.ReadLine();
                 return;
             }
 
             if (!System.IO.Directory.Exists(args[1]))
             {
                 WriteError("Not valid subversion repository directory path : " + args[0]);
+                Console.ReadLine();
                 return;
             }
 
@@ -39,8 +43,8 @@ namespace ConsoleApplicationSubStat
             SvnObjects.SvnFunctions.SubversionFunctions subFunc = new SvnObjects.SvnFunctions.SubversionFunctions(sSubversionExePath);
             FolderRepoInfo info = subFunc.GetFolderRepoInfo(sSubversionRepositoryPath, -1);
             List<RepositoryInfo> lRepository = subFunc.GetRepositoryLogImmediate(info, -1);
-
-
+            QueryBase.AddRevisionsToDB(lRepository);
+         
         }
 
 
