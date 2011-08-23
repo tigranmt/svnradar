@@ -20,10 +20,10 @@ namespace ConsoleApplicationSubStat.Base.Classes
             this.File = repoinfo.Item;
         }
 
-        [Column(IsPrimaryKey = true, Name = "FileID")]
+        [Column(IsPrimaryKey = true, Name = "FileID", UpdateCheck = UpdateCheck.Never)]
         public long? FileID { get; set; }
 
-        [Column(Name = "File")]
+        [Column(Name = "File", UpdateCheck = UpdateCheck.Never)]
         public string File { get; set; }
     }
 }

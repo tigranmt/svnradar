@@ -214,6 +214,123 @@ namespace SvnObjects.SvnFunctions
             return frInfo;
         }
 
+        public bool GetChnagedLinesCount(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo)
+        {
+
+
+           
+
+
+            /*If for some reason sSubverisionPath is emtpy, notify error and return */
+            if (string.IsNullOrEmpty(sSubverisionPath) ||
+                !System.IO.File.Exists(sSubverisionPath))
+            {
+                LastErrorMessage = "The subversion exe path is missed. Can not execute command";
+                return null;
+            }
+
+            System.Diagnostics.ProcessStartInfo psi =
+                          new System.Diagnostics.ProcessStartInfo("\"" + sSubverisionPath + "\"");
+
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            psi.UseShellExecute = false;
+
+          
+            psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
+            psi.CreateNoWindow = true;
+
+            SubversionRepositoryProcess process = new SubversionRepositoryProcess();
+
+            process.StartInfo = psi;
+            process.EnableRaisingEvents = true;
+
+
+
+            /* Do not use Stack, for example, because we need to begins the scan of the results from the begining, in order 
+             if in the future, the output of this command will be changed, that probabbly will be added some new  information 
+             * on end, we by the way are able to get all neccessary for us information */
+            List<string> diInfoStrings = new List<string>();
+
+
+            process.ErrorDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+
+            };
+
+            process.Exited += delegate(object sender, EventArgs e)
+            {
+
+            };
+
+            process.OutputDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+                if (string.IsNullOrEmpty(e.Data))
+                    return;
+
+                diInfoStrings.Add(e.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+
+            process.WaitForExit();
+
+            if (!System.IO.Path.IsPathRooted(fileName))
+                fileName = System.IO.Path.GetFullPath(fileName);
+
+
+            string logInfoParams = "  -r " + revisionNum.ToString();
+            string fileRelativeUrl = fileName;
+            if (folderRepoInfo != null)
+            {
+                try
+                {
+                    string relativeUrl = folderRepoInfo.RepoRelativeUrl;
+                    if (!string.IsNullOrEmpty(relativeUrl) && !fileRelativeUrl.Equals(relativeUrl, StringComparison.InvariantCultureIgnoreCase))
+                        fileRelativeUrl = fileName.Substring(fileName.IndexOf(relativeUrl) + relativeUrl.Length + 1);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    throw ex;
+#else
+                    return false;
+#endif
+                }
+            }
+
+
+
+            /*Svn special parameters for requesting the repository info*/
+            string changesMadeInfoParams = " " + folderRepoInfo.Path + @"\" + fileRelativeUrl.Replace("/", @"\");
+
+            if (!System.IO.File.Exists(changesMadeInfoParams))
+            {
+                LastErrorMessage = "Can not locate " + changesMadeInfoParams +
+                    " file";
+                return false;
+            }
+
+            /*Move OS pointer to the directory of interest*/
+            string folderCompletePath = System.IO.Path.GetDirectoryName(changesMadeInfoParams);
+            if (!string.IsNullOrEmpty(folderCompletePath))
+                System.IO.Directory.SetCurrentDirectory(folderCompletePath);
+            else
+                throw new InvalidOperationException("Can not get the specified folder location. Path: " + changesMadeInfoParams);
+
+            /*Get file name */
+            string fileNaturalName = System.IO.Path.GetFileName(changesMadeInfoParams);
+
+            /*Execute command*/
+            Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
+                " " + logInfoParams + " " + fileNaturalName, isCallForSysTray);
+
+
+            return true;
+        }
+
 
 
         /// <summary>

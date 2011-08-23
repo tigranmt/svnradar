@@ -43,6 +43,7 @@ namespace ConsoleApplicationSubStat
             SvnObjects.SvnFunctions.SubversionFunctions subFunc = new SvnObjects.SvnFunctions.SubversionFunctions(sSubversionExePath);
             FolderRepoInfo info = subFunc.GetFolderRepoInfo(sSubversionRepositoryPath, -1);
             List<RepositoryInfo> lRepository = subFunc.GetRepositoryLogImmediate(info, -1);
+            
             QueryBase.AddRevisionsToDB(lRepository);
          
         }

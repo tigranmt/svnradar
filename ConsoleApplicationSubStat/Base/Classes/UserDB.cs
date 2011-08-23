@@ -21,10 +21,10 @@ namespace ConsoleApplicationSubStat.Base.Classes
             UserName = repoInfo.Account;
         }
 
-        [Column(Name = "ID", IsPrimaryKey=true, AutoSync = AutoSync.Never, CanBeNull = false)]
+        [Column(Name = "ID",  UpdateCheck = UpdateCheck.Never, IsPrimaryKey=true, AutoSync = AutoSync.Never, CanBeNull = false)]
         public long? ID { get; set; }
 
-        [Column(Name = "UserName", DbType="nvarchar(50)")]
+        [Column(Name = "UserName",UpdateCheck = UpdateCheck.Never, DbType="nvarchar(50)")]
         public string UserName { get; set ; }
     }
 }

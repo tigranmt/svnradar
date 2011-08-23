@@ -18,13 +18,13 @@ namespace ConsoleApplicationSubStat.Base.Classes
             this.Revision = repoinfo.Revision;
         }
 
-        [Column(Name = "ID", IsPrimaryKey = true)]
+        [Column(Name = "ID", UpdateCheck = UpdateCheck.Never, IsPrimaryKey = true)]
         public long? ID { get; set; }
 
-        [Column(Name = "FileID")]
+        [Column(Name = "FileID", UpdateCheck = UpdateCheck.Never)]
         public long FileID { get; set; }
 
-        [Column(Name = "Revision")]
+        [Column(Name = "Revision", UpdateCheck = UpdateCheck.Never)]
         public long Revision { get; set; }
     }
 }

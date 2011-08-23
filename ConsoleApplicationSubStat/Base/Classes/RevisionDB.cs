@@ -33,16 +33,16 @@ namespace ConsoleApplicationSubStat.Base.Classes
 
      
 
-        [Column(Name = "Revision", IsPrimaryKey = true)]
+        [Column(Name = "Revision", UpdateCheck = UpdateCheck.Never, IsPrimaryKey = true)]
         public long? Revision { get; set; }
 
-        [Column(Name = "UserID")]
+        [Column(Name = "UserID", UpdateCheck = UpdateCheck.Never)]
         public Int64 UserID { get; set; }
 
-        [Column(Name = "Comment")]
+        [Column(Name = "Comment", UpdateCheck = UpdateCheck.Never)]
         public string Comment { get; set; }
 
-        [Column(Name = "Date")]
+        [Column(Name = "Date", UpdateCheck = UpdateCheck.Never)]
         public DateTime Date { get; set; }
     }
 }

@@ -79,9 +79,7 @@ namespace ConsoleApplicationSubStat.Base.Query
             try
             {
                 using (context = ConstructContext())
-                {
-
-                    context.ObjectTrackingEnabled = false;
+                {                  
 
                     Stopwatch stopWatch = new Stopwatch();
                     stopWatch.Start();
@@ -302,11 +300,12 @@ namespace ConsoleApplicationSubStat.Base.Query
                 //get maximum ID available 
                 long? ids = userstable.Max<UserDB>(u => u.ID);
                 udb.ID = (ids.HasValue) ? ids.Value + 1 : 1;
+                userstable.InsertOnSubmit(udb);             
+               
                 userid = udb.ID.Value;
 
-                userstable.InsertOnSubmit(udb);     
-
-                addedusers.Add(repoInfo.Account, udb.ID);               
+                addedusers.Add(repoInfo.Account, udb.ID);
+               
             }
 
             return userid.Value;
