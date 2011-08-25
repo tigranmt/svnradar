@@ -72,6 +72,7 @@
     <Compile Include="Base\Classes\RevisionFilesDB.cs" />
     <Compile Include="Base\Classes\UserDB.cs" />
     <Compile Include="Base\Communicator\Communicator.cs" />
+    <Compile Include="Base\Classes\ChangedLinesCountDB.cs" />
     <Compile Include="Base\Query\QueryBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

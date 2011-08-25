@@ -8,9 +8,18 @@ using ConsoleApplicationSubStat.Base.Query;
 
 namespace ConsoleApplicationSubStat
 {
+
+    public static class ProgramConfiguration
+    {       
+        public static FolderRepoInfo REPOSITORY_FOLDER = null;
+    }
+
     class Program
     {
         static readonly string sDBFileName = "stat.db";
+        internal static SvnObjects.SvnFunctions.SubversionFunctions subFunc = null;
+      
+
         static void Main(string[] args)
         {
 
@@ -37,14 +46,36 @@ namespace ConsoleApplicationSubStat
             }
 
             string sSubversionExePath = args[0];
-            string sSubversionRepositoryPath = args[1];
+            string repository_local_path = args[1];
+
+
+          
+
+
+            //save current directory for system 
+           // string currentDirectory = System.IO.Directory.GetCurrentDirectory();
+
+            //set current directory for system to subversion repository local path 
+           // System.IO.Directory.SetCurrentDirectory(ProgramConfiguration.REPOSITORY_LOCAL_PATH);
 
             ///Sample for query Subverion repository
-            SvnObjects.SvnFunctions.SubversionFunctions subFunc = new SvnObjects.SvnFunctions.SubversionFunctions(sSubversionExePath);
-            FolderRepoInfo info = subFunc.GetFolderRepoInfo(sSubversionRepositoryPath, -1);
-            List<RepositoryInfo> lRepository = subFunc.GetRepositoryLogImmediate(info, -1);
+            subFunc = new SvnObjects.SvnFunctions.SubversionFunctions(sSubversionExePath);
+
+             //first update repository to latest version 
+            bool updatesucceed = subFunc.UpdateRepository(repository_local_path);
+            if (!updatesucceed)
+            {
+                WriteError("Failed update repository. Can not generate statistics on this repository. Please fix the problem and run the program again.");
+                Console.ReadLine();
+                return;
+            }
+            ProgramConfiguration.REPOSITORY_FOLDER = subFunc.GetFolderRepoInfo(repository_local_path, -1);
+            List<RepositoryInfo> lRepository = subFunc.GetRepositoryLogImmediate(ProgramConfiguration.REPOSITORY_FOLDER, -1);
             
             QueryBase.AddRevisionsToDB(lRepository);
+
+            //restore previously saved current directory for system
+          //  System.IO.Directory.SetCurrentDirectory(currentDirectory);
          
         }
 

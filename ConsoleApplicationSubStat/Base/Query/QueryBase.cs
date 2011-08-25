@@ -25,8 +25,19 @@ namespace ConsoleApplicationSubStat.Base.Query
         //These collections are for storing added ids
         private static List<long?> addedrevisions = new List<long?>();
         private static Dictionary<string, long?> addedfiles = new Dictionary<string, long?>();
-        private static Dictionary<string,long?> addedusers = new Dictionary<string,long?>();
+        private static Dictionary<string, long?> addedusers = new Dictionary<string, long?>();
 
+        //first time program executes it gets max id from Files table and store it here
+        // after program use this variable ++last_file_id to set every new row in the table
+        private static long last_file_id = -1;
+
+        //first time program executes it gets max id from Users table and store it here
+        // after program use this variable ++last_user_id to set every new row in the table
+        private static long last_user_id = -1;
+
+        //first time program executes it gets max id from ChangedLinesCount table and store it here
+        // after program use this variable ++last_user_id to set every new row in the table
+        private static long last_changedlinescount_id = -1;
 
         /// <summary>
         /// Returns connection string to SQLite
@@ -64,7 +75,7 @@ namespace ConsoleApplicationSubStat.Base.Query
 #if DEBUG
             context.Log = Console.Out;
 #endif
-            
+
             return context;
         }
 
@@ -79,7 +90,7 @@ namespace ConsoleApplicationSubStat.Base.Query
             try
             {
                 using (context = ConstructContext())
-                {                  
+                {
 
                     Stopwatch stopWatch = new Stopwatch();
                     stopWatch.Start();
@@ -91,12 +102,12 @@ namespace ConsoleApplicationSubStat.Base.Query
                     Communicator.Communicator.NotifyRevisionsCountToInsert(revisionsCount);
                     foreach (var rev in revisons)
                     {
-                        
+
                         AddRevisionToDB(context, rev);
                         context.SubmitChanges();
 
                         Communicator.Communicator.NotifyRevisionInesrtedInDBAndAvailableCount(rev, --revisionsCount);
-                        
+
                     }
 
                     context.Transaction.Commit();
@@ -175,8 +186,41 @@ namespace ConsoleApplicationSubStat.Base.Query
             long fileID = AddFile(context, repoInfo);
 
             AddRevisionFile(context, repoInfo, fileID);
+
+            AddChangedLinesCountOnFile(context, repoInfo, fileID);
         }
 
+
+        static void AddChangedLinesCountOnFile(DataContext context, RepositoryInfo repoInfo, long fileid)
+        {
+            string replace = repoInfo.Item.Replace("/", @"\");
+
+            DirectoryInfo dirinfo = Directory.GetParent(ProgramConfiguration.REPOSITORY_FOLDER.FolderPath);
+            string repository_upper_directory = dirinfo.FullName;
+            string local_path_to_item = repository_upper_directory + replace;
+            int changedlinescount = Program.subFunc.GetChangedLinesCount(local_path_to_item, repoInfo.Item, repoInfo.Revision);
+            if (changedlinescount > 0)
+            {
+                //Get revisions table
+                var changedlinescounttable = context.GetTable<ChangedLinesCountDB>();
+                ChangedLinesCountDB clc = new ChangedLinesCountDB();
+                clc.Revision = repoInfo.Revision;
+                clc.FileID = fileid;
+                clc.LinesCount = changedlinescount;
+
+                //get maximum ID available 
+                if (last_changedlinescount_id < 0)
+                {
+                    long? ids = changedlinescounttable.Max<ChangedLinesCountDB>(u => u.ID);
+                    last_changedlinescount_id = (ids.HasValue) ? ids.Value  : 0;
+                }
+                
+
+                clc.ID = ++last_changedlinescount_id;
+                changedlinescounttable.InsertOnSubmit(clc);
+
+            }
+        }
 
         /// <summary>
         /// Addds revision file to base
@@ -197,9 +241,11 @@ namespace ConsoleApplicationSubStat.Base.Query
             revfileDB.ID = (ids.HasValue) ? ids.Value + 1 : 1;
 
             revisionfilestable.InsertOnSubmit(revfileDB);
-           
-           
+
+
         }
+
+
 
         /// <summary>
         /// Adds file to the base if doesn't exist
@@ -225,13 +271,19 @@ namespace ConsoleApplicationSubStat.Base.Query
                 FileDB fileDB = new FileDB(repoInfo);
                 fileDB.File = repoInfo.Item;
 
-                //get maximum ID available                 
-                long? ids = filestable.Max<FileDB>(fdb => fdb.FileID);
-                fileDB.FileID = (ids.HasValue) ? ids.Value + 1 : 1;
+                //get maximum ID available and store it global variable                
+                if (last_file_id < 0)
+                {
+                    long? ids = filestable.Max<FileDB>(fdb => fdb.FileID);
+                    last_file_id = (ids.HasValue) ? ids.Value : 0;
+                }
+
+                //increment variable and assign it to field
+                fileDB.FileID = ++last_file_id;
 
                 filestable.InsertOnSubmit(fileDB);
-             
-               
+
+
                 fid = fileDB.FileID;
 
                 addedfiles.Add(repoInfo.Item, fid);
@@ -268,7 +320,7 @@ namespace ConsoleApplicationSubStat.Base.Query
                 addedrevisions.Add(repoinfo.Revision);
             }
 
-           
+
         }
 
 
@@ -285,27 +337,32 @@ namespace ConsoleApplicationSubStat.Base.Query
 
             //Get users table
             var userstable = context.GetTable<UserDB>();
-            long?userid;
+            long? userid;
 
             //first check in memory
             if (addedusers.TryGetValue(repoInfo.Account, out userid))
                 return userid.Value;
 
             userid = (from u in userstable
-                          where u.UserName == repoInfo.Account
-                          select u.ID).SingleOrDefault<long?>();
+                      where u.UserName == repoInfo.Account
+                      select u.ID).SingleOrDefault<long?>();
 
             if (!userid.HasValue)
             {
                 //get maximum ID available 
-                long? ids = userstable.Max<UserDB>(u => u.ID);
-                udb.ID = (ids.HasValue) ? ids.Value + 1 : 1;
-                userstable.InsertOnSubmit(udb);             
-               
+                if (last_user_id < 0)
+                {
+                    long? ids = userstable.Max<UserDB>(u => u.ID);
+                    last_user_id = (ids.HasValue) ? ids.Value : 0;
+                }
+
+                udb.ID = ++last_user_id;
+                userstable.InsertOnSubmit(udb);
+
                 userid = udb.ID.Value;
 
                 addedusers.Add(repoInfo.Account, udb.ID);
-               
+
             }
 
             return userid.Value;
