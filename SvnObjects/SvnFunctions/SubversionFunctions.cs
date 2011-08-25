@@ -214,20 +214,21 @@ namespace SvnObjects.SvnFunctions
             return frInfo;
         }
 
-        public bool GetChnagedLinesCount(string repoPath, int revisionNum, string fileName, FolderRepoInfo folderRepoInfo)
+        public bool UpdateRepository(string repository_local_path)
         {
+            
 
-
-           
-
+            bool returnvalue = false;
 
             /*If for some reason sSubverisionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(sSubverisionPath) ||
                 !System.IO.File.Exists(sSubverisionPath))
             {
                 LastErrorMessage = "The subversion exe path is missed. Can not execute command";
-                return null;
+                return false;
             }
+
+
 
             System.Diagnostics.ProcessStartInfo psi =
                           new System.Diagnostics.ProcessStartInfo("\"" + sSubverisionPath + "\"");
@@ -237,8 +238,11 @@ namespace SvnObjects.SvnFunctions
             psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             psi.UseShellExecute = false;
 
-          
-            psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
+
+            System.IO.Directory.SetCurrentDirectory(repository_local_path);
+
+           // psi.Arguments = " " + CommandStringsManager.UpdateCommand + "  \"" + repository_local_path + "\"";
+            psi.Arguments = " " + CommandStringsManager.UpdateCommand ;
             psi.CreateNoWindow = true;
 
             SubversionRepositoryProcess process = new SubversionRepositoryProcess();
@@ -246,13 +250,72 @@ namespace SvnObjects.SvnFunctions
             process.StartInfo = psi;
             process.EnableRaisingEvents = true;
 
+            process.ErrorDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+                returnvalue = false;
+            };
+
+            process.Exited += delegate(object sender, EventArgs e)
+            {
+               
+            };
+
+            process.OutputDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+                if (string.IsNullOrEmpty(e.Data))
+                    return;              
+                    
+                returnvalue = true;
+                Console.WriteLine(e.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+
+            process.WaitForExit();
 
 
-            /* Do not use Stack, for example, because we need to begins the scan of the results from the begining, in order 
-             if in the future, the output of this command will be changed, that probabbly will be added some new  information 
-             * on end, we by the way are able to get all neccessary for us information */
-            List<string> diInfoStrings = new List<string>();
+            return returnvalue;
+        }
 
+        /// <summary>
+        /// Get changed lines count from specified file on specified revision number
+        /// </summary>
+        /// <param name="filePath">Complete path to local file</param>
+        /// <param name="fileRepoPath">Relative path of the file on repository</param>
+        /// <param name="revisionnumber">Revision number</param>
+        /// <returns>Lines count chnaged in specified revision on specified file, or -1</returns>
+        public int GetChangedLinesCount(string filePath, string fileRepoPath, int revisionnumber)
+        {
+
+            int changedlinescount = 0;
+
+            /*If for some reason sSubverisionPath is emtpy, notify error and return */
+            if (string.IsNullOrEmpty(sSubverisionPath) ||
+                !System.IO.File.Exists(sSubverisionPath))
+            {
+                LastErrorMessage = "The subversion exe path is missed. Can not execute command";
+                return -1;
+            }
+
+           
+
+            System.Diagnostics.ProcessStartInfo psi =
+                          new System.Diagnostics.ProcessStartInfo("\"" + sSubverisionPath + "\"");
+
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            psi.UseShellExecute = false;
+
+
+            psi.Arguments = " " + CommandStringsManager.CommonDiffCommand + " \"" + filePath.Trim() + "\" -c " + revisionnumber;
+            psi.CreateNoWindow = true;
+
+            SubversionRepositoryProcess process = new SubversionRepositoryProcess();
+
+            process.StartInfo = psi;
+            process.EnableRaisingEvents = true;
 
             process.ErrorDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
             {
@@ -269,7 +332,8 @@ namespace SvnObjects.SvnFunctions
                 if (string.IsNullOrEmpty(e.Data))
                     return;
 
-                diInfoStrings.Add(e.Data);
+                if (e.Data.StartsWith("+ ", StringComparison.InvariantCultureIgnoreCase))
+                    ++changedlinescount;
             };
 
             process.Start();
@@ -277,58 +341,9 @@ namespace SvnObjects.SvnFunctions
 
             process.WaitForExit();
 
-            if (!System.IO.Path.IsPathRooted(fileName))
-                fileName = System.IO.Path.GetFullPath(fileName);
 
+            return changedlinescount;
 
-            string logInfoParams = "  -r " + revisionNum.ToString();
-            string fileRelativeUrl = fileName;
-            if (folderRepoInfo != null)
-            {
-                try
-                {
-                    string relativeUrl = folderRepoInfo.RepoRelativeUrl;
-                    if (!string.IsNullOrEmpty(relativeUrl) && !fileRelativeUrl.Equals(relativeUrl, StringComparison.InvariantCultureIgnoreCase))
-                        fileRelativeUrl = fileName.Substring(fileName.IndexOf(relativeUrl) + relativeUrl.Length + 1);
-                }
-                catch (Exception ex)
-                {
-#if DEBUG
-                    throw ex;
-#else
-                    return false;
-#endif
-                }
-            }
-
-
-
-            /*Svn special parameters for requesting the repository info*/
-            string changesMadeInfoParams = " " + folderRepoInfo.Path + @"\" + fileRelativeUrl.Replace("/", @"\");
-
-            if (!System.IO.File.Exists(changesMadeInfoParams))
-            {
-                LastErrorMessage = "Can not locate " + changesMadeInfoParams +
-                    " file";
-                return false;
-            }
-
-            /*Move OS pointer to the directory of interest*/
-            string folderCompletePath = System.IO.Path.GetDirectoryName(changesMadeInfoParams);
-            if (!string.IsNullOrEmpty(folderCompletePath))
-                System.IO.Directory.SetCurrentDirectory(folderCompletePath);
-            else
-                throw new InvalidOperationException("Can not get the specified folder location. Path: " + changesMadeInfoParams);
-
-            /*Get file name */
-            string fileNaturalName = System.IO.Path.GetFileName(changesMadeInfoParams);
-
-            /*Execute command*/
-            Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
-                " " + logInfoParams + " " + fileNaturalName, isCallForSysTray);
-
-
-            return true;
         }
 
 
