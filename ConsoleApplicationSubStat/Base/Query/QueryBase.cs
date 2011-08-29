@@ -79,6 +79,18 @@ namespace ConsoleApplicationSubStat.Base.Query
             return context;
         }
 
+        public static long GetLastSavedRevisonNumber(DataContext context)
+        {
+            //Get revisions table
+            var revisionstable = context.GetTable<RevisionDB>();
+            var revision = revisionstable.Max<RevisionDB>(r => r.Revision);
+            if (revision.HasValue)
+                return revision.Value;
+
+            return -1;
+
+        }
+
 
         /// <summary>
         /// Adds the list of revisions to base 
@@ -89,6 +101,8 @@ namespace ConsoleApplicationSubStat.Base.Query
             DataContext context = null;
             try
             {
+               
+
                 using (context = ConstructContext())
                 {
 
@@ -98,16 +112,23 @@ namespace ConsoleApplicationSubStat.Base.Query
                     context.Connection.Open();
                     context.Transaction = context.Connection.BeginTransaction();
 
-                    int revisionsCount = revisons.Count<RepositoryInfo>();
-                    Communicator.Communicator.NotifyRevisionsCountToInsert(revisionsCount);
-                    foreach (var rev in revisons)
-                    {
+                    //get highest revision number from DB
+                    long lastSavedRevision = GetLastSavedRevisonNumber(context);
 
+                    //get from revision collection of all repositories with the index higher then saved one
+                    //if we save from stratch, index is -1, so any revision present in collection will be higher
+                    var revision_higher_then_saved = revisons.Where<RepositoryInfo>(re => re.Revision > lastSavedRevision);
+
+                    //get resulting collection count
+                    int revisionsCount = revision_higher_then_saved.Count<RepositoryInfo>();
+
+                    Communicator.Communicator.NotifyRevisionsCountToInsert(revisionsCount);
+                    foreach (var rev in revision_higher_then_saved)
+                    {
                         AddRevisionToDB(context, rev);
                         context.SubmitChanges();
 
                         Communicator.Communicator.NotifyRevisionInesrtedInDBAndAvailableCount(rev, --revisionsCount);
-
                     }
 
                     context.Transaction.Commit();

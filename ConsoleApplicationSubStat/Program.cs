@@ -72,6 +72,9 @@ namespace ConsoleApplicationSubStat
             ProgramConfiguration.REPOSITORY_FOLDER = subFunc.GetFolderRepoInfo(repository_local_path, -1);
             List<RepositoryInfo> lRepository = subFunc.GetRepositoryLogImmediate(ProgramConfiguration.REPOSITORY_FOLDER, -1);
             
+            //reverse collection to begin insert from lowest revision available
+            lRepository.Reverse();
+
             QueryBase.AddRevisionsToDB(lRepository);
 
             //restore previously saved current directory for system
