@@ -194,7 +194,7 @@
 
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <Image  Grid.Column="0"  HorizontalAlignment="Center"
-                          Source="{Binding Path=RepositoryItemState, 
+                          Source="{Binding Path=State, 
                             Converter={StaticResource RepositoryItemStateConverter}}" 
                                 Width="15"
                                    Height="15" ToolTip="{Binding Path=StateDescription}"/>
