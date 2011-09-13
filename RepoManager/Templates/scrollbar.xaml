@@ -8,7 +8,7 @@
                 <ControlTemplate TargetType="ScrollBar">
                     <Grid x:Name="Root" >
                         <Grid.Resources>
-                            <ControlTemplate x:Key="RepeatButtonTemplate" TargetType="RepeatButton">
+                            <!--<ControlTemplate x:Key="RepeatButtonTemplate" TargetType="RepeatButton">
                                 <Grid x:Name="Root">
                                     <vsm:VisualStateManager.VisualStateGroups>
                                         <vsm:VisualStateGroup x:Name="CommonStates">
@@ -16,7 +16,7 @@
                                         </vsm:VisualStateGroup>
                                     </vsm:VisualStateManager.VisualStateGroups>
                                 </Grid>
-                            </ControlTemplate>
+                            </ControlTemplate>-->
 
                             <!--I'm not using the repeat buttons and that's why these templates are empty-->
                             <ControlTemplate x:Key="HorizontalIncrementTemplate" TargetType="RepeatButton" />

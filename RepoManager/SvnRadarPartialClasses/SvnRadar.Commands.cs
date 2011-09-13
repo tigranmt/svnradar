@@ -200,7 +200,7 @@ namespace SvnRadar
         {
             get
             {
-                if(svnRadarExecutor == null) 
+                if (svnRadarExecutor == null)
                 {
                     svnRadarExecutor = (SvnRadarExecutor)((ObjectDataProvider)FindResource("svnRadarExecutor")).ObjectInstance;
                     SvnRadarExecutor.AddNotification += new SvnRadarExecutor.AddNotificationDelegate(SvnRadarExecutor_AddNotification);
@@ -864,6 +864,10 @@ namespace SvnRadar
         /// <param name="args"></param>
         private void OnGroupByRevisionNumberCommand(object sender, ExecutedRoutedEventArgs args)
         {
+            //If Revision (Group) View is already active one, skip
+            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView)
+                return;
+
             SetUpGroupByRevision();
         }
 
@@ -890,6 +894,10 @@ namespace SvnRadar
         /// <param name="args"></param>
         private void OnFlatViewCommand(object sender, ExecutedRoutedEventArgs args)
         {
+            //If FlatView is already active one, skip
+            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.FlatView)
+                return;
+
             SetUpFlatView();
         }
 

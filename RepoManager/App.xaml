@@ -8,6 +8,7 @@
     xmlns:repoCC="clr-namespace:SvnRadar.Common.Controls"            
     xmlns:database="clr-namespace:SvnRadar"
     xmlns:pf='clr-namespace:System.Windows.Data;assembly=PresentationFramework'    
+    xmlns:wpfextended="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
     StartupUri="SvnRadar.xaml">
     <Application.Resources>
 
@@ -40,8 +41,8 @@
             <converter:BreakExecutionVisibilityConverter x:Key="BreakExecutionVisibilityConverter" />
             <converter:VisibilityReverseConverter x:Key="VisibilityReverseConverter" />
 
-
-
+            <Color x:Key="ToolTipBackColor" R="114" G="114" B="114"/>
+            <SolidColorBrush x:Key="ToolTipBackBrush" Color="{Binding Source={StaticResource ToolTipBackColor}}"/>
        
 
 
@@ -84,7 +85,7 @@
             <Image x:Key="UpdateImage" Source="Images/updateimage.png"/>
             <Image x:Key="LogImage" Source="Images/logimage.png"/>    
             <Image x:Key="MergedImage" Source="Images/merged.png"/>
-            
+            <Image x:Key="GeekImage" Source="Images/geek.png"/>
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
             <Image x:Key="NextImage" Source="Images/next.png"/>
             <Image x:Key="ShowRevisionInfo" Source="Images/showrevision.png"/>
@@ -96,43 +97,54 @@
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
             <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
             <Image x:Key="FolderIcon" Source="Images/Folder.ico"/>
+           
             <!--- Images -->
 
 
            
             <!--Tool Tip -->
-            <StackPanel x:Key="ToolTipPanel">
-                <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                    <TextBlock FontFamily="Aharoni" FontSize="12" FontWeight="Bold" Foreground="Black" 
-                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top"  HorizontalAlignment="Right"
-                               Text="{Binding Path=Account}"
-                               Width="143"/>
+            <StackPanel x:Key="ToolTipPanel" Background="#505050">
 
+                <StackPanel x:Name="HeadStackFlatView" Orientation="Horizontal">
+                    <Image Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBlock Text="    " />
+                    <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="Orange" Background="Transparent"
+                               TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Account}"/>
+
+                    <TextBlock Text="    " />
+                    <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="WhiteSmoke"  Background="Transparent"
+                               TextWrapping="Wrap" TextAlignment="Right"  VerticalAlignment="Center"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Revision}"/>
                 </StackPanel>
 
-                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                    <TextBlock TextWrapping="Wrap" Foreground="Black" TextAlignment="Left" Background="{x:Null}" 
-                               HorizontalAlignment="Right" VerticalAlignment="Top" Width="181" Text="{Binding Path=UserComment}"/>
-
-                </StackPanel>
+                <wpfextended:RichTextBox Background="#505050" FontFamily="Arial" Width="400" Foreground="WhiteSmoke" FontSize="2" Text ="{Binding Path=UserComment}"/>
+               
 
             </StackPanel>
             <!--Tool Tip -->
 
             <!--Group view Tool Tip -->
-            <StackPanel x:Key="ToolTipPanelForGroupView">
-                <StackPanel Background="BurlyWood" Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                    <TextBlock FontFamily="Aharoni" FontSize="12" FontWeight="Bold" Foreground="Black" 
-                               TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top"  HorizontalAlignment="Right"
-                               Text="{Binding Path=Items[0].Account}"
-                               Width="143"/>
+            <StackPanel x:Key="ToolTipPanelGroupView" Background="#505050">
+                
+                <StackPanel x:Name="HeadStackGroupView" Orientation="Horizontal">
+                    <Image Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBlock Text="    " />
+                    <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="Orange" Background="Transparent"
+                               TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Items[0].Account}"/>
+                    <TextBlock Text="    " />
+                    <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="WhiteSmoke"  Background="Transparent"
+                               TextWrapping="Wrap" TextAlignment="Right"  VerticalAlignment="Center"  HorizontalAlignment="Right"
+                               Text="{Binding Path=Items[0].Revision}"/>
                 </StackPanel>
 
-                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                    <TextBlock TextWrapping="Wrap" Foreground="Black" TextAlignment="Left" Background="{x:Null}" 
-                               HorizontalAlignment="Right" VerticalAlignment="Top" Width="181" Text="{Binding Path=Items[0].UserComment}"/>
-                </StackPanel>
-
+                <wpfextended:RichTextBox Background="#505050" FontFamily="Arial" Width="400" Foreground="WhiteSmoke" FontSize="2" Text ="{Binding Path=Items[0].UserComment}">
+                    <!--<wpfextended:RichTextBox.TextFormatter>
+                        <converter:ToolTipRichTextFormatter/>
+                    </wpfextended:RichTextBox.TextFormatter>-->
+                </wpfextended:RichTextBox>
+               
             </StackPanel>
             <!--Group view Tool Tip -->
 
@@ -295,7 +307,7 @@
                                               
                                                    
                                                     <!--ToolTip="{Binding Path=Items[0].UserComment}"-->
-                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelForGroupView}">
+                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelGroupView}">
                                                         <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
                                                             <Expander.Header>
                                                             <DockPanel HorizontalAlignment="Stretch" >

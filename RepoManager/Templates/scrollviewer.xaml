@@ -2,9 +2,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--Scrollviewer Style-->
     
-    <ResourceDictionary.MergedDictionaries>
+    <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="scrollbar.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary.MergedDictionaries>-->
     
     <Style TargetType="ScrollViewer" x:Key="ScrollViewerStyle">
         <Setter Property="Background">
