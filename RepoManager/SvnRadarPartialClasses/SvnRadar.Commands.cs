@@ -92,10 +92,22 @@ namespace SvnRadar
             }
             else if (btn.Name == UIConstants.BTN_DELETE_SVN_PATH)
             {
-                if (lbSvnPaths.SelectedItem != null)
+                if (lbSvnPaths.SelectedItems != null && lbSvnPaths.SelectedItems.Count > 0)
                 {
-                    Repository repo = lbSvnPaths.SelectedItem as Repository;
-                    RemoveSvnPath(repo.RepositoryCompletePath);
+                    string warningMessage =
+                                        FindResource("MSG_WARNING_DELETE_REPOPATH") as string;
+
+                    if (System.Windows.MessageBox.Show(warningMessage,
+                         this.Title,
+                         MessageBoxButton.YesNo,
+                         MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        var reposToRemove = new List<Repository>(lbSvnPaths.SelectedItems.Cast<Repository>());
+                        foreach (var repo in reposToRemove)
+                        {
+                            RemoveSvnPath(repo.RepositoryCompletePath);
+                        }
+                    }
                 }
             }
 

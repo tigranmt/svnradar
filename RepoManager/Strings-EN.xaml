@@ -104,7 +104,7 @@
     
 
 
-    <system:String x:Key="MSG_WARNING_DELETE_REPOPATH">Are you sure want to remove selected repository from the list?</system:String>
+    <system:String x:Key="MSG_WARNING_DELETE_REPOPATH">Are you sure want to remove selected repositories from the list?</system:String>
     <system:String x:Key="MSG_SELECTED_PATH_NOLONGER_EXISTS">The repository seems doensn't exist at the path : {0}. If you want delete path from the configuration automatically, please press Yes. Or you can press Cancel and remove it manualy from configuration tab after.</system:String>
 
     <system:String x:Key="MSG_MAIN_CLOSE">Are you sure want to exit application ?</system:String>

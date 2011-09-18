@@ -665,16 +665,9 @@ namespace SvnRadar
         /// <param name="path">Repositiory path</param>
         private void RemoveSvnPath(string path)
         {
-            string warningMessage =
-                FindResource("MSG_WARNING_DELETE_REPOPATH") as string;
-
-            if (System.Windows.MessageBox.Show(warningMessage,
-                 this.Title,
-                 MessageBoxButton.YesNo,
-                 MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {
+           
                 RepoBrowserConfiguration.Instance.RemoveRepoPath(path);
-            }
+            
         }
 
 
