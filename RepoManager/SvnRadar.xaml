@@ -99,7 +99,7 @@
             </MenuItem>
 
             <MenuItem x:Name="ViewMI" Header="{StaticResource MI_VIEW}">
-                <MenuItem x:Name="RevisionViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsGroupLayoutConverter}}" Header="{StaticResource MI_REVISIONVIEW}" IsEnabled="True" Command="repomanager:AppCommands.GroupByRevisionNumberCommand"/>
+                <MenuItem x:Name="RevisionViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsGroupLayoutConverter}}" Header="{StaticResource MI_GROUPVIEW}" IsEnabled="True" Command="repomanager:AppCommands.GroupByRevisionNumberCommand"/>
                 <MenuItem x:Name="FlatViewMI" IsChecked="{Binding Path=ViewLayout,  Converter={StaticResource IsFlatLayoutConverter}}" Header="{StaticResource MI_FLATVIEW}" IsEnabled="True" Command="repomanager:AppCommands.FlatViewCommand"/>
             </MenuItem>
 

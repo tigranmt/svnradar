@@ -233,7 +233,7 @@ namespace SvnRadar
             TaskNotifierManager.Balloon.RepositoryUpdateRequested += new FancyBalloon.RepositoryRoutedEventHandler(Balloon_RepositoryUpdateRequested);
 
 
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.GroupView)
                 SetUpGroupByRevision();
 
             /*Start timer*/

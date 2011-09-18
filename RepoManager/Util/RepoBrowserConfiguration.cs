@@ -47,7 +47,7 @@ namespace SvnRadar.Util
         /// <summary>
         /// List view initial layout.
         /// </summary>
-        ListViewLayoutEnum listViewLayout = ListViewLayoutEnum.RevisionView;
+        ListViewLayoutEnum listViewLayout = ListViewLayoutEnum.GroupView;
 
         /// <summary>
         /// Repository paths collection
@@ -85,10 +85,10 @@ namespace SvnRadar.Util
         #region List view layut enumration declaration
         /// <summary>
         /// Defines the possible values of the alyout of the ListView items.
-        /// RevisionView: item are grouped by Revision number
+        /// GroupView: item are grouped by Revision number
         /// FlatView    : items are inserted just in sequence
         /// </summary>
-        public enum ListViewLayoutEnum { FlatView, RevisionView };
+        public enum ListViewLayoutEnum { FlatView, GroupView };
         #endregion
 
         #region properties

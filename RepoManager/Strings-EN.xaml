@@ -70,7 +70,7 @@
     
     
     <system:String x:Key="MI_VIEW">View</system:String>
-    <system:String x:Key="MI_REVISIONVIEW">Revision View</system:String>
+    <system:String x:Key="MI_GROUPVIEW">Group View</system:String>
     <system:String x:Key="MI_FLATVIEW">Flat View</system:String>
 
     <system:String x:Key="MI_HELP">Help</system:String>

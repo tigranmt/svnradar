@@ -36,7 +36,7 @@ namespace SvnRadar.FormatConverters
             SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum curValue = (SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum)Enum.Parse(typeof(SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum),
                  SvnRadar.Util.RepoBrowserConfiguration.Instance.ViewLayout.ToString());
 
-            return (curValue == SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView);
+            return (curValue == SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum.GroupView);
            
         }
 

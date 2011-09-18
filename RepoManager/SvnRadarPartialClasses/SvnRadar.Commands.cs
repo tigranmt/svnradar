@@ -847,7 +847,7 @@ namespace SvnRadar
         /// </summary>
         private void SetUpGroupByRevision()
         {
-            RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView;
+            RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.GroupView;
             CollectionViewSource colViewSource = FindResource("source") as CollectionViewSource;
             if (colViewSource == null)
                 return;
@@ -865,7 +865,7 @@ namespace SvnRadar
         private void OnGroupByRevisionNumberCommand(object sender, ExecutedRoutedEventArgs args)
         {
             //If Revision (Group) View is already active one, skip
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.RevisionView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.GroupView)
                 return;
 
             SetUpGroupByRevision();
