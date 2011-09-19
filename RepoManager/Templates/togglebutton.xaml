@@ -1,0 +1,68 @@
+<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:util="clr-namespace:SvnRadar.Util" >
+
+<!--<SnippetMergedDictionaries>-->
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="Shared.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+<!--</SnippetMergedDictionaries>-->
+
+
+    <Style x:Key="ImageToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="MinWidth" Value="25"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border 
+                        x:Name="Border"  
+                        CornerRadius="2" 
+                        BorderThickness="1"
+                        Background="{StaticResource NormalBrush}"
+                        BorderBrush="{StaticResource NormalBorderBrush}">
+                        <Grid>
+                            <Image Source="{Binding Path=(util:ImageToggleButton.Image),
+                                 RelativeSource={RelativeSource FindAncestor,
+                                   AncestorType={x:Type ToggleButton}}}"  HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center"
+                                    Margin="8,0,0,0"
+                                    Height="16"
+                                    Width="16" />
+                            <!--<TextBlock
+                                Text="{TemplateBinding Content}"
+                                 Margin="8,0,0,0"
+                                HorizontalAlignment="Center"  VerticalAlignment="Center"/>-->
+                        </Grid>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
+                        </Trigger>                       
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource DarkBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PressedBorderBrush}" />
+                        </Trigger>
+                        <!--<SnippetIsEnabledTrigger>-->
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                        </Trigger>
+                        <!--</SnippetIsEnabledTrigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+   
+</ResourceDictionary>
