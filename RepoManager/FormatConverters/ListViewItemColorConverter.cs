@@ -38,7 +38,7 @@ namespace SvnRadar.FormatConverters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.GroupView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView)
                 return true;
 
             int curRevNum = (int)value;

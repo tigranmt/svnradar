@@ -909,7 +909,7 @@ namespace SvnRadar
 
 
 
-            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+            if (!RepoBrowserConfiguration.Instance.Model.IsBatchFileExists)
                 return false;
 
 
@@ -983,7 +983,7 @@ namespace SvnRadar
 
             /*Execute command*/
             Execute(RepoBrowserConfiguration.Instance.SubversionPath, " " + CommandStringsManager.CommonDiffCommand +
-                " " + logInfoParams + " " + fileNaturalName + " --diff-cmd " + "\"" + RepoBrowserConfiguration.Instance.BatchFileCompletePath + "\"", false);
+                " " + logInfoParams + " " + fileNaturalName + " --diff-cmd " + "\"" + RepoBrowserConfigurationModel.BatchFileCompletePath + "\"", false);
 
 
             return true;

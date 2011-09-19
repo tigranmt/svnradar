@@ -111,7 +111,7 @@ namespace SvnRadar.Common.Controls
 
                     /*Assign alias to tab and save configuration immidiately*/
                     SvnRadar.Util.RepoBrowserConfiguration.Instance.AssignAliasToTab(parentTabItem.RepositoryCompletePath, this.Text);
-                    SvnRadar.Util.RepoBrowserConfiguration.Instance.Save();
+                    SvnRadar.Util.RepoBrowserConfiguration.Instance.Model.Save();
                 }
                 else
                     parentTabItem.Header = headerOriginalContent;   

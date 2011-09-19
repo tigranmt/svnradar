@@ -1,6 +1,6 @@
-﻿/* IsGroupLayoutConverter.cs --------------------------------
+﻿/* IsFlatLayoutConverter.cs --------------------------------
  * 
- * * Copyright (c) 2009 Tigran Martirosyan 
+ * * Copyright (c) 2011 Tigran Martirosyan 
  * * Contact and Information: tigranmt@gmail.com 
  * * This application is free software; you can redistribute it and/or 
  * * Modify it under the terms of the GPL license
@@ -15,19 +15,19 @@
  * * THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE 
  *  */
 // ---------------------------------
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SvnRadar.FormatConverters
 {
-    public class IsGroupLayoutConverter : IValueConverter
+    class FlatLayoutToImageConverter : IValueConverter
     {
-        
-        #region IValueConverter Members     
+        #region IValueConverter Members
 
 
 
@@ -36,8 +36,13 @@ namespace SvnRadar.FormatConverters
             SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum curValue = (SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum)Enum.Parse(typeof(SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum),
                  SvnRadar.Util.RepoBrowserConfiguration.Instance.ViewLayout.ToString());
 
-            return (curValue == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView);
-           
+            
+
+            if (curValue == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.FlatView)
+                return new BitmapImage(new Uri("/SvnRadar;component/Images/flatview.png", UriKind.Relative));
+            else
+                return new BitmapImage(new Uri("/SvnRadar;component/Images/groupview.png", UriKind.Relative));
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

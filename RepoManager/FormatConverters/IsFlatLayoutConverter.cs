@@ -33,10 +33,10 @@ namespace SvnRadar.FormatConverters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum curValue = (SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum)Enum.Parse(typeof(SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum),
+            SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum curValue = (SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum)Enum.Parse(typeof(SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum),
                  SvnRadar.Util.RepoBrowserConfiguration.Instance.ViewLayout.ToString());
 
-            return (curValue == SvnRadar.Util.RepoBrowserConfiguration.ListViewLayoutEnum.FlatView);
+            return (curValue == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.FlatView);
            
         }
 

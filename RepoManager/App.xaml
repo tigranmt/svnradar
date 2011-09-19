@@ -17,14 +17,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Strings-EN.xaml" />
                 <ResourceDictionary Source="Templates/ButtonTemplates.xaml" />
-                <ResourceDictionary Source="ExpanderStyle.xaml"/>               
+                <ResourceDictionary Source="ExpanderStyle.xaml"/>
                 <ResourceDictionary Source="Templates/tabcontrol.xaml"/>
                 <ResourceDictionary Source="Templates/slider.xaml"/>
-                <ResourceDictionary Source="Templates/button.xaml"/>                
+                <ResourceDictionary Source="Templates/button.xaml"/>
                 <ResourceDictionary Source="Templates/checkbox.xaml"/>
-                <ResourceDictionary Source="Templates/listbox.xaml"/>                           
+                <ResourceDictionary Source="Templates/listbox.xaml"/>
                 <ResourceDictionary Source="Templates/listview.xaml"/>
-                
+                <ResourceDictionary Source="Templates/togglebutton.xaml"/>
+
+               
+
 
 
 
@@ -37,13 +40,14 @@
             <converter:ListViewItemColorConverter x:Key="ListViewItemColorConverter" />
             <converter:EnableFromItemsCountConverter x:Key="EnableFromItemsCountConverter" />
             <converter:IsFlatLayoutConverter x:Key="IsFlatLayoutConverter" />
+            <converter:FlatLayoutToImageConverter x:Key="FlatLayoutToImageConverter" />            
             <converter:IsGroupLayoutConverter x:Key="IsGroupLayoutConverter" />
             <converter:BreakExecutionVisibilityConverter x:Key="BreakExecutionVisibilityConverter" />
             <converter:VisibilityReverseConverter x:Key="VisibilityReverseConverter" />
 
             <Color x:Key="ToolTipBackColor" R="114" G="114" B="114"/>
             <SolidColorBrush x:Key="ToolTipBackBrush" Color="{Binding Source={StaticResource ToolTipBackColor}}"/>
-       
+
 
 
 
@@ -71,6 +75,12 @@
             <ObjectDataProvider ObjectType="{x:Type repoManager:SvnRadarExecutor}"  x:Key="svnRadarExecutor"/>
             <!--- Repo executor global object -->
 
+
+            <!--- Repo executor global object -->
+            <ObjectDataProvider ObjectType="{x:Type util:RepoBrowserConfiguration}"  x:Key="Configuration"/>
+            <!--- Repo executor global object -->
+
+
             <!--- Filter manager global object -->
             <ObjectDataProvider ObjectType="{x:Type repoManager:FilterManager}"  x:Key="filterManager"/>
             <!--- Filter manager global object -->
@@ -83,7 +93,7 @@
             <Image x:Key="ConflictedImage" Source="Images/conflicted.png"/>
             <Image x:Key="EmptyImage" Source="Images/empty.png"/>
             <Image x:Key="UpdateImage" Source="Images/updateimage.png"/>
-            <Image x:Key="LogImage" Source="Images/logimage.png"/>    
+            <Image x:Key="LogImage" Source="Images/logimage.png"/>
             <Image x:Key="MergedImage" Source="Images/merged.png"/>
             <Image x:Key="GeekImage" Source="Images/geek.png"/>
             <Image x:Key="PrevImage" Source="Images/prev.png"/>
@@ -97,11 +107,11 @@
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
             <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
             <Image x:Key="FolderIcon" Source="Images/Folder.ico"/>
-           
+
             <!--- Images -->
 
 
-           
+
             <!--Tool Tip -->
             <StackPanel x:Key="ToolTipPanel" Background="#505050">
 
@@ -119,14 +129,14 @@
                 </StackPanel>
 
                 <wpfextended:RichTextBox Background="#505050" FontFamily="Arial" Width="400" Foreground="LightGray" FontSize="14" Text ="{Binding Path=UserComment}"/>
-               
+
 
             </StackPanel>
             <!--Tool Tip -->
 
             <!--Group view Tool Tip -->
             <StackPanel x:Key="ToolTipPanelGroupView" Background="#505058">
-                
+
                 <StackPanel x:Name="HeadStackGroupView" Orientation="Horizontal" Width="400">
                     <Image Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <TextBlock Text="    " />
@@ -144,7 +154,7 @@
                         <converter:ToolTipRichTextFormatter/>
                     </wpfextended:RichTextBox.TextFormatter>
                 </wpfextended:RichTextBox>
-               
+
             </StackPanel>
             <!--Group view Tool Tip -->
 
@@ -152,7 +162,7 @@
             <ContextMenu  x:Key="ListViewItemContextMenu" >
                 <MenuItem  Header="{StaticResource MI_SHOWREVISIONINFO}" Click="ShowRevisionInfo_Click" Icon="{StaticResource ShowRevisionInfo}" />
                 <!--<MenuItem  Header="{StaticResource MI_UPDATEONYTHISFILE}" Click="UpdateOnlyThisFile_Click" />-->
-                
+
             </ContextMenu>
 
             <!-- Context menu on sys tray -->
@@ -194,7 +204,7 @@
                                                         AncestorType={x:Type GridViewColumnHeader}}, 
                                                         Path=ActualWidth}"                                                                                   
                                                         TextAlignment="Left" FontFamily="Arial"   FontSize="12"/>
-                    
+
 
                 </StackPanel>
             </DataTemplate>
@@ -254,7 +264,7 @@
                 <Setter Property="IsSelected" Value="{Binding IsSelectedInfo, Mode=TwoWay}"/>
                 <!--<Setter Property="ToolTip" Value="{Binding Path=UserComment}"/>-->
                 <Setter Property="ToolTip" Value="{StaticResource ToolTipPanel}"/>
-                
+
 
 
 
@@ -292,9 +302,9 @@
                                         Loaded="repoView_Loaded"                                                    
                                         ItemsSource="{Binding Source={StaticResource source}}"                                        
                                         ItemContainerStyle="{StaticResource ListViewItemsStyle}">
-                        
-                        
-                        
+
+
+
                         <ListView.GroupStyle>
                             <GroupStyle>
 
@@ -304,16 +314,16 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                                              
-                                                   
+
+
                                                     <!--ToolTip="{Binding Path=Items[0].UserComment}"-->
                                                     <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelGroupView}">
                                                         <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
-                                                            <Expander.Header>
+                                                        <Expander.Header>
                                                             <DockPanel HorizontalAlignment="Stretch" >
                                                                 <TextBlock  Text="       " />
                                                                 <TextBlock  Text="{Binding Path=Items[0].Revision}"  TextAlignment="Left" Width="{Binding Path=ActualWidth, ElementName=RevisionColumn}"  >
-                                                                  
+
                                                                 </TextBlock>
                                                                 <TextBlock  Text="{Binding Path=Items[0].Account}" TextAlignment="Right" Width="{Binding Path=ActualWidth, ElementName=AccountColumn}"/>
                                                                 <TextBlock  Text="{Binding Path=Items[0].Date}" TextAlignment="Right" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
@@ -321,7 +331,7 @@
                                                                 <TextBlock  FontWeight="Bold" Text="{Binding Path=Items.Count}" TextAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=DateColumn}" />
 
                                                             </DockPanel>
-                                                        </Expander.Header>    
+                                                        </Expander.Header>
                                                         <Expander.Content>
                                                             <ItemsPresenter />
                                                         </Expander.Content>
@@ -346,7 +356,7 @@
                                 <util:CustomColumn x:Name="AccountColumn" Header="{StaticResource ACCOUNT_NAME}" DisplayMemberBinding="{Binding Path=Account}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
                                 <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
                                 <util:CustomColumn x:Name="ItemColumn" Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450"  HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
-                              
+
 
                             </GridView>
                         </ListView.View>
@@ -357,31 +367,24 @@
                     </ListView>
 
 
-                        <!-- Buttons  Template="{StaticResource SimpleButtonStyle}"-->
+                    <!-- Buttons  Template="{StaticResource SimpleButtonStyle}"-->
+
+                    <Button Style="{StaticResource ImageButtonStyle}" x:Name="rbRepository" util:ImageButton.Image="/SvnRadar;component/Images/sync.png"    Grid.Row="2"  Width="160" Height="26"    FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
+                    <Button Style="{StaticResource ImageButtonStyle}" x:Name="rbUpdateRepository" util:ImageButton.Image="/SvnRadar;component/Images/check_for_updatesico.ico"    Grid.Row="2"  Width="160" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
+                    <ToggleButton  Style="{StaticResource ImageToggleButtonStyle}" x:Name="ViewTypeButton" ToolTip="{StaticResource  ViewTypeButtonToolTip}"  util:ImageToggleButton.Image="{Binding Source={StaticResource Configuration},  Path=ViewLayout,  Converter={StaticResource FlatLayoutToImageConverter}}"  Grid.Row="2"  Command="repoManager:AppCommands.SwitchViewCommand" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="350,0,0,0"  Width="32" Height="26"/>
+
+                    <Button Style="{StaticResource ImageButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="70" Height="26" FontSize="12" util:ImageButton.Image="/SvnRadar;component/Images/stop.ico"  Content="{StaticResource  BreakExecutionTitle}"  HorizontalAlignment="Right"  VerticalAlignment="Center"  Margin="120,0,120,0" 
+                                      Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
+
                     
-                    <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbRepository"   Grid.Row="2"  Width="160" Height="26"  FontSize="12"   Content="{StaticResource  RepositoryTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="10,0,0,0" Command="repoManager:AppCommands.GetRepoInfoCommand" />
-                    <Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbUpdateRepository"   Grid.Row="2"  Width="200" Height="26"  FontSize="12" Content="{StaticResource  UpdateAllTitle}" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="180,0,0,0" Command="repoManager:AppCommands.UpdateRepositoryCommand" />
-                    <Button Style="{StaticResource BlockButtonStyle}" x:Name="rbBreakExecution"   Grid.Row="2"  Width="160" Height="26" FontSize="12"  Content="{StaticResource  BreakExecutionTitle}" Background="#FFAD1D07" Foreground="WhiteSmoke" HorizontalAlignment="Left"  VerticalAlignment="Center"  Margin="450,0,0,0" 
-                                  Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource BreakExecutionVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" Command="repoManager:AppCommands.BreakLogLoadingCommand" />
-
-                    <!--<Button Style="{StaticResource SimpleButtonStyle}" x:Name="rbOpenWorkingCopy"   Grid.Row="2"  Width="26" Height="26" FontSize="12" HorizontalAlignment="Right"  
-                            VerticalAlignment="Center"  Margin="600,0,10,0" 
-                            Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, 
-                            Mode=OneWay,  Converter={StaticResource VisibilityReverseConverter}, UpdateSourceTrigger=PropertyChanged}" 
-                            Command="repoManager:AppCommands.OpenWorkingCopyLocationCommand"  Content="{StaticResource FolderImage}" />-->
-
-                    <!-- Buttons  -->
-
-
-                    <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="200" Height="22" HorizontalAlignment="Right"    
-                                 VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" 
-                                 Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
-
+                    <ProgressBar x:Name="checkRepositoryProgress" Grid.Row="2" Width="100" Height="22" HorizontalAlignment="Right"    
+                                     VerticalAlignment="Center" Margin="600,0,10,0" IsIndeterminate="True" 
+                                     Visibility="{Binding Source={StaticResource svnRadarExecutor}, Path=ExecutingCommand, Mode=OneWay,  Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                 </Grid>
 
-             
+
             </DataTemplate>
 
 

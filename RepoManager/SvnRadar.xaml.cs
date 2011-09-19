@@ -119,7 +119,7 @@ namespace SvnRadar
                     string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                     string assemblyDirectory = System.IO.Path.GetDirectoryName(assemblyPath) + System.IO.Path.DirectorySeparatorChar;
 
-                    using (FileStream batchFileData = new FileStream(assemblyDirectory + RepoBrowserConfiguration.BATCH_FILE_NAME,
+                    using (FileStream batchFileData = new FileStream(assemblyDirectory + RepoBrowserConfigurationModel.BATCH_FILE_NAME,
                            FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         using (StreamWriter w = new StreamWriter(batchFileData))
@@ -151,8 +151,8 @@ namespace SvnRadar
             RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
             try
             {
-                if (File.Exists(RepoBrowserConfiguration.Instance.BatchFileCompletePath))
-                    File.Delete(RepoBrowserConfiguration.Instance.BatchFileCompletePath);
+                if (File.Exists(RepoBrowserConfigurationModel.BatchFileCompletePath))
+                    File.Delete(RepoBrowserConfigurationModel.BatchFileCompletePath);
             }
             catch(Exception ex)
             {
@@ -203,7 +203,7 @@ namespace SvnRadar
         /// </summary>
         internal void ResetConfiguration()
         {
-            RepoBrowserConfiguration.Instance.ResetConfiguration();
+            RepoBrowserConfiguration.Instance.Model.ResetConfiguration();
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace SvnRadar
         /// </summary>
         internal void SaveConfiguration()
         {
-            RepoBrowserConfiguration.Instance.Save();
+            RepoBrowserConfiguration.Instance.Model.Save();
         }
 
 
@@ -220,7 +220,7 @@ namespace SvnRadar
             base.OnInitialized(e);
 
             //Loading configuration saved, if there is any
-            RepoBrowserConfiguration.Instance.Load();
+            RepoBrowserConfiguration.Instance.Model.Load();
 
             /*Set up notify icon object into it's manager*/
             TaskNotifierManager.SetTaskBarIconObject(MainNotifyIcon);
@@ -233,7 +233,7 @@ namespace SvnRadar
             TaskNotifierManager.Balloon.RepositoryUpdateRequested += new FancyBalloon.RepositoryRoutedEventHandler(Balloon_RepositoryUpdateRequested);
 
 
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.GroupView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView)
                 SetUpGroupByRevision();
 
             /*Start timer*/
@@ -572,11 +572,11 @@ namespace SvnRadar
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
             chbSetOnAutorun.DataContext = RepoBrowserConfiguration.Instance;
+            
+
 
             /*sign data context of the Menu*/
-            ApplicationMenu.DataContext = RepoBrowserConfiguration.Instance;
-
-
+            //ApplicationMenu.DataContext = RepoBrowserConfiguration.Instance;
         }
 
 

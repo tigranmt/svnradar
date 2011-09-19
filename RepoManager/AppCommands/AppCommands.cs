@@ -91,6 +91,11 @@ namespace SvnRadar
         public static readonly ICommand FlatViewCommand = new RoutedCommand("FlatViewCommand", typeof(AppCommands));
 
         /// <summary>
+        /// Command that makes to swicth between Group and Flat view esclusively
+        /// </summary>
+        public static readonly ICommand SwitchViewCommand = new RoutedCommand("SwitchViewCommand", typeof(AppCommands));
+
+        /// <summary>
         /// Command that breaks the chenges view loading on the user view
         /// </summary>
         public static readonly ICommand BreakLogLoadingCommand = new RoutedCommand("BreakLogLoadingCommand", typeof(AppCommands));

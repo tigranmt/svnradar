@@ -76,13 +76,13 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.XML" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -115,6 +115,10 @@
     <Page Include="Strings-EN.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\togglebutton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -315,6 +319,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataBase\RepoInfoBase.cs" />
+    <Compile Include="FormatConverters\FlatLayoutToImageConverter.cs" />
     <Compile Include="FormatConverters\RichTextFormatter.cs" />
     <Compile Include="RepositoryProcess\RepositoryProcess.cs">
       <SubType>Component</SubType>
@@ -337,6 +342,9 @@
     </Compile>
     <Compile Include="FormatConverters\VisibilityReverseFormatConverter.cs" />
     <Compile Include="Util\FolderDialog.cs" />
+    <Compile Include="Util\ImageButton.cs" />
+    <Compile Include="Util\ImageToggleButton.cs" />
+    <Compile Include="Util\RepoBrowserConfigurationModel.cs" />
     <Compile Include="Util\Repository.cs" />
     <Compile Include="Util\SilentError.cs" />
     <Compile Include="VersionControlWindow.xaml.cs">
@@ -542,6 +550,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\geek.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sync.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\stop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\groupview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\flatview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

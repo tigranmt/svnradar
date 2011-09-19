@@ -94,8 +94,7 @@ namespace SvnRadar
             {
                 if (lbSvnPaths.SelectedItems != null && lbSvnPaths.SelectedItems.Count > 0)
                 {
-                    string warningMessage =
-                                        FindResource("MSG_WARNING_DELETE_REPOPATH") as string;
+                    string warningMessage = FindResource("MSG_WARNING_DELETE_REPOPATH") as string;
 
                     if (System.Windows.MessageBox.Show(warningMessage,
                          this.Title,
@@ -679,13 +678,13 @@ namespace SvnRadar
                 return;
 
             /*If Batch file doesn't exist but the merge path defined , try to recreate batch file*/
-            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists && RepoBrowserConfiguration.Instance.IsWinMergeDefined)
+            if (!RepoBrowserConfiguration.Instance.Model.IsBatchFileExists && RepoBrowserConfiguration.Instance.IsWinMergeDefined)
             {
                 GenerateBatchFile();
 
                 /*If Batch file doesn't exist, means there is somethign wrong with the batch file generation so remove also WinMerge 
                  * definition from  the application configuration, and application will make diff via built in future*/
-                if (!RepoBrowserConfiguration.Instance.IsBatchFileExists)
+                if (!RepoBrowserConfiguration.Instance.Model.IsBatchFileExists)
                 {
                     /*Reset WinMerge path to emtpy*/
                     RepoBrowserConfiguration.Instance.WinMergePath = string.Empty;
@@ -720,7 +719,7 @@ namespace SvnRadar
             }
 
             /*If there is no any batch file in the system or any diff tol defined, manage in built in way*/
-            if (!RepoBrowserConfiguration.Instance.IsBatchFileExists || !RepoBrowserConfiguration.Instance.IsWinMergeDefined)
+            if (!RepoBrowserConfiguration.Instance.Model.IsBatchFileExists || !RepoBrowserConfiguration.Instance.IsWinMergeDefined)
             {
                 /*Add revison object to the base, in order to populate it from the
                  commands output in the future. The strong key, in this case, is the Revision number*/
@@ -859,7 +858,7 @@ namespace SvnRadar
         /// </summary>
         private void SetUpGroupByRevision()
         {
-            RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.GroupView;
+            RepoBrowserConfiguration.Instance.ViewLayout = SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView;
             CollectionViewSource colViewSource = FindResource("source") as CollectionViewSource;
             if (colViewSource == null)
                 return;
@@ -877,21 +876,40 @@ namespace SvnRadar
         private void OnGroupByRevisionNumberCommand(object sender, ExecutedRoutedEventArgs args)
         {
             //If Revision (Group) View is already active one, skip
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.GroupView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView)
                 return;
 
             SetUpGroupByRevision();
         }
 
 
+        /// <summary>
+        /// Makes UI to switch between Group ad Flat views
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnSwitchViewCommand(object sender, ExecutedRoutedEventArgs args)
+        {
+            ICommand command = null;
 
+            if (RepoBrowserConfiguration.Instance.ViewLayout == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.GroupView)
+            {               
+                command = AppCommands.FlatViewCommand;
+            }
+            else
+            {              
+                command = AppCommands.GroupByRevisionNumberCommand;
+            }
+
+            command.Execute(null);
+        }
 
         /// <summary>
         /// Setups FlatView on UI
         /// </summary>
         private void SetUpFlatView()
         {
-            RepoBrowserConfiguration.Instance.ViewLayout = RepoBrowserConfiguration.ListViewLayoutEnum.FlatView;
+            RepoBrowserConfiguration.Instance.ViewLayout = SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.FlatView;
             CollectionViewSource colViewSource = FindResource("source") as CollectionViewSource;
             if (colViewSource == null)
                 return;
@@ -907,7 +925,7 @@ namespace SvnRadar
         private void OnFlatViewCommand(object sender, ExecutedRoutedEventArgs args)
         {
             //If FlatView is already active one, skip
-            if (RepoBrowserConfiguration.Instance.ViewLayout == RepoBrowserConfiguration.ListViewLayoutEnum.FlatView)
+            if (RepoBrowserConfiguration.Instance.ViewLayout == SvnRadar.Util.RepoBrowserConfigurationModel.ListViewLayoutEnum.FlatView)
                 return;
 
             SetUpFlatView();

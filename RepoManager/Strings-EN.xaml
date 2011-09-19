@@ -17,13 +17,14 @@
     <system:String x:Key="SVNRepositioryPath">Svn repository paths</system:String>
     <system:String x:Key="WorkingCopyTitle">Working copy</system:String>
     <system:String x:Key="RepositoryTitle">Sync with repository</system:String>   
-    <system:String x:Key="UpdateAllTitle">Update all from Repostory</system:String>
-    <system:String x:Key="BreakExecutionTitle">Break execution</system:String>    
+    <system:String x:Key="UpdateAllTitle">Update repository</system:String>
+    <system:String x:Key="BreakExecutionTitle">Stop</system:String>    
     <system:String x:Key="UdateWindowTitle">Updating </system:String>
     <system:String x:Key="UdateToolTip">Update from Repository</system:String>
     <system:String x:Key="ShowChangesToolTip">Show Change Log</system:String>
     <system:String x:Key="MainWindowTitle">Svn Radar</system:String>
-
+    <system:String x:Key="ViewTypeButtonToolTip">Switch between Group and Flat view</system:String>
+    
 
     <system:String x:Key="UserCommentTitle">Comment(Click to change)</system:String>
     <system:String x:Key="BugTitle">Bug(Click to change)</system:String>
@@ -66,7 +67,7 @@
     <system:String x:Key="MI_REPOSITORY">Repository</system:String>
     <system:String x:Key="MI_SYNCWITHREPOSITORY">Sync with repository</system:String>
     <system:String x:Key="MI_SYNCWITHREPOSITORIES">Sync all repositories</system:String>
-    <system:String x:Key="MI_UPDATEFROMREPOSITORY">Update all from Repostory</system:String>
+    <system:String x:Key="MI_UPDATEFROMREPOSITORY">Update repostory</system:String>
     
     
     <system:String x:Key="MI_VIEW">View</system:String>

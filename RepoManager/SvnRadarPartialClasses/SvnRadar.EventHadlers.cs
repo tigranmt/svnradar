@@ -294,7 +294,7 @@ namespace SvnRadar
            
             if ((bool)sfd.ShowDialog())
             {
-                RepoBrowserConfiguration.Instance.Export(sfd.FileName);
+                RepoBrowserConfiguration.Instance.Model.Export(sfd.FileName);
 
             }
 
@@ -314,7 +314,7 @@ namespace SvnRadar
 
             if ((bool)sfd.ShowDialog())
             {
-                RepoBrowserConfiguration.Instance.Import(sfd.FileName);
+                RepoBrowserConfiguration.Instance.Model.Import(sfd.FileName);
 
                 SetupBindings();
 
