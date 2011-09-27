@@ -204,6 +204,7 @@ namespace SvnRadar
         internal void ResetConfiguration()
         {
             RepoBrowserConfiguration.Instance.Model.ResetConfiguration();
+            SetupUI();
         }
 
         /// <summary>
