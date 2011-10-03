@@ -118,6 +118,7 @@ namespace SvnRadar.Util
             if (notificationList == null || notificationList.Count == 0)
                 return;
 
+           
             ShowNotification(notificationList[0]);
             SignalChangesOnSysTray(true);
             
@@ -210,7 +211,7 @@ namespace SvnRadar.Util
                 /*Updates counter textbox*/
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    if(ErrorManager.SilentNotificationList.Count ==0)
+                    if(ErrorManager.SilentNotificationList.Count > 0)
                         taskBarIcon.FlipIcon(true);
                    
                 }));
@@ -324,6 +325,12 @@ namespace SvnRadar.Util
             taskBarIcon.ShowCustomBalloon(fancyBalloon, System.Windows.Controls.Primitives.PopupAnimation.Slide, 5000);
 
             UpdateCounterTextBox();
+        }
+
+
+        public static void HideNotification()
+        {
+            taskBarIcon.HideBalloonTip();
         }
 
 

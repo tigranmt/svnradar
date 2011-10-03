@@ -86,7 +86,7 @@ namespace SvnRadar
 
         private void UpdateAll_Click(object sender, RoutedEventArgs e)
         {
-
+            TaskNotifierManager.HideNotification();
             UpdateReporiotiesInSequence();
             
         }
@@ -208,8 +208,11 @@ namespace SvnRadar
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == WindowState.Minimized)
+            if (this.WindowState == WindowState.Minimized) {
+                this.WindowState = WindowState.Normal;
                 HideMe();
+               
+            }
         }
 
 

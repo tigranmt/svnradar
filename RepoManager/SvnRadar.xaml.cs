@@ -677,20 +677,17 @@ namespace SvnRadar
         /// Attempts to restore the state of the main window
         /// </summary>
         private void ShowMe()
-        {
-            
-            this.Visibility = Visibility.Visible;           
-            this.Activate();
-            
-            
+        {                   
+            this.Show();
+            this.Activate();           
         }
 
         /// <summary>
         /// Attempts to hide the main window
         /// </summary>
         private void HideMe()
-        {          
-            this.Visibility = Visibility.Hidden;
+        {
+            this.Hide();
         }
 
 
@@ -739,7 +736,9 @@ namespace SvnRadar
             }
         }
 
-    
+ 
+
+     
 
 
 

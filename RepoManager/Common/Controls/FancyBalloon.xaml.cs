@@ -228,6 +228,7 @@ namespace SvnRadar.Common.Controls
         {
             /*Execute update command on the related repository*/
             RaiseUpdateRepoEvent(RepositoryCompletePath);
+            TaskNotifierManager.HideNotification();
 
         }
 
@@ -235,6 +236,7 @@ namespace SvnRadar.Common.Controls
         {
             /*Get log information*/
             RaiseViewChangeLogEvent(RepositoryCompletePath);
+            TaskNotifierManager.HideNotification();
         }
 
 

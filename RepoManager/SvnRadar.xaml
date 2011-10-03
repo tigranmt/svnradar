@@ -9,7 +9,7 @@
     ResizeMode="CanResizeWithGrip"
     Closing="Window_Closing"  
     StateChanged="Window_StateChanged"
-     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="700" MinHeight="500" Icon="Images\main.png">
+     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="700" MinHeight="500" Icon="Images\main.png" AllowsTransparency="False" Topmost="True">
 
    
     <Window.CommandBindings>
@@ -45,7 +45,7 @@
             <Separator/>
             <MenuItem x:Name="ShowErrorNotifications" Header="{StaticResource MI_SHOWERRORNOTIFICATIONS}" Click="ShowErrorNotification_Click" Icon="{StaticResource ErrorIcon}"/>
             <MenuItem x:Name="ShowChangesSequence" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
-            <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"/>
+            <MenuItem x:Name="ShowMainWindow" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"  />
             <MenuItem x:Name="Exit"  IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
         </ContextMenu>
 

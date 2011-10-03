@@ -794,6 +794,8 @@ namespace Hardcodet.Wpf.TaskbarNotification
             //reset balloon by just setting the info to an empty string
             iconData.BalloonText = iconData.BalloonTitle = String.Empty;
             Util.WriteIconData(ref iconData, NotifyCommand.Modify, IconDataMembers.Info);
+
+            popup.IsOpen = false;
         }
 
         #endregion

@@ -227,27 +227,25 @@ namespace SvnRadar
                 //try to kill process if it still alive
                 try
                 {
-                    if (!this.Process.HasExited)
-                    {
+                    //if (!this.Process.HasExited)
+                    //{
 
-                        string warningMsg = FindResource("MSG_REPOUPDATEBREAK") as string;
-                        if (!string.IsNullOrEmpty(warningMsg))
-                        {
-                            if (MessageBox.Show(warningMsg, Application.Current.MainWindow.Title, MessageBoxButton.OKCancel, MessageBoxImage.Exclamation) ==
-                                MessageBoxResult.Cancel)
-                            {
-                                e.Cancel = true;
-                                return;
-                            }
-                        }
-
-
-                        this.Process.CancelOutputRead();
-                        this.Process.Kill();
-                        this.Process.Dispose();
-                    }
+                    //    string warningMsg = FindResource("MSG_REPOUPDATEBREAK") as string;
+                    //    if (!string.IsNullOrEmpty(warningMsg))
+                    //    {
+                    //        if (MessageBox.Show(warningMsg, Application.Current.MainWindow.Title, MessageBoxButton.OKCancel, MessageBoxImage.Exclamation) ==
+                    //            MessageBoxResult.Cancel)
+                    //        {
+                    //            e.Cancel = true;
+                    //            return;
+                    //        }
+                    //    }
 
 
+                    //    this.Process.CancelOutputRead();
+                    //    this.Process.Kill();
+                    //    this.Process.Dispose();
+                    //}
 
                     /*Delete myself from the available windows collection */
                     WindowsManager.RemoveWindow(this);

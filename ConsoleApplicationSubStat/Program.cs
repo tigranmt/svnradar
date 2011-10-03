@@ -49,15 +49,6 @@ namespace ConsoleApplicationSubStat
             string repository_local_path = args[1];
 
 
-          
-
-
-            //save current directory for system 
-           // string currentDirectory = System.IO.Directory.GetCurrentDirectory();
-
-            //set current directory for system to subversion repository local path 
-           // System.IO.Directory.SetCurrentDirectory(ProgramConfiguration.REPOSITORY_LOCAL_PATH);
-
             ///Sample for query Subverion repository
             subFunc = new SvnObjects.SvnFunctions.SubversionFunctions(sSubversionExePath);
 
@@ -77,8 +68,6 @@ namespace ConsoleApplicationSubStat
 
             QueryBase.AddRevisionsToDB(lRepository);
 
-            //restore previously saved current directory for system
-          //  System.IO.Directory.SetCurrentDirectory(currentDirectory);
          
         }
 
