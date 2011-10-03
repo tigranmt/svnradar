@@ -31,7 +31,7 @@
     <system:String x:Key="ReportBugWindowTitle">Report a bug or leave a Comment</system:String>
 
     <system:String x:Key="GoToSourceToolTip">Go to source file</system:String>
-    <system:String x:Key="SetOnAutorunTitle">Run program on Windows Start up</system:String>
+    <system:String x:Key="SetOnAutorunTitle">Run on OS start up</system:String>
     <system:String x:Key="CloseTitle">Close</system:String>
     <system:String x:Key="ClearErrorsTitle">Clear errors</system:String>
     
@@ -44,7 +44,7 @@
     
     <system:String x:Key="Version">Version</system:String>
     <system:String x:Key="Author">Author</system:String>
-    <system:String x:Key="AuthorProfile">Author's profile</system:String>
+    <system:String x:Key="AuthorProfile">My profile</system:String>
     <system:String x:Key="AuthorEmail">Email</system:String>
     
     <system:String x:Key="ProjectSite">Project site</system:String>

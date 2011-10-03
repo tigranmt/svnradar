@@ -137,7 +137,7 @@
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="19,0,0,14" HorizontalAlignment="Left" Width="105" Height="23"
                             VerticalAlignment="Bottom" Content="{StaticResource SaveButtonTitle}" Name="btnSave"/>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle}" Height="16" Margin="29,86,0,0" Name="chbSetOnAutorun" VerticalAlignment="Top" IsChecked="{Binding RunOnStartUp}" HorizontalAlignment="Left" Width="16" />
+                    <CheckBox Style="{StaticResource CheckBoxStyle}" Height="16" Margin="230,85,0,0" Name="chbSetOnAutorun" VerticalAlignment="Top" IsChecked="{Binding RunOnStartUp}" HorizontalAlignment="Left" Width="16" />
 
 
                     <Button Style="{StaticResource SimpleButtonStyle}" Margin="0,0,17,14" HorizontalAlignment="Right" Width="115" Height="23"
@@ -152,7 +152,7 @@
                     <TextBlock Margin="157,0,0,73"  HorizontalAlignment="Left" Width="22" Background="Gold" Height="14" VerticalAlignment="Bottom" 
                                Text="{Binding Path=Value, ElementName=frequencySlider, Converter={StaticResource SliderFormatConverter}}" FontWeight="Bold" TextAlignment="Center" />
                     <Rectangle HorizontalAlignment="Left" Margin="155,0,0,71" Name="rectangle1" Stroke="Black" Width="26" Height="18.04" VerticalAlignment="Bottom" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="6,110,0,0" Text="{StaticResource SVNRepositioryPath}" TextAlignment="Left" VerticalAlignment="Top" Width="302" FontSize="14" FontWeight="Normal" />
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="23,119,0,0" Text="{StaticResource SVNRepositioryPath}" TextAlignment="Left" VerticalAlignment="Top" Width="302" FontSize="14" FontWeight="Normal" />
                     <!--<Border Margin="6,134,6,93" Name="border1" Background="PowderBlue" />-->
                     <Button Style="{StaticResource SimpleButtonStyle}" Height="23" HorizontalAlignment="Right" Margin="0,144,17,0" Name="btnAddNewSvnPath" VerticalAlignment="Top" Width="31" BorderBrush="#FF707070" >
                         +</Button>
@@ -160,8 +160,8 @@
                     <ListBox Margin="19,141,54,99" Style="{StaticResource ListBoxStyle}"  Name="lbSvnPaths" ItemsSource="{Binding RepositoryPaths}" Drop="lbSvnPaths_Drop"  AllowDrop="True" SelectionMode="Multiple" />
                     <Button Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,182,17,0" Name="btnDeleteSvnPath" Width="31" Height="23" VerticalAlignment="Top" >
                         -</Button>
-                    <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="51,83,91,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" />
-                    <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="69,55,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="116" />
+                    <TextBlock Text="{StaticResource SetOnAutorunTitle}"  Height="23" TextAlignment="Left" Margin="57,83,638,0" Name="textBox1" FontSize="14" VerticalAlignment="Top" Width="128" HorizontalAlignment="Left" />
+                    <TextBlock FontSize="14" Height="22" HorizontalAlignment="Left" Margin="69,53,0,0" Text="{StaticResource WinMergePath}" TextAlignment="Center" VerticalAlignment="Top" Width="116" />
                     <TextBox Height="23" IsReadOnly="True" Margin="230,50,91,0" Name="txtWinMergePath" Text="{Binding Path=WinMergePath,Mode=TwoWay}" VerticalAlignment="Top" />
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,54,0" Name="btnFindWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">...</Button>
                     <Button Height="23" HorizontalAlignment="Right" Margin="0,51,17,0" Name="btnRemoveWinMergePath" Style="{StaticResource SimpleButtonStyle}" VerticalAlignment="Top" Width="31">-</Button>
