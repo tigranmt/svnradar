@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C72A54A2-AFF1-4AEC-9959-4A2A12CEF55B}"
 	ProjectSection(SolutionItems) = preProject
-		diff.bat = diff.bat
+		RepoManager\diff.bat = RepoManager\diff.bat
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoManager", "RepoManager\RepoManager.csproj", "{B1CC1272-F2E2-4990-9ECC-5618EF7A9E7F}"
