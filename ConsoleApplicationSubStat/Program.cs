@@ -40,7 +40,7 @@ namespace ConsoleApplicationSubStat
 
             if (!System.IO.Directory.Exists(args[1]))
             {
-                WriteError("Not valid subversion repository directory path : " + args[0]);
+                WriteError("Not valid or not existing subversion repository directory path : " + args[1]);
                 Console.ReadLine();
                 return;
             }

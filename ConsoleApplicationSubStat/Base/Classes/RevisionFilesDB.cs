@@ -26,5 +26,9 @@ namespace ConsoleApplicationSubStat.Base.Classes
 
         [Column(Name = "Revision", UpdateCheck = UpdateCheck.Never)]
         public long Revision { get; set; }
+
+
+        [Column(Name = "Action", UpdateCheck = UpdateCheck.Never)]
+        public char Action { get; set; }
     }
 }

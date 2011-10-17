@@ -260,12 +260,45 @@ namespace ConsoleApplicationSubStat.Base.Query
             //get maximum ID available                 
             long? ids = revisionfilestable.Max<RevisionFilesDB>(rfd => rfd.ID);
             revfileDB.ID = (ids.HasValue) ? ids.Value + 1 : 1;
-
+            revfileDB.Action  = CharFromState(repoinfo.ItemState);
+           
             revisionfilestable.InsertOnSubmit(revfileDB);
 
 
         }
 
+
+        static char CharFromState(RepositoryInfo.RepositoryItemState action)
+        {
+            if (action == RepositoryInfo.RepositoryItemState.Add)
+                return 'A';
+            else if (action == RepositoryInfo.RepositoryItemState.Conflict)
+                return 'C';
+            else if (action == RepositoryInfo.RepositoryItemState.Deleted)
+                return 'D';
+            else if (action == RepositoryInfo.RepositoryItemState.ExternalDefinition)
+                return 'E';
+            else if (action == RepositoryInfo.RepositoryItemState.Ignored)
+                return 'I';
+            else if (action == RepositoryInfo.RepositoryItemState.Merged)
+                return '|';
+            else if (action == RepositoryInfo.RepositoryItemState.Missing)
+                return 'X';
+            else if (action == RepositoryInfo.RepositoryItemState.Modified)
+                return 'M';
+            else if (action == RepositoryInfo.RepositoryItemState.NeedToBeUpdatedFromRepo)
+                return 'R';
+            else if (action == RepositoryInfo.RepositoryItemState.Normal)
+                return 'N';
+            else if (action == RepositoryInfo.RepositoryItemState.NotVersioned)
+                return 'V';
+            else if (action == RepositoryInfo.RepositoryItemState.Replaced)
+                return '&';
+            else if (action == RepositoryInfo.RepositoryItemState.VersionedWithDifferentKindOfObject)
+                return 'O';
+
+            return '-';
+        }
 
 
         /// <summary>
