@@ -211,7 +211,7 @@ namespace SvnRadar.Util
                 /*Updates counter textbox*/
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    if(ErrorManager.SilentNotificationList.Count > 0)
+                    if(ErrorManager.SilentNotificationList.Count == 0)
                         taskBarIcon.FlipIcon(true);
                    
                 }));
