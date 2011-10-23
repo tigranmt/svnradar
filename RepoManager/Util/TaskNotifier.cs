@@ -129,8 +129,9 @@ namespace SvnRadar.Util
         /// Set error icon on sys tray
         /// </summary>
         public static void SetErrorIcon()
-        {
+        {          
             taskBarIcon.SetErrorIcon();
+           
         }
 
         /// <summary>
@@ -422,7 +423,8 @@ namespace SvnRadar.Util
                 /*Set data binding on fancy balloon*/
                 fancyBalloon.DataContext = null;
                 taskBarIcon.CloseBalloon();
-                taskBarIcon.FlipIcon(false);
+                
+                // taskBarIcon.FlipIcon(false);
                 return;
             }
 

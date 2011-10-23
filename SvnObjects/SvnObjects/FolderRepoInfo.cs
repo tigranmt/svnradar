@@ -122,8 +122,12 @@ namespace SvnObjects.Objects
                 {
                     if (string.IsNullOrEmpty(this.Url))
                         return null;
+                    int startIndex = this.Url.IndexOf(this.RepositoryRoot);
+                    
+                    if(startIndex >=0)
+                        return this.Url.Substring(startIndex + this.RepositoryRoot.Length);
 
-                    return this.Url.Substring(this.Url.IndexOf(this.RepositoryRoot) + this.RepositoryRoot.Length);
+                    return null;
 
                 }
                 catch

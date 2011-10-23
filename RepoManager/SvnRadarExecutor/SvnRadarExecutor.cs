@@ -211,6 +211,14 @@ namespace SvnRadar
 
 
 
+        public static void SetErrorIcon()
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                TaskNotifierManager.SetErrorIcon();
+            }));
+        }
+
         /// <summary>
         /// Gets the given working copy folder repository related information
         /// </summary>
@@ -271,9 +279,9 @@ namespace SvnRadar
 
             /*If the path is not Url based, means that we neeed o handle a cases when the path contains spaces*/
             if (!UrlPassed)
-                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\" --xml";
             else
-                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\"";
+                psi.Arguments = " " + CommandStringsManager.CommonInfoCommand + " \"" + folderPath.Trim() + "\" --xml";
             psi.CreateNoWindow = true;
 
             RepositoryProcess process = RepoProcess;
@@ -321,6 +329,7 @@ namespace SvnRadar
                             {
                                 AddNotification(ErrorManager.ERROR_PROCESS_ERRSTDOUT,
                                     erroMessage);
+
                             }
                         }
                         else
@@ -345,16 +354,19 @@ namespace SvnRadar
             process.WaitForExit(60000);
 
             int unniqueCode = CodeFromString(folderPath);
-            if (diInfoStrings.Count < 2)
+            if (diInfoStrings.Count < 3)
             {
                 if (process.ExitCode != 0)
                 {
                     try
                     {
 
-                        if (AddNotification != null) { 
+                        if (AddNotification != null)
+                        {
                             AddNotification(unniqueCode, "Got problems retreiving  information for the folder " +
                          folderPath + "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd());
+                            SetErrorIcon();
+
                         }
                     }
                     catch (Exception ex)
@@ -372,83 +384,160 @@ namespace SvnRadar
 
             frInfo.FolderPath = folderPath;
 
+
             try
             {
-                for (int i = 0; i < diInfoStrings.Count; i++)
+                StringBuilder sb = new StringBuilder();
+                diInfoStrings.ForEach(s => sb.Append(s));
+
+                using (System.IO.MemoryStream memStream = new System.IO.MemoryStream(System.Text.UTF8Encoding.UTF8.GetBytes(sb.ToString())))
                 {
-                    int sepIndex = diInfoStrings[i].IndexOf(':');
-                    if (sepIndex <= 0)
-                        continue;
 
-                    string value = diInfoStrings[i].Substring(sepIndex + 1);
+                    XPathDocument xmldoc = new XPathDocument(memStream);
+                    XPathNavigator navigator = xmldoc.CreateNavigator();
+                    navigator.MoveToRoot();
+                    navigator.MoveToFirstChild();
 
-
-                    if (i == 0)
-                    {
-                        frInfo.Path = value;
-                    }
-
-                    else if (i == 1)
-                    {
-                        frInfo.Url = value;
-                    }
-
-                    else if (i == 2)
-                    {
-                        frInfo.RepositoryRoot = value;
-                    }
-
-                    else if (i == 3)
-                    {
-                        frInfo.UUID = value;
-                    }
-
-                    else if (i == 4)
+                    if (navigator.MoveToChild("entry", ""))
                     {
                         int revNum = -1;
-                        Int32.TryParse(value, out revNum);
-                        frInfo.Revision = revNum;
+                        Int32.TryParse(navigator.GetAttribute("revision", string.Empty), out revNum);
+                        frInfo.Revision = revNum;                       
                     }
 
-                    else if (i == 6 && UrlPassed)
+                    if (navigator.MoveToChild("url", string.Empty))
                     {
-                        frInfo.LastAuthor = value;
-                    }
-                    else if (i == 7)
-                    {
-                        if (!UrlPassed)
-                            frInfo.LastAuthor = value;
-                        else
-                        {
-                            int revNum = -1;
-                            Int32.TryParse(value, out revNum);
-                            frInfo.LastRevisionNumber = revNum;
-                        }
+                        frInfo.Url = navigator.InnerXml;
+                        navigator.MoveToParent();
                     }
 
-                    else if (i == 8)
+                    if (navigator.MoveToChild("repository", string.Empty))
                     {
-                        if (!UrlPassed)
+                        if (navigator.MoveToChild("root", string.Empty))
                         {
-                            int revNum = -1;
-                            Int32.TryParse(value, out revNum);
-                            frInfo.LastRevisionNumber = revNum;
+                            frInfo.RepositoryRoot = navigator.InnerXml;
+                            navigator.MoveToParent();
                         }
-                        else
+
+                        if (navigator.MoveToChild("uuid", string.Empty))
                         {
-                            frInfo.LastChangeDate = value;
+                            frInfo.UUID = navigator.InnerXml;
+                            navigator.MoveToParent();
                         }
+
+                        navigator.MoveToParent();
                     }
 
-                    else if (i == 9)
+                    if (navigator.MoveToChild("wc-info", string.Empty))
                     {
-                        if (!UrlPassed)
+                        if (navigator.MoveToChild("wcroot-abspath", string.Empty))
                         {
-                            frInfo.LastChangeDate = value;
-
+                            frInfo.Path = navigator.InnerXml.Replace("/",@"\");
+                            navigator.MoveToParent();
                         }
+                        navigator.MoveToParent();
                     }
+
+
+                    if (navigator.MoveToChild("commit", string.Empty))
+                    {
+                        if (navigator.MoveToChild("date", string.Empty)) 
+                        { 
+                            frInfo.LastChangeDate = navigator.InnerXml;
+                            navigator.MoveToParent();
+                        }
+
+                        if (navigator.MoveToChild("author", string.Empty))
+                        {
+                            frInfo.LastAuthor = navigator.InnerXml;
+                            navigator.MoveToParent();
+                        }
+
+                        int revNum = -1;
+                        Int32.TryParse(navigator.GetAttribute("revision", string.Empty), out revNum);
+                        frInfo.LastRevisionNumber = revNum;                        
+                        navigator.MoveToParent();
+                    }
+
+
+                    memStream.Close();
                 }
+
+                //for (int i = 0; i < diInfoStrings.Count; i++)
+                //{
+                //    int sepIndex = diInfoStrings[i].IndexOf(':');
+                //    if (sepIndex <= 0)
+                //        continue;
+
+                //    string value = diInfoStrings[i].Substring(sepIndex + 1);
+
+
+                //    if (i == 0)
+                //    {
+                //        frInfo.Path = value;
+                //    }
+
+                //    else if (i == 1)
+                //    {
+                //        frInfo.Url = value;
+                //    }
+
+                //    else if (i == 2)
+                //    {
+                //        frInfo.RepositoryRoot = value;
+                //    }
+
+                //    else if (i == 3)
+                //    {
+                //        frInfo.UUID = value;
+                //    }
+
+                //    else if (i == 4)
+                //    {
+                //        int revNum = -1;
+                //        Int32.TryParse(value, out revNum);
+                //        frInfo.Revision = revNum;
+                //    }
+
+                //    else if (i == 6 && UrlPassed)
+                //    {
+                //        frInfo.LastAuthor = value;
+                //    }
+                //    else if (i == 7)
+                //    {
+                //        if (!UrlPassed)
+                //            frInfo.LastAuthor = value;
+                //        else
+                //        {
+                //            int revNum = -1;
+                //            Int32.TryParse(value, out revNum);
+                //            frInfo.LastRevisionNumber = revNum;
+                //        }
+                //    }
+
+                //    else if (i == 8)
+                //    {
+                //        if (!UrlPassed)
+                //        {
+                //            int revNum = -1;
+                //            Int32.TryParse(value, out revNum);
+                //            frInfo.LastRevisionNumber = revNum;
+                //        }
+                //        else
+                //        {
+                //            frInfo.LastChangeDate = value;
+                //        }
+                //    }
+
+                //    else if (i == 9)
+                //    {
+                //        if (!UrlPassed)
+                //        {
+                //            frInfo.LastChangeDate = value;
+
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -1171,7 +1260,7 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                if(AddNotification !=null)
+                if (AddNotification != null)
                     AddNotification(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
                         "The subversion exe path is missed. Can not execute command");
                 return;
@@ -1428,6 +1517,12 @@ namespace SvnRadar
                 }
 
                 wcInfo = null;
+            }
+            else
+            {
+
+                if (TaskNotifierManager.notificationList.Count > 0)
+                    SetErrorIcon();
             }
 
 

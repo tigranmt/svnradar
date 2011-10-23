@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace SvnRadar.Util
 {
@@ -57,9 +58,12 @@ namespace SvnRadar.Util
         {
             lock (syncObject)
             {
-                if (runtimeErrorList.Count > 100)
-                    runtimeErrorList.RemoveAt(runtimeErrorList.Count - 1);
-                runtimeErrorList.Add(new SilentNotification { ErrorCode = errorCode, ErrorDescription = errorDescription });
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    if (runtimeErrorList.Count > 100)
+                        runtimeErrorList.RemoveAt(runtimeErrorList.Count - 1);
+                    runtimeErrorList.Add(new SilentNotification { ErrorCode = errorCode, ErrorDescription = errorDescription });
+                }));
             }
 
 
@@ -73,27 +77,28 @@ namespace SvnRadar.Util
         /// <param name="errorCode">Error code</param>
         public static void RemoveRuntimeSilentNotification(int errorCode)
         {
+             Application.Current.Dispatcher.Invoke(new Action(() =>
+             {
+
+                 if (runtimeErrorList.Count == 0)
+                     return;
+
+                 /*Removes all available items in the collection with the specified error code*/
+                 SilentNotification bulkItem = new SilentNotification { ErrorCode = errorCode, ErrorDescription = string.Empty };
 
 
-            if (runtimeErrorList.Count == 0)
-                return;
+                 int indexOf = 0;
+                 do
+                 {
+                     lock (syncObject)
+                     {
+                         indexOf = runtimeErrorList.IndexOf(bulkItem);
+                         if (indexOf >= 0)
+                             runtimeErrorList.RemoveAt(indexOf);
+                     }
+                 } while (indexOf >= 0 && runtimeErrorList.Count > 0);
 
-            /*Removes all available items in the collection with the specified error code*/
-            SilentNotification bulkItem = new SilentNotification { ErrorCode = errorCode, ErrorDescription = string.Empty };
-
-
-            int indexOf = 0;
-            do
-            {
-                lock (syncObject)
-                {
-                    indexOf = runtimeErrorList.IndexOf(bulkItem);
-                    if (indexOf >= 0)
-                        runtimeErrorList.RemoveAt(indexOf);
-                }
-            } while (indexOf >= 0 && runtimeErrorList.Count > 0);
-
-
+             }));
 
         }
 

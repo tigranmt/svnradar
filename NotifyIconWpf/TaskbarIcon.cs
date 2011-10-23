@@ -918,8 +918,7 @@ namespace Hardcodet.Wpf.TaskbarNotification
         /// </summary>
         public void SetErrorIcon()
         {
-            if(ErrorIconSource!=null)
-                this.Icon = ErrorIconSource.ToIcon();
+            this.Icon = ErrorIconSource.ToIcon();
         }
 
 

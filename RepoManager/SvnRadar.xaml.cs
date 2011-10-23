@@ -49,7 +49,7 @@ namespace SvnRadar
     /// Interaction logic for Window1.xaml
     /// </summary>
 
-   
+
     public partial class RepoBrowserWindow : Window
     {
         /// <summary>
@@ -87,7 +87,7 @@ namespace SvnRadar
         /// <summary>
         /// Notifies the prgram about netowk status state
         /// </summary>
-        static bool bNetworksAvailable = false;
+        static bool NetworksAvailable = false;
 
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace SvnRadar
                 if (!string.IsNullOrEmpty(batchFileContent))
                 {
 
-                  
+
                     string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                     string assemblyDirectory = System.IO.Path.GetDirectoryName(assemblyPath) + System.IO.Path.DirectorySeparatorChar;
 
@@ -133,7 +133,7 @@ namespace SvnRadar
                 }
 
 
-            }                
+            }
             catch (Exception ex)
             {
                 ErrorManager.ShowExceptionError(ex, true);
@@ -154,12 +154,12 @@ namespace SvnRadar
                 if (File.Exists(RepoBrowserConfigurationModel.BatchFileCompletePath))
                     File.Delete(RepoBrowserConfigurationModel.BatchFileCompletePath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorManager.LogException(ex);
             }
             txtWinMergePath.Text = string.Empty;
-             
+
         }
 
         /// <summary>
@@ -239,6 +239,9 @@ namespace SvnRadar
 
             /*Start timer*/
             StartTimer();
+
+
+            System.Net.NetworkInformation.NetworkChange.NetworkAvailabilityChanged += new System.Net.NetworkInformation.NetworkAvailabilityChangedEventHandler(NetworkChange_NetworkAvailabilityChanged);
         }
 
         protected override void OnContentRendered(EventArgs e)
@@ -261,7 +264,7 @@ namespace SvnRadar
             if (!IsNetworkAvailable())
             {
                 string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
-                SvnRadarExecutor.AddNotificationCall( ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
+                SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                 return;
             }
             else
@@ -318,7 +321,7 @@ namespace SvnRadar
                     nodeIterator = navigator.Evaluate("/Application/DownloadFrom/@Value") as XPathNodeIterator;
                     nodeIterator.MoveNext();
 
-                    string downloadfrom = nodeIterator.Current.ToString(); 
+                    string downloadfrom = nodeIterator.Current.ToString();
                     new VersionControlWindow(serverSideVersion, downloadfrom).Show();
                 }
 
@@ -377,8 +380,21 @@ namespace SvnRadar
         /// <returns></returns>
         bool IsNetworkAvailable()
         {
-            bNetworksAvailable = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-            return bNetworksAvailable;
+            if (NetworksAvailable)
+                NetworksAvailable = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+
+            return NetworksAvailable;
+        }
+
+        private void NetworkChange_NetworkAvailabilityChanged(object sender, System.Net.NetworkInformation.NetworkAvailabilityEventArgs e)
+        {
+            NetworksAvailable = e.IsAvailable;
+            if (!NetworksAvailable)
+            {
+                string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;
+                SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
+                return;
+            }
         }
 
         /// <summary>
@@ -394,8 +410,8 @@ namespace SvnRadar
             /*If for some reason RepoBrowserConfiguration.Instance.SubversionPath is emtpy, notify error and return */
             if (string.IsNullOrEmpty(RepoBrowserConfiguration.Instance.SubversionPath))
             {
-                 SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
-                    "The subversion exe path is missed. Can not execute command");
+                SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_CANNOT_FIND_SUBVERSIONPATH,
+                   "The subversion exe path is missed. Can not execute command");
                 return;
             }
             else
@@ -441,7 +457,7 @@ namespace SvnRadar
 
                                     Dispatcher.Invoke(new Action(() =>
                                     {
-                                        RepoBrowserConfiguration.Instance.RemoveRepoPath(repository.RepositoryCompletePath);                                        
+                                        RepoBrowserConfiguration.Instance.RemoveRepoPath(repository.RepositoryCompletePath);
                                     }));
                                 }
                             }
@@ -468,6 +484,8 @@ namespace SvnRadar
                     else
                     {
                         TaskNotifierManager.UpToDateRepository(repository.RepositoryCompletePath);
+                        if (TaskNotifierManager.notificationList.Count > 0)
+                            TaskNotifierManager.SetErrorIcon();
                     }
 
 
@@ -516,7 +534,7 @@ namespace SvnRadar
                 return;
 
             /*Verifies the network status*/
-            if (bNetworksAvailable)
+            if (NetworksAvailable)
             {
                 if (!IsNetworkAvailable())
                 {
@@ -524,12 +542,13 @@ namespace SvnRadar
                     SvnRadarExecutor.AddNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM, errMsg);
                     return;
                 }
-              
+
             }
-            if (bNetworksAvailable) {
+            if (NetworksAvailable)
+            {
                 SvnRadarExecutor.RemoveNotificationCall(ErrorManager.ERROR_NETWORK_STATUS_PROBLEM);
             }
-            bNetworksAvailable = true;
+            NetworksAvailable = true;
             ControlRepositorySequence();
 
         }
@@ -573,7 +592,7 @@ namespace SvnRadar
             frequencySlider.DataContext = RepoBrowserConfiguration.Instance;
             lbSvnPaths.DataContext = RepoBrowserConfiguration.Instance;
             chbSetOnAutorun.DataContext = RepoBrowserConfiguration.Instance;
-            
+
 
 
             /*sign data context of the Menu*/
@@ -647,12 +666,12 @@ namespace SvnRadar
         /// </summary>
         private void AddNewSvnPath()
         {
-            
+
             System.Windows.Forms.DialogResult res = FolderDialog.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
                 RepoBrowserConfiguration.Instance.AddRepoPath(FolderDialog.SelectedPath);
-               
+
             }
 
         }
@@ -666,9 +685,9 @@ namespace SvnRadar
         /// <param name="path">Repositiory path</param>
         private void RemoveSvnPath(string path)
         {
-           
-                RepoBrowserConfiguration.Instance.RemoveRepoPath(path);
-            
+
+            RepoBrowserConfiguration.Instance.RemoveRepoPath(path);
+
         }
 
 
@@ -677,9 +696,9 @@ namespace SvnRadar
         /// Attempts to restore the state of the main window
         /// </summary>
         private void ShowMe()
-        {                   
+        {
             this.Show();
-            this.Activate();           
+            this.Activate();
         }
 
         /// <summary>
@@ -736,9 +755,9 @@ namespace SvnRadar
             }
         }
 
- 
 
-     
+
+
 
 
 

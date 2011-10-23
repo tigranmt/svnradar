@@ -299,7 +299,7 @@ namespace SvnRadar
             }
             else
             {
-                //TODO: notify an error to the user
+                SvnRadarExecutor.SetErrorIcon();
             }
         }
 
