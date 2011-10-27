@@ -402,7 +402,9 @@ namespace SvnRadar
                     {
                         int revNum = -1;
                         Int32.TryParse(navigator.GetAttribute("revision", string.Empty), out revNum);
-                        frInfo.Revision = revNum;                       
+                        frInfo.Revision = revNum;
+
+                        frInfo.Path = navigator.GetAttribute("path", string.Empty);
                     }
 
                     if (navigator.MoveToChild("url", string.Empty))
@@ -428,15 +430,15 @@ namespace SvnRadar
                         navigator.MoveToParent();
                     }
 
-                    if (navigator.MoveToChild("wc-info", string.Empty))
-                    {
-                        if (navigator.MoveToChild("wcroot-abspath", string.Empty))
-                        {
-                            frInfo.Path = navigator.InnerXml.Replace("/",@"\");
-                            navigator.MoveToParent();
-                        }
-                        navigator.MoveToParent();
-                    }
+                    //if (navigator.MoveToChild("wc-info", string.Empty))
+                    //{
+                    //    if (navigator.MoveToChild("wcroot-abspath", string.Empty))
+                    //    {
+                        
+                    //        navigator.MoveToParent();
+                    //    }
+                    //    navigator.MoveToParent();
+                    //}
 
 
                     if (navigator.MoveToChild("commit", string.Empty))
