@@ -795,6 +795,9 @@ namespace Hardcodet.Wpf.TaskbarNotification
             iconData.BalloonText = iconData.BalloonTitle = String.Empty;
             Util.WriteIconData(ref iconData, NotifyCommand.Modify, IconDataMembers.Info);
 
+            if (popup == null)
+                return;
+
             popup.IsOpen = false;
         }
 

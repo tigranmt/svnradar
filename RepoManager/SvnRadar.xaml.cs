@@ -484,8 +484,8 @@ namespace SvnRadar
                     else
                     {
                         TaskNotifierManager.UpToDateRepository(repository.RepositoryCompletePath);
-                        if (TaskNotifierManager.notificationList.Count > 0)
-                            TaskNotifierManager.SetErrorIcon();
+                        //if (TaskNotifierManager.notificationList.Count > 0)
+                        //    SvnRadarExecutor.SetErrorIcon();
                     }
 
 

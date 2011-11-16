@@ -130,6 +130,7 @@ namespace SvnRadar.Util
         /// </summary>
         public static void SetErrorIcon()
         {          
+            
             taskBarIcon.SetErrorIcon();
            
         }
