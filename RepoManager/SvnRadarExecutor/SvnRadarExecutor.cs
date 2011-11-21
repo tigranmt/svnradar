@@ -1637,6 +1637,11 @@ namespace SvnRadar
 
                             }
                         }
+                        else
+                        {
+                            if (TaskNotifierManager.notificationList == null || TaskNotifierManager.notificationList.Count == 0)
+                                TaskNotifierManager.SignalChangesOnSysTray(false);
+                        }
 
                     }
                 }));

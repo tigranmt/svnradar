@@ -265,7 +265,7 @@ namespace SvnRadar.Util
 
 
                     /*Show the notification on system tray*/
-                 //   ShowNotification(information);
+                    //ShowNotification(information);
 
                 }
 
