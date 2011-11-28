@@ -201,8 +201,6 @@ namespace SvnRadar.Common.Controls
             {
                 contextMenu = new ContextMenu();
 
-
-
                 MenuItem openLocation = new MenuItem();
                 openLocation.Header = FindResource(UIConstants.MENUTEM_OPENLOCATION) as string;
                 openLocation.Command = AppCommands.OpenWorkingCopyLocationCommand;

@@ -43,8 +43,7 @@
     
     
     <system:String x:Key="Version">Version</system:String>
-    <system:String x:Key="Author">Author</system:String>
-    <system:String x:Key="AuthorProfile">My profile</system:String>
+    <system:String x:Key="Author">Author</system:String>   
     <system:String x:Key="AuthorEmail">Email</system:String>
     
     <system:String x:Key="ProjectSite">Project site</system:String>

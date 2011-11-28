@@ -3,31 +3,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="{StaticResource AboutWindowTitle}"  MinHeight="250" MaxHeight="250" Height="250" MaxWidth="360" MinWidth="360" Width="360" Icon="/SvnRadar;component/Images/systrayicon.ico" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
     <Grid Height="220" Width="338">
-        <Image HorizontalAlignment="Left" Margin="12,12,0,0" Name="image1" Stretch="Fill" Width="85" Source="/SvnRadar;component/Images/systrayicon.ico" Height="80" VerticalAlignment="Top" />
-        <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="252,0,12,12" Name="button1" VerticalAlignment="Bottom" Content="{StaticResource CloseTitle}" Click="button1_Click" />
-        <TextBlock Height="21" Margin="111,12,161,0" FontWeight="Bold" Name="tbVersion" VerticalAlignment="Top" Text="{StaticResource Version}"/>
-        <TextBlock Margin="110,39,0,0" FontWeight="Bold" Name="tbAuthor" HorizontalAlignment="Left" Width="47" Text="{StaticResource Author}" Height="20" VerticalAlignment="Top" />
-        <TextBlock Margin="110,95,0,0" FontWeight="Bold" Name="tbProjectSite" HorizontalAlignment="Left" Width="66" Text="{StaticResource ProjectSite}" Height="21" VerticalAlignment="Top" />
-        <TextBlock Margin="110,0,0,78" FontWeight="Bold" Name="tbAuthorSite" Text="{StaticResource AuthorProfile}" Height="17" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="67" />
-        <TextBlock Height="21" Margin="0,12,12,0" Name="tbVersionString" VerticalAlignment="Top" HorizontalAlignment="Right" Width="121" />
-        <TextBlock Margin="0,39,12,0" Name="tbAuthorString" HorizontalAlignment="Right" 
-                   Width="121" TextAlignment="Left"  Height="19" VerticalAlignment="Top">
+        <Image HorizontalAlignment="Left" Margin="124,10,0,0" Name="image1" Stretch="Fill" Width="85" Source="/SvnRadar;component/Images/systrayicon.ico" Height="80" VerticalAlignment="Top" />
+        <Button Style="{StaticResource SimpleButtonStyle}" Height="23" Margin="241,0,12,9" Name="button1" VerticalAlignment="Bottom" Content="{StaticResource CloseTitle}" Click="button1_Click" />
+        <TextBlock Height="21" Margin="18,108,272,0" FontWeight="Bold" Name="tbVersion" VerticalAlignment="Top" Text="{StaticResource Version}" FontSize="12" />
+        <TextBlock Margin="17,135,0,0" FontWeight="Bold" Name="tbAuthor" HorizontalAlignment="Left" Width="47" Text="{StaticResource Author}" Height="20" VerticalAlignment="Top" FontSize="12" />
+        <TextBlock Height="21" Margin="0,108,109,0" Name="tbVersionString" VerticalAlignment="Top" HorizontalAlignment="Right" Width="145" />
+        <TextBlock Margin="0,134,109,0" Name="tbAuthorString" HorizontalAlignment="Right" 
+                   Width="145" TextAlignment="Left"  Height="21" VerticalAlignment="Top">
          
         </TextBlock>
-        <Image Margin="0,0,51,78" Name="image2" Stretch="Fill" MouseUp="image2_MouseUp" Cursor="Hand" Source="/SvnRadar;component/Images/linkedin.png" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="82" />
-        <TextBlock FontWeight="Bold" Height="20" Margin="111,0,0,133" Name="tbEmail" Text="{StaticResource AuthorEmail}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="48" />
-        <TextBlock Cursor="Hand" FontWeight="Bold" Foreground="Blue" Height="19" 
-                   HorizontalAlignment="Right" Margin="0,0,12,134" Name="tbEmailString" 
-                   TextAlignment="Left" VerticalAlignment="Bottom" Width="121"
+        <TextBlock FontWeight="Bold" Height="20" Margin="18,0,0,39" Name="tbEmail" Text="{StaticResource AuthorEmail}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="48" FontSize="12" />
+        <TextBlock Cursor="Hand" FontWeight="Bold" Foreground="Blue" Height="21" 
+                   HorizontalAlignment="Right" Margin="0,0,109,39" Name="tbEmailString" 
+                   TextAlignment="Left" VerticalAlignment="Bottom" Width="145"
                    Mouse.MouseUp="tbEmailString_MouseUp"
                    ><Hyperlink><ContentPresenter /></Hyperlink>
         </TextBlock>
-        <TextBlock Height="23" HorizontalAlignment="Right" Margin="0,90,65,0" Name="textBlock1" Text="TextBlock" VerticalAlignment="Top" Width="66" FontSize="15">
+        <TextBlock Height="23" HorizontalAlignment="Right" Margin="0,189,102,0" Name="LinkToProject"  VerticalAlignment="Top" Width="217" FontSize="12">
             <Hyperlink
                     NavigateUri="http://code.google.com/p/svnradar/"
                   >
-                    Svnradar.
+                    http://code.google.com/p/svnradar/
             </Hyperlink>
-        </TextBlock> 
+        </TextBlock>
+        <Label Content="SvnRadar" Height="92" HorizontalAlignment="Center" Margin="21,1,0,0" Name="label1" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" Width="307" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0.5" />
     </Grid>
 </Window>

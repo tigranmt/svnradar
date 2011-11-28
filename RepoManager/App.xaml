@@ -107,6 +107,7 @@
             <Image x:Key="AliasIcon" Source="Images/alias.ico"/>
             <Image x:Key="ErrorIcon" Source="Images/errornotification.ico"/>
             <Image x:Key="FolderIcon" Source="Images/Folder.ico"/>
+            <Image x:Key="SyncIcon" Source="Images/sync.ico"/>
 
             <!--- Images -->
 
