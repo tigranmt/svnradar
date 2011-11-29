@@ -65,7 +65,7 @@
     
     <system:String x:Key="MI_REPOSITORY">Repository</system:String>
     <system:String x:Key="MI_SYNCWITHREPOSITORY">Sync with repository</system:String>
-    <system:String x:Key="MI_SYNCWITHREPOSITORIES">Sync all repositories</system:String>
+    <system:String x:Key="MI_UPDATEALLREPOSITORIES">Update all </system:String>
     <system:String x:Key="MI_UPDATEFROMREPOSITORY">Update repostory</system:String>
     
     

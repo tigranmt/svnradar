@@ -41,12 +41,12 @@
         <!-- Context menu on sys tray -->
         <ContextMenu x:Key="SysTrayMenu" x:Name="SysTrayMenu"   Opacity="0.9" >
 
-            <MenuItem x:Name="About"  Foreground="Black" FontWeight="Bold" FontSize="11" IsEnabled="True" Header="{StaticResource MI_ABOUT}" Click="AboutMI_Click"  Icon="{StaticResource AboutIcon}"/>
-            <MenuItem x:Name="UpdateAll" Foreground="Black" FontWeight="Bold" FontSize="11" Header="{StaticResource MI_SYNCWITHREPOSITORIES}" TextBlock.FontWeight="Bold" Click="UpdateAll_Click"  Icon="{StaticResource SyncIcon}"/>
-            <MenuItem x:Name="ShowErrorNotifications" Foreground="Black" FontWeight="Bold" FontSize="11" Header="{StaticResource MI_SHOWERRORNOTIFICATIONS}" Click="ShowErrorNotification_Click" Icon="{StaticResource ErrorIcon}"/>
-            <MenuItem x:Name="ShowChangesSequence"  Foreground="Black" FontWeight="Bold" FontSize="11" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
-            <MenuItem x:Name="ShowMainWindow"  Foreground="Black" FontWeight="Bold" FontSize="11" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"  />
-            <MenuItem x:Name="Exit" Foreground="Black" FontWeight="Bold" FontSize="11" IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
+            <MenuItem x:Name="About"  Foreground="Black" FontSize="11" IsEnabled="True" Header="{StaticResource MI_ABOUT}" Click="AboutMI_Click"  Icon="{StaticResource AboutIcon}"/>
+            <MenuItem x:Name="UpdateAll" Foreground="Black" FontWeight="Bold" FontSize="11" Header="{StaticResource MI_UPDATEALLREPOSITORIES}" TextBlock.FontWeight="Bold" Click="UpdateAll_Click"/>
+            <MenuItem x:Name="ShowErrorNotifications" Foreground="Black"  FontSize="11" Header="{StaticResource MI_SHOWERRORNOTIFICATIONS}" Click="ShowErrorNotification_Click" Icon="{StaticResource ErrorIcon}"/>
+            <MenuItem x:Name="ShowChangesSequence"  Foreground="Black" FontSize="11" Header="{StaticResource MI_SHOWCHANGESSEQUENCE}" Click="ShowChanges_Click"/>
+            <MenuItem x:Name="ShowMainWindow"  Foreground="Black" FontSize="11" Header="{StaticResource MI_SHOWMAINWINDOW}" Click="ShowMainWindow_Click"  />
+            <MenuItem x:Name="Exit" Foreground="Black"  FontSize="11" IsEnabled="True" Header="{StaticResource MI_EXIT}" Click="ExitMI_Click"  Icon="{StaticResource ExitIcon}"/>
         </ContextMenu>
 
         <!-- Context menu on sys tray -->
