@@ -26,6 +26,6 @@
                     http://code.google.com/p/svnradar/
             </Hyperlink>
         </TextBlock>
-        <Label Content="SvnRadar" Height="92" HorizontalAlignment="Center" Margin="21,1,0,0" Name="label1" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" Width="307" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0.5" />
+        <Label Content="SvnRadar" Height="90" HorizontalAlignment="Center" Margin="4,5,8,0" Name="label1" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" Width="326" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0.5" />
     </Grid>
 </Window>

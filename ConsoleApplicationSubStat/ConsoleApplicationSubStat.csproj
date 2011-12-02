@@ -76,7 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\Develop\RepoManagerGc\SvnObjects\SvnObjects.csproj">
+    <ProjectReference Include="..\SvnObjects\SvnObjects.csproj">
       <Project>{BBDAD153-BF39-48CA-9B49-4EA8299ECEE5}</Project>
       <Name>SvnObjects</Name>
     </ProjectReference>
