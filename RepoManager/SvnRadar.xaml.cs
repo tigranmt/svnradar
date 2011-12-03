@@ -261,6 +261,7 @@ namespace SvnRadar
 
             /* Control if new version of an application exists on the server */
 
+            NetworksAvailable = true;
             if (!IsNetworkAvailable())
             {
                 string errMsg = FindResource("MSG_NETWORKSTATUS_PROBLEM") as string;

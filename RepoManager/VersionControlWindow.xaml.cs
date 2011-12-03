@@ -76,8 +76,7 @@ namespace SvnRadar
             base.OnContentRendered(e);
 
             string imgTitle = ((string)AppResourceManager.FindResource("GoToTitle")) + " " + GoToPath;
-            imgSvnRadar.ToolTip = imgTitle;
-
+          
             string infoString = AppResourceManager.FindResource("NewVersionApplicationString") as string;
             
             if(newVersion!=null)

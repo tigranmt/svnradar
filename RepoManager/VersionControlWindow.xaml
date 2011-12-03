@@ -8,8 +8,13 @@
     <Grid Width="424" Height="108">
         <Image Margin="12,12,0,27" Name="image1" Stretch="Fill" HorizontalAlignment="Left" Width="69" Source="/SvnRadar;component/Images/systrayicon.ico" />
         <Button  Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,0,12,12" Name="btnClose" Width="95" Content="{StaticResource CloseTitle}" Click="btnClose_Click" Height="23" VerticalAlignment="Bottom" />
-        <TextBlock Height="27" Margin="106,12,12,0" Name="infoTextBlock"  FontWeight="Bold" VerticalAlignment="Top"  Foreground="Black" />
-        <TextBlock Margin="98,45,0,42" Name="tbLinkToDownload" FontWeight="Bold" FontSize="16" Text="{StaticResource GoToTitle}" HorizontalAlignment="Left" Width="45" />
-        <Image Margin="149,39,172,30" Name="imgSvnRadar" Stretch="Fill" Source="/SvnRadar;component/Images/SvnRadarLinkLogo.png" Cursor="Hand" MouseUp="imgSvnRadar_MouseUp" />
+        <TextBlock Height="27" Margin="98,69,125,0" Name="infoTextBlock"  FontWeight="Bold" VerticalAlignment="Top"  Foreground="Black" />
+        <TextBlock Margin="98,38,0,49" Name="tbLinkToDownload" FontWeight="Bold" FontSize="16" Text="{StaticResource GoToTitle}" HorizontalAlignment="Left" Width="45" />
+        <TextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="98,12,0,75" Name="textBlock1" Text="New version of SvnRadar available !" Width="283" />
+        <TextBlock Height="23" Margin="149,36,12,48" FontWeight="Bold" FontSize="16">
+            <Hyperlink NavigateUri="http://code.google.com/p/svnradar/" TargetName="Svn radar">
+               Svn radar Google code repository
+            </Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>
