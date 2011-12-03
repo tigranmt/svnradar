@@ -9,7 +9,7 @@
     ResizeMode="CanResizeWithGrip"
     Closing="Window_Closing"  
     StateChanged="Window_StateChanged"
-     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="700" MinHeight="500" Icon="Images\main.png" AllowsTransparency="False" Topmost="True">
+     Title="{StaticResource MainWindowTitle}" Height="500" Width="855" MinWidth="700" MinHeight="500" Icon="Images\main.png" AllowsTransparency="False" >
 
    
     <Window.CommandBindings>
