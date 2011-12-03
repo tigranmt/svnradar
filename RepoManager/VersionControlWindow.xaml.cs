@@ -93,7 +93,8 @@ namespace SvnRadar
             this.Close();
         }
 
-        private void imgSvnRadar_MouseUp(object sender, MouseButtonEventArgs e)
+
+        private void LinkToProject_LMouseDown(object sender, MouseButtonEventArgs e)
         {
             Executor.ExecuteExplorerProcess(GoToPath);
         }

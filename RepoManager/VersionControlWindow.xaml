@@ -5,15 +5,15 @@
        MinHeight="140"  MaxHeight="140"
     Title="{StaticResource VersionControlWindowTitle}" Height="140" Width="440" Icon="/SvnRadar;component/Images/systrayicon.ico" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
 	
-    <Grid Width="424" Height="108">
+    <Grid Width="424" Height="108" >
         <Image Margin="12,12,0,27" Name="image1" Stretch="Fill" HorizontalAlignment="Left" Width="69" Source="/SvnRadar;component/Images/systrayicon.ico" />
-        <Button  Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,0,12,12" Name="btnClose" Width="95" Content="{StaticResource CloseTitle}" Click="btnClose_Click" Height="23" VerticalAlignment="Bottom" />
-        <TextBlock Height="27" Margin="98,69,125,0" Name="infoTextBlock"  FontWeight="Bold" VerticalAlignment="Top"  Foreground="Black" />
-        <TextBlock Margin="98,38,0,49" Name="tbLinkToDownload" FontWeight="Bold" FontSize="16" Text="{StaticResource GoToTitle}" HorizontalAlignment="Left" Width="45" />
-        <TextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="98,12,0,75" Name="textBlock1" Text="New version of SvnRadar available !" Width="283" />
-        <TextBlock Height="23" Margin="149,36,12,48" FontWeight="Bold" FontSize="16">
-            <Hyperlink NavigateUri="http://code.google.com/p/svnradar/" TargetName="Svn radar">
-               Svn radar Google code repository
+        <Button  Style="{StaticResource SimpleButtonStyle}" HorizontalAlignment="Right" Margin="0,0,12,6" Name="btnClose" Width="95" Content="{StaticResource CloseTitle}" Click="btnClose_Click" Height="23" VerticalAlignment="Bottom" />
+        <TextBlock Height="27" Margin="93,77,130,0" Name="infoTextBlock"  FontWeight="Bold" VerticalAlignment="Top"  Foreground="Black" />
+        <TextBlock Margin="93,45,0,42" Name="tbLinkToDownload" FontWeight="Bold" FontSize="16" Text="{StaticResource GoToTitle}" HorizontalAlignment="Left" Width="45" />
+        <TextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="92,12,0,75" Name="textBlock1" Text="New version of SvnRadar available !" Width="283" />
+        <TextBlock Name="LinkToProject" Height="23" Margin="141,44,1,41" FontWeight="Bold" FontSize="16">
+            <Hyperlink NavigateUri="http://code.google.com/p/svnradar/">
+              <TextBlock MouseLeftButtonDown="LinkToProject_LMouseDown"> http://code.google.com/p/svnradar/</TextBlock>
             </Hyperlink>
         </TextBlock>
     </Grid>
