@@ -352,7 +352,8 @@ namespace SvnObjects.SvnFunctions
                 if (string.IsNullOrEmpty(e.Data))
                     return;
 
-                if (e.Data.StartsWith("+ ", StringComparison.InvariantCultureIgnoreCase))
+                if (e.Data.StartsWith("+ ", StringComparison.InvariantCultureIgnoreCase) ||
+                    e.Data.StartsWith("- ", StringComparison.InvariantCultureIgnoreCase))
                     ++changedlinescount;
             };
 

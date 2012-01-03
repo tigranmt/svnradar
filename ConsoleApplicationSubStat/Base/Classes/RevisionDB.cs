@@ -45,7 +45,7 @@ namespace ConsoleApplicationSubStat.Base.Classes
             Comment = repoInfo.UserComment;
 
             DateTime dateToSave;
-            if(DateTime.TryParse(repoInfo.Date, out dateToSave))
+            if(DateTime.TryParse(repoInfo.Date, System.Globalization.DateTimeFormatInfo.InvariantInfo, System.Globalization.DateTimeStyles.None, out dateToSave))
                 Date = dateToSave;
         }
 
