@@ -131,13 +131,13 @@ namespace SvnObjects.SvnFunctions
                 process.WaitForExit(milliseconds);
             else
                 process.WaitForExit();
-          
+
             if (diInfoStrings.Count < 2)
             {
                 if (process.ExitCode != 0)
                 {
-                           LastErrorMessage =  "Got problems retreiving  information for the folder " +
-                         folderPath + "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd();
+                    LastErrorMessage = "Got problems retreiving  information for the folder " +
+                  folderPath + "ErrorCode: " + process.ExitCode.ToString() + " " + process.StandardError.ReadToEnd();
                 }
                 return null;
             }
@@ -236,7 +236,7 @@ namespace SvnObjects.SvnFunctions
 
         public bool UpdateRepository(string repository_local_path)
         {
-            
+
 
             bool returnvalue = false;
 
@@ -261,8 +261,8 @@ namespace SvnObjects.SvnFunctions
 
             System.IO.Directory.SetCurrentDirectory(repository_local_path);
 
-           // psi.Arguments = " " + CommandStringsManager.UpdateCommand + "  \"" + repository_local_path + "\"";
-            psi.Arguments = " " + CommandStringsManager.UpdateCommand ;
+            // psi.Arguments = " " + CommandStringsManager.UpdateCommand + "  \"" + repository_local_path + "\"";
+            psi.Arguments = " " + CommandStringsManager.UpdateCommand;
             psi.CreateNoWindow = true;
 
             SubversionRepositoryProcess process = new SubversionRepositoryProcess();
@@ -277,14 +277,14 @@ namespace SvnObjects.SvnFunctions
 
             process.Exited += delegate(object sender, EventArgs e)
             {
-               
+
             };
 
             process.OutputDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
             {
                 if (string.IsNullOrEmpty(e.Data))
-                    return;              
-                    
+                    return;
+
                 returnvalue = true;
                 Console.WriteLine(e.Data);
             };
@@ -307,7 +307,19 @@ namespace SvnObjects.SvnFunctions
         /// <returns>Lines count chnaged in specified revision on specified file, or -1</returns>
         public int GetChangedLinesCount(string filePath, string fileRepoPath, int revisionnumber)
         {
+            int changedlinescount = GetLinesByCommand(filePath, fileRepoPath, revisionnumber, CommandStringsManager.CommonBlameCommand, "-r");
+            if (changedlinescount == 0) //could be that we can not blame on that revision so call Diff on it
+            {
+                changedlinescount = GetLinesByCommand(filePath, fileRepoPath, revisionnumber, CommandStringsManager.CommonDiffCommand, "-c");
+            }
 
+            return changedlinescount;
+
+        }
+
+
+        int GetLinesByCommand(string filePath, string fileRepoPath, int revisionnumber, string Command, string revisonAccessParameter)
+        {
             int changedlinescount = 0;
 
             /*If for some reason sSubverisionPath is emtpy, notify error and return */
@@ -318,7 +330,6 @@ namespace SvnObjects.SvnFunctions
                 return -1;
             }
 
-           
 
             System.Diagnostics.ProcessStartInfo psi =
                           new System.Diagnostics.ProcessStartInfo("\"" + sSubverisionPath + "\"");
@@ -329,7 +340,7 @@ namespace SvnObjects.SvnFunctions
             psi.UseShellExecute = false;
 
 
-            psi.Arguments = " " + CommandStringsManager.CommonDiffCommand + " \"" + filePath.Trim() + "\" -c " + revisionnumber;
+            psi.Arguments = " " + Command + " \"" + filePath.Trim() + "\" " + revisonAccessParameter + " " + revisionnumber;
             psi.CreateNoWindow = true;
 
             SubversionRepositoryProcess process = new SubversionRepositoryProcess();
@@ -352,8 +363,7 @@ namespace SvnObjects.SvnFunctions
                 if (string.IsNullOrEmpty(e.Data))
                     return;
 
-                if (e.Data.StartsWith("+ ", StringComparison.InvariantCultureIgnoreCase) ||
-                    e.Data.StartsWith("- ", StringComparison.InvariantCultureIgnoreCase))
+                if (LineIsAChangedLine(e.Data, revisionnumber))
                     ++changedlinescount;
             };
 
@@ -362,12 +372,31 @@ namespace SvnObjects.SvnFunctions
 
             process.WaitForExit();
 
-
             return changedlinescount;
-
         }
 
+        bool LineIsAChangedLine(string line, long revision)
+        {
 
+            if (string.IsNullOrEmpty(line) ||
+                line.Length < 3)
+                return false;
+
+            if (line.TrimStart().StartsWith(revision + " "))
+                return true;
+
+            //if starts with (+/-) and empty space, this is a changed line 
+            if (line.StartsWith("+ ", StringComparison.InvariantCultureIgnoreCase) ||
+                line.StartsWith("- ", StringComparison.InvariantCultureIgnoreCase))
+                return true;
+
+            //if starts with (+/-) and the next one is NOT the same symbol, this is a changed line
+            if ((line[0] == '+' || line[0] == '-')
+                && (line[1] != '+' && line[1] != '-'))
+                return true;
+
+            return false;
+        }
 
         /// <summary>
         /// Parser the XML string into the list of RepoInfo objects
@@ -512,8 +541,8 @@ namespace SvnObjects.SvnFunctions
         /// Get the log for the given repository. Blocking call, not async.
         /// </summary>       
         /// <param name="folderRepoInfo">FolderrepoInfo object, if Null no params will specified on command execution</param>   
-       /// <param name="iFromRevision">Specifiy revision number whom log have to be found, or pass -1 to get everything</param>
-       /// <returns></returns>   
+        /// <param name="iFromRevision">Specifiy revision number whom log have to be found, or pass -1 to get everything</param>
+        /// <returns></returns>   
         public List<RepositoryInfo> GetRepositoryLogImmediate(FolderRepoInfo folderRepoInfo, int iFromRevision)
         {
             if (string.IsNullOrEmpty(sSubverisionPath))
@@ -526,14 +555,15 @@ namespace SvnObjects.SvnFunctions
             string repoStatusRequestParams = " ";
 
             /*If object is not Null, pass Url like a parameter to reconver server side log of the repository*/
-            if (folderRepoInfo != null) {
-                if (iFromRevision>0)
+            if (folderRepoInfo != null)
+            {
+                if (iFromRevision > 0)
                     repoStatusRequestParams += folderRepoInfo.Url + " -r " + iFromRevision.ToString() + " -v --xml";
                 else
                     repoStatusRequestParams += folderRepoInfo.Url + " -v --xml";
             }
 
-         
+
             StringBuilder unrecognizedData = new StringBuilder();
             System.Diagnostics.ProcessStartInfo psi =
                           new System.Diagnostics.ProcessStartInfo(sSubverisionPath);
@@ -558,8 +588,9 @@ namespace SvnObjects.SvnFunctions
 
             process.ErrorDataReceived += delegate(object sender, System.Diagnostics.DataReceivedEventArgs e)
             {
-                if(!string.IsNullOrEmpty(e.Data )) {
-                    LastErrorMessage = e.Data;                    
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    LastErrorMessage = e.Data;
                 }
             };
 
@@ -571,13 +602,13 @@ namespace SvnObjects.SvnFunctions
                 if (e.Data.StartsWith("<logentry"))
                     xmlLogStrings.Append(e.Data);
                 else if (e.Data.Contains("</logentry"))
-                {                  
+                {
                     int endIndex = e.Data.IndexOf("</logentry");
                     xmlLogStrings.Append(e.Data.Substring(0, endIndex) + "</logentry>");
                     bool breakPorcessing = false;
                     result.AddRange(ProcessRepoLogCommandOutputLine(xmlLogStrings.ToString(), folderRepoInfo, false, out breakPorcessing));
                     xmlLogStrings.Clear();
-                    
+
                     //TEST ONLY!
                     return;
                 }
@@ -607,5 +638,5 @@ namespace SvnObjects.SvnFunctions
 
 
     }
-    
+
 }

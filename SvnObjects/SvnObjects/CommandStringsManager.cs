@@ -37,6 +37,7 @@ namespace SvnObjects.Objects
         const string UPDATE_COMMAND = "update";
         const string COMMON_LOG_COMMAND = "log";
         const string COMMON_DIFF_COMMAND = "diff";
+        const string COMMON_BLAME_COMMAND = "blame";
         const string COMMON_INFO_COMMAND = "info";
         const string COMMON_UPDATE_COMMAND = "update";
 
@@ -187,6 +188,14 @@ namespace SvnObjects.Objects
             }
         }
 
+
+        public static string CommonBlameCommand
+        {
+            get
+            {
+                return COMMON_BLAME_COMMAND;
+            }
+        }
         public static bool IsCommonDiffCommand(string commandString)
         {
             if (string.IsNullOrEmpty(commandString))
