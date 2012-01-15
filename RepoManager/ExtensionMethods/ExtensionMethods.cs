@@ -55,7 +55,7 @@ namespace SvnRadar
             {                
                 foreach (FilterCriteria filter in filters)
                 {
-                    filteredCollection = filteredCollection.Where(p => repoInfoType.InvokeMember(filter.ColumnName, BindingFlags.GetProperty, null, p, null).ToString().StartsWith(filter.Filter));
+                    filteredCollection = filteredCollection.Where(p => repoInfoType.InvokeMember(filter.ColumnName, BindingFlags.GetProperty, null, p, null).ToString().ToLowerInvariant().Contains(filter.Filter.ToLowerInvariant()));
                 }
 
                 return filteredCollection;

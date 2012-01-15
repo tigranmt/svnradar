@@ -28,11 +28,6 @@ using System.Windows.Data;
 namespace SvnRadar
 {
 
-
-   
-
-
-
     /// <summary>
     /// Custom ListView header template selector
     /// </summary>

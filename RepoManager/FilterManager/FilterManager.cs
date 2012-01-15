@@ -183,7 +183,7 @@ namespace SvnRadar
                     return fc;
                 else if (ignoreFilter && fc.EqualsIgnoreFilter(criteria))
                     return fc;
-                   
+
             }
 
             //Return empty struct
@@ -237,8 +237,12 @@ namespace SvnRadar
           
             if (!FilterCriteria.IsValid(fc))
                 return false;
-           
-            filterCriteriaList.AddLast(fc);
+
+            if (filterCriteriaList.Find(fc) == null)
+                filterCriteriaList.AddLast(fc);
+            else
+                return false;
+
             return true;
 
         }

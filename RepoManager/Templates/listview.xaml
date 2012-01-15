@@ -98,7 +98,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
                     <Grid SnapsToDevicePixels="true">
-                        <Border x:Name="HeaderBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1,0,1">
+                        <Border x:Name="HeaderBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,1">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition MaxHeight="7"/>

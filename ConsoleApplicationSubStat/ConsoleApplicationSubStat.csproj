@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SvnObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Binaries\SvnObjects.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -74,12 +77,6 @@
     <Compile Include="Base\Query\QueryBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SvnObjects\SvnObjects.csproj">
-      <Project>{BBDAD153-BF39-48CA-9B49-4EA8299ECEE5}</Project>
-      <Name>SvnObjects</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -111,9 +108,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SqliteBin\System.Data.SQLite.dll" />
-    <Content Include="SqliteBin\System.Data.SQLite.Linq.dll" />
+    <Content Include="Binaries\SvnObjects.dll" />
+    <Content Include="Binaries\SqliteBin\System.Data.SQLite.dll" />
+    <Content Include="Binaries\SqliteBin\System.Data.SQLite.Linq.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rem xcopy /Y $(ProjectDir)\Base\svn.db $(TargetDir)</PostBuildEvent>

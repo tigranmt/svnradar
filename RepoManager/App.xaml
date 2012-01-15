@@ -25,12 +25,6 @@
                 <ResourceDictionary Source="Templates/listbox.xaml"/>
                 <ResourceDictionary Source="Templates/listview.xaml"/>
                 <ResourceDictionary Source="Templates/togglebutton.xaml"/>
-
-               
-
-
-
-
             </ResourceDictionary.MergedDictionaries>
 
             <!--- Converters -->
@@ -296,9 +290,10 @@
                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"                                         
                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                                         ScrollViewer.CanContentScroll="True"                                        
-                                        GridViewColumnHeader.Click="repoView_Click"                                  
+                                        GridViewColumnHeader.Click="repoView_Click"   
+                                      
                                         SelectionMode="Single"      
-                                        Style="{StaticResource ListViewCustomStyle}"
+                              
                                         ContextMenu="{StaticResource ListViewItemContextMenu}"
                                         Loaded="repoView_Loaded"                                                    
                                         ItemsSource="{Binding Source={StaticResource source}}"                                        
@@ -348,17 +343,17 @@
                         <ListView.View>
                             <GridView>
 
-
                                 <util:FixWidthListViewColumn x:Name="StateColumn" FixedWidth="50"    Header="{StaticResource STATE_NAME}"                                                   
                                                     HeaderTemplate="{StaticResource ListViewStateHeaderNormalTemplate}" 
                                                     CellTemplate="{StaticResource StateColumnCellTemplate}"/>
-
-                                <util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}" />
+                                <!--<util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}" />
                                 <util:CustomColumn x:Name="AccountColumn" Header="{StaticResource ACCOUNT_NAME}" DisplayMemberBinding="{Binding Path=Account}" Width="150" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
-                                <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
+                                <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250" HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>-->
+                                <util:CustomColumn x:Name="RevisionColumn"   Header="{StaticResource REVISION_NAME}" DisplayMemberBinding="{Binding Path=Revision}" Width="150"  />
+                                <util:CustomColumn x:Name="AccountColumn" Header="{StaticResource ACCOUNT_NAME}" DisplayMemberBinding="{Binding Path=Account}" Width="150" />
+                                <util:CustomColumn x:Name="DateColumn" Header="{StaticResource DATE_NAME}" DisplayMemberBinding="{Binding Path=Date}" Width="250"/>
                                 <util:CustomColumn x:Name="ItemColumn" Header="{StaticResource ITEM_NAME}" DisplayMemberBinding="{Binding Path=Item}" Width="450"  HeaderTemplateSelector="{StaticResource ListViewHeaderDataTemplateSelector}"/>
-
-
+                               
                             </GridView>
                         </ListView.View>
 
