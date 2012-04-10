@@ -123,7 +123,11 @@
                                Text="{Binding Path=Revision}"/>
                 </StackPanel>
 
-                <wpfextended:RichTextBox Background="#505050" FontFamily="Arial" Width="400" Foreground="LightGray" FontSize="14" Text ="{Binding Path=UserComment}"/>
+                <wpfextended:RichTextBox Background="#505050" FontFamily="Arial" Width="400" Foreground="LightGray" FontSize="14" Text ="{Binding Path=UserComment}">
+                    <wpfextended:RichTextBox.TextFormatter>
+                        <converter:ToolTipRichTextFormatter/>
+                    </wpfextended:RichTextBox.TextFormatter>
+                </wpfextended:RichTextBox>
 
 
             </StackPanel>
