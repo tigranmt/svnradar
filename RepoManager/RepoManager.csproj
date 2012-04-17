@@ -342,6 +342,7 @@
       <DependentUpon>ErrorsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FormatConverters\VisibilityReverseFormatConverter.cs" />
+    <Compile Include="Util\AccountImageBinder.cs" />
     <Compile Include="Util\FolderDialog.cs" />
     <Compile Include="Util\ImageButton.cs" />
     <Compile Include="Util\ImageToggleButton.cs" />

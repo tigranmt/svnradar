@@ -237,11 +237,11 @@
                 <DropShadowEffect Color="#FF747474"/>
             </Border.Effect>
         </Border>
-        <Image
+        <Image x:Name="BalloonImage"
       HorizontalAlignment="Left"
       Margin="13.8,42.8,0,0"
       Width="55.2"
-      Source="/Images/systrayicon.ico"
+    
       Stretch="Fill" Height="55.2" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" />
         <Path
       Fill="#FFFFFFFF"

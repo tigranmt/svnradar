@@ -108,10 +108,10 @@
 
 
             <!--Tool Tip -->
-            <StackPanel x:Key="ToolTipPanel" Background="#505050">
+            <StackPanel x:Key="ToolTipPanel" Background="#505050" Loaded="FlatToolTipLoaded">
 
                 <StackPanel x:Name="HeadStackFlatView" Orientation="Horizontal" Width="400">
-                    <Image Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Image x:Name="StackImage" Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <TextBlock Text="    " />
                     <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="Orange" Background="Transparent"
                                TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Right"
@@ -134,10 +134,10 @@
             <!--Tool Tip -->
 
             <!--Group view Tool Tip -->
-            <StackPanel x:Key="ToolTipPanelGroupView" Background="#505058">
+            <StackPanel x:Key="ToolTipPanelGroupView" Background="#505058" Loaded="GroupToolTipLoaded">
 
                 <StackPanel x:Name="HeadStackGroupView" Orientation="Horizontal" Width="400">
-                    <Image Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Image x:Name="StackImage" Source="/SvnRadar;component/Images/geek.png" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <TextBlock Text="    " />
                     <TextBlock FontFamily="Arial" FontSize="17" FontWeight="Bold" Foreground="Orange" Background="Transparent"
                                TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Right"
@@ -317,7 +317,7 @@
 
 
                                                     <!--ToolTip="{Binding Path=Items[0].UserComment}"-->
-                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelGroupView}">
+                                                    <Expander IsExpanded="False" Style="{StaticResource GroupExpanderStyle}" ToolTip="{StaticResource ToolTipPanelGroupView}"  >
                                                         <!--<Expander IsExpanded="False" BorderBrush="LightGray" ToolTip="{Binding Path=Items[0].UserComment}">-->
                                                         <Expander.Header>
                                                             <DockPanel HorizontalAlignment="Stretch" >

@@ -22,6 +22,8 @@ using System.Configuration;
 using System.Linq;
 using System.Windows;
 using SvnRadar.Util;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace SvnRadar
 {
@@ -107,7 +109,53 @@ namespace SvnRadar
             AppCommands.SetFilterOnColumnCommand.Execute(sender);
         }
 
-      
+        private void GroupToolTipLoaded(object sender, RoutedEventArgs e)
+        {
+            StackPanel sp = sender as StackPanel;
+
+            foreach (UIElement uiel in sp.Children)
+            {
+                StackPanel child = uiel as StackPanel;
+                if (child != null && child.Name.StartsWith("HeadStackGroupView"))
+                {
+                    foreach (UIElement content in child.Children)
+                    {
+                        Image img = content as Image;
+                        if (img != null && img.Name.StartsWith("StackImage")) {
+
+                            RepoInfo repoInfo = (sp.DataContext as CollectionViewGroup).Items[0] as RepoInfo;
+                            if(repoInfo !=null)
+                                AccountImageBinder.BindToAccountImage(img, repoInfo.Account);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void FlatToolTipLoaded(object sender, RoutedEventArgs e)
+        {
+            StackPanel sp = sender as StackPanel;
+
+            foreach (UIElement uiel in sp.Children)
+            {
+                StackPanel child = uiel as StackPanel;
+                if (child != null && child.Name.StartsWith("HeadStackFlatView"))
+                {
+                    foreach (UIElement content in child.Children)
+                    {
+                        Image img = content as Image;
+                        if (img != null && img.Name.StartsWith("StackImage"))
+                        {
+
+                            RepoInfo repoInfo = sp.DataContext as RepoInfo;
+                            if (repoInfo != null)
+                                AccountImageBinder.BindToAccountImage(img, repoInfo.Account);
+                        }
+                    }
+                }
+            }
+        }
+
 
      
 

@@ -28,6 +28,12 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using SvnObjects;
 using SvnObjects.Objects;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Reflection;
+using System.IO;
+
+
 
 
 namespace SvnRadar.Util
@@ -298,6 +304,10 @@ namespace SvnRadar.Util
             fancyBalloon.PrevChangeViewRequested += new RoutedEventHandler(fancyBalloon_PrevChangeViewRequested);
         }
 
+
+         //
+      
+
         /// <summary>
         /// Notify popup window in system tray about specifed repository information
         /// </summary>
@@ -306,7 +316,6 @@ namespace SvnRadar.Util
         {
             if (taskBarIcon == null)
                 throw new NullReferenceException("TaskBarIcon object is Null. Call SetTaskBarIconObject to setup the reference");
-
 
 
             if (fancyBalloon == null)
@@ -321,8 +330,14 @@ namespace SvnRadar.Util
                 return;
             }
 
+
+
             /*Set data binding on fancy balloon*/
             fancyBalloon.DataContext = information;
+
+
+            AccountImageBinder.BindToAccountImage(fancyBalloon.BalloonImage,
+                fancyBalloon.AccountView.Text);
 
             taskBarIcon.ShowCustomBalloon(fancyBalloon, System.Windows.Controls.Primitives.PopupAnimation.Slide, 5000);
 
