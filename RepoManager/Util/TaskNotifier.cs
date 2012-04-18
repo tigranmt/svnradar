@@ -462,6 +462,10 @@ namespace SvnRadar.Util
             FolderRepoInfo fri = notificationList[currentNotificationIndex];
             if (fri != null)
                 fancyBalloon.DataContext = fri;
+
+
+            AccountImageBinder.BindToAccountImage(fancyBalloon.BalloonImage,
+                fancyBalloon.AccountView.Text);
         }
 
         /// <summary>
