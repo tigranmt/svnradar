@@ -385,6 +385,10 @@ namespace SvnRadar.Util
             }
 
             UpdateCounterTextBox();
+
+
+            AccountImageBinder.BindToAccountImage(fancyBalloon.BalloonImage,
+                fancyBalloon.AccountView.Text);
         }
 
         /// <summary>
@@ -425,6 +429,10 @@ namespace SvnRadar.Util
 
 
             UpdateCounterTextBox();
+
+
+            AccountImageBinder.BindToAccountImage(fancyBalloon.BalloonImage,
+                fancyBalloon.AccountView.Text);
         }
 
         /// <summary>
